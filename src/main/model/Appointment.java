@@ -14,10 +14,6 @@ public class Appointment {
     private int customerID;
     private int userID;
     private int contactID;
-    private LocalDateTime createDate;
-    private String createdBy;
-    private LocalDateTime lastUpdate;
-    private String lastUpdateBy;
 
     /**
      * Constructor that takes a ResultSet which is already pointing to a record in the Appointment table. Fills in all
@@ -46,28 +42,6 @@ public class Appointment {
         this.contactID = contactID;
     }
 
-    public Appointment(int appointmentID, String title,
-                       String description, String location,
-                       String type, LocalDateTime start,
-                       LocalDateTime end, int customerID,
-                       int userID, int contactID,
-                       LocalDateTime createDate, String createdBy,
-                       LocalDateTime lastUpdate, String lastUpdateBy) {
-        this.appointmentID = appointmentID;
-        this.title = title;
-        this.description = description;
-        this.location = location;
-        this.type = type;
-        this.start = start;
-        this.end = end;
-        this.customerID = customerID;
-        this.userID = userID;
-        this.contactID = contactID;
-        this.createDate = createDate;
-        this.createdBy = createdBy;
-        this.lastUpdate = lastUpdate;
-        this.lastUpdateBy = lastUpdateBy;
-    }
 
     public int getAppointmentID() {
         return appointmentID;
@@ -109,19 +83,4 @@ public class Appointment {
         return contactID;
     }
 
-    public LocalDateTime getCreateDate() {
-        return createDate;
-    }
-
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public LocalDateTime getLastUpdate() {
-        return lastUpdate;
-    }
-
-    public String getLastUpdateBy() {
-        return lastUpdateBy;
-    }
 }

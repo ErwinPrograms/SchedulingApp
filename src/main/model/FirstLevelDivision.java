@@ -7,10 +7,6 @@ public class FirstLevelDivision {
     private int divisionID;
     private String division;
     private int countryID;
-    private LocalDateTime createDate;
-    private String createdBy;
-    private LocalDateTime lastUpdate;
-    private String lastUpdateBy;
 
     public FirstLevelDivision(int divisionID, String division, int countryID) {
         this.divisionID = divisionID;
@@ -25,10 +21,6 @@ public class FirstLevelDivision {
         this.divisionID = divisionID;
         this.division = division;
         this.countryID = countryID;
-        this.createDate = createDate;
-        this.createdBy = createdBy;
-        this.lastUpdate = lastUpdate;
-        this.lastUpdateBy = lastUpdateBy;
     }
 
     public int getDivisionID() {
@@ -43,19 +35,4 @@ public class FirstLevelDivision {
         return countryID;
     }
 
-    public LocalDateTime getCreateDate() {
-        return createDate;
-    }
-
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public LocalDateTime getLastUpdate() {
-        return lastUpdate;
-    }
-
-    public String getLastUpdateBy() {
-        return lastUpdateBy;
-    }
 }
