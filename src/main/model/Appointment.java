@@ -1,6 +1,7 @@
 package main.model;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 
 public class Appointment {
@@ -22,7 +23,20 @@ public class Appointment {
      * @param row   ResultSet object already pointing at a row that can be made into an Appointment object
      */
     public Appointment(ResultSet row){
-
+        try {
+            appointmentID = row.getInt("Appointment_ID");
+            title = row.getString("Title");
+            description = row.getString("Description");
+            location = row.getString("Location");
+            type = row.getString("Type");
+            start = row.getTimestamp("Start").toLocalDateTime();
+            end = row.getTimestamp("End").toLocalDateTime();
+            customerID = row.getInt("Customer_ID");
+            userID = row.getInt("User_ID");
+            contactID = row.getInt("Contact_ID");
+        } catch (SQLException ex) {
+            System.out.println("Error with SQL " + ex.getMessage());
+        }
     }
 
     public Appointment(int appointmentID, String title,
