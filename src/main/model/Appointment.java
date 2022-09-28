@@ -42,6 +42,47 @@ public class Appointment {
         this.contactID = contactID;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (this == null || !(obj instanceof Appointment)) {
+            return false;
+        }
+
+        Appointment other = (Appointment) obj;
+        if (appointmentID != other.getAppointmentID())
+            return false;
+        if (!title.equals(other.getTitle()))
+            return false;
+        if (!description.equals(other.getDescription()))
+            return false;
+        if (!location.equals(other.getLocation()))
+            return false;
+        if (!type.equals(other.getType()))
+            return false;
+        if (customerID != other.getCustomerID())
+            return false;
+        if (userID != other.getUserID())
+            return false;
+        if (contactID != other.getContactID())
+            return false;
+
+        //Check equality by checking if both are null or not null
+        if ((start == null) != (other.getStart() == null))
+            return false;
+        //Then, if start isn't null, check the other attribute to see if equal
+        if (start != null && !start.equals(other.getStart()))
+            return false;
+        //same as start
+        if ((end == null) != (other.getEnd() == null))
+            return false;
+        if (end != null && !end.equals(other.getEnd()))
+            return false;
+
+        return true;
+    }
 
     public int getAppointmentID() {
         return appointmentID;
