@@ -2,7 +2,6 @@ package test.dao;
 
 import main.dao.AppointmentDao;
 import main.dao.DBConnection;
-import main.dao.Query;
 import main.model.Appointment;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -112,10 +111,35 @@ public class AppointmentDaoTest {
     @Test
     public void update() {
         //TODO
+        LocalDateTime expectedStartFirst = LocalDateTime.ofEpochSecond(1590667200L, 0, ZoneOffset.UTC);
+        LocalDateTime expectedEndFirst = LocalDateTime.ofEpochSecond(1590670800L, 0, ZoneOffset.UTC);
+        Appointment expectedFirstAppointment =
+                new Appointment(
+                        1, "title",
+                        "description", "location",
+                        "Planning Session", expectedStartFirst,
+                        expectedEndFirst, 1,
+                        1, 3
+                );
+        Appointment updatedFirstAppointment =
+                new Appointment(
+                        1, "Update Test",
+                        "DescUp", "locUP",
+                        "Test", expectedStartFirst,
+                        expectedEndFirst, 1,
+                        1, 3
+                );
+
+        assertEquals(0, testedDao.update(updatedFirstAppointment));
+        assertEquals(updatedFirstAppointment, testedDao.getByID(1));
+        assertEquals(0, testedDao.update(expectedFirstAppointment));
+
     }
 
     @Test
     public void delete() {
-        //TODO
+        assertEquals(0, testedDao.delete(3));
+        assertEquals(1, testedDao.delete(0));
+        assertEquals(1, testedDao.delete(500));
     }
 }

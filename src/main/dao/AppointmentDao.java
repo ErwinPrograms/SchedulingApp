@@ -2,10 +2,7 @@ package main.dao;
 
 import main.model.Appointment;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class AppointmentDao implements DAO<Appointment>{
@@ -77,11 +74,51 @@ public class AppointmentDao implements DAO<Appointment>{
 
     @Override
     public int update(Appointment model) {
-        return 0;
+
+        if (!model.hasRequiredData())
+            return 1;
+
+        try {
+            PreparedStatement update = connDB.prepareStatement(
+                    "UPDATE appointments " +
+                            "SET Appointment_ID = ?, " +
+                            "Title = ?, " +
+                            "Description = ?, " +
+                            "Location = ?, " +
+                            "Type = ?, " +
+                            "Start = ?, " +
+                            "End = ?, " +
+                            "Customer_ID = ?, " +
+                            "User_ID = ?, " +
+                            "Contact_ID = ? " +
+                            "WHERE Appointment_ID = ?");
+            update.setInt(1, model.getAppointmentID());
+            update.setString(2, model.getTitle());
+            update.setString(3, model.getDescription());
+            update.setString(4, model.getLocation());
+            update.setString(5, model.getType());
+            update.setTimestamp(6, Timestamp.valueOf(model.getStart()));
+            update.setTimestamp(7, Timestamp.valueOf(model.getEnd()));
+            update.setInt(8, model.getCustomerID());
+            update.setInt(9, model.getUserID());
+            update.setInt(10, model.getContactID());
+            update.setInt(11, model.getAppointmentID());
+
+            int affectedRows = update.executeUpdate();
+            if (affectedRows == 0) {
+                return 1;
+            } else {
+                return 0;
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error: " + ex.getMessage());
+        }
+        return 1;
     }
 
     @Override
     public int delete(int id) {
-        return 0;
+        Query deleteQuery = new Query(connDB, "DELETE FROM appointments WHERE Appointment_ID = " + id);
+        return deleteQuery.executeQuery();
     }
 }

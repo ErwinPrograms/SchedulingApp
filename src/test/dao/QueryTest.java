@@ -59,9 +59,12 @@ public class QueryTest {
     @Test
     public void executeUpdate() throws Exception {
         Query updateSuccess = new Query(conn,
-                "UPDATE countries SET Last_Update = now(), Last_Updated_By = 'test' WHERE Country_ID > 3");
+                "UPDATE countries SET Last_Update = now(), Last_Updated_By = 'test' WHERE Country_ID = 3");
+        Query emptyUpdate = new Query(conn,
+                "UPDATE countries SET Last_Update = now(), Last_Updated_By = 'test' WHERE Country_ID = 100");
 
         assertEquals(0, updateSuccess.executeQuery());
+        assertEquals(1, emptyUpdate.executeQuery());
     }
 
     @Test

@@ -1,9 +1,6 @@
 package main.dao;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class Query {
     private String query;
@@ -35,9 +32,12 @@ public class Query {
             if(query.toLowerCase().startsWith("delete")
             || query.toLowerCase().startsWith("insert")
             || query.toLowerCase().startsWith("update")) {
-                stmt.executeUpdate(query);
-                System.out.println("Finished update");
-                return 0;
+                int affectedRows = stmt.executeUpdate(query);
+                if (affectedRows == 0) {
+                    return 1;
+                } else {
+                    return 0;
+                }
             }
         } catch (Exception ex) {
             System.out.println("Error: " + ex.getMessage());
