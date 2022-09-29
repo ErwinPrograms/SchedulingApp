@@ -1,11 +1,10 @@
-USE client_schedule;
-
-/*DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS contacts;
-DROP TABLE IF EXISTS customers;
-DROP TABLE IF EXISTS first_level_divisions;
 DROP TABLE IF EXISTS countries;
-*/
+DROP TABLE IF EXISTS first_level_divisions;
+DROP TABLE IF EXISTS customers;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS contacts;
+DROP TABLE IF EXISTS appointments;
+
 
 CREATE TABLE IF NOT EXISTS `countries` (
   `Country_ID` int NOT NULL AUTO_INCREMENT,

@@ -16,6 +16,8 @@ public class Query {
         this.query = query;
     }
 
+    //TODO: Consider making a prepare query method and implementing PreparedStatement
+
     /**
      * Executes the stored query using the provided connection in the constructor.
      *
