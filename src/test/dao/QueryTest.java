@@ -45,11 +45,15 @@ public class QueryTest {
     public void executeInsert() throws Exception {
         Query insertSuccess = new Query(conn, "INSERT INTO countries (Country) VALUES ('Rome'), ('Persia')");
         Query noTableFailure = new Query(conn, "INSERT INTO gibberish (Country) VALUES ('Rome')");
-        Query badSyntaxFailure = new Query(conn, "INSERT INTO customers VALUES ('asd')");
+        Query lowColCountFailure = new Query(conn, "INSERT INTO customers VALUES ('asd')");
+        Query badFKFailure = new Query(conn,
+                "INSERT INTO appointments (Title, Description, Customer_ID, User_ID, Contact_ID)" +
+                        "VALUES ('Test Fail', 'Foreign Key not exists', 10, 1, 1)");
 
         assertEquals(0, insertSuccess.executeQuery());
         assertEquals(1, noTableFailure.executeQuery());
-        assertEquals(1, badSyntaxFailure.executeQuery());
+        assertEquals(1, lowColCountFailure.executeQuery());
+        assertEquals(1, badFKFailure.executeQuery());
     }
 
     @Test

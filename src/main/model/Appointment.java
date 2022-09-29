@@ -23,6 +23,7 @@ public class Appointment {
      * @param row   ResultSet object already pointing at a row that can be made into an Appointment object
      */
     public Appointment(ResultSet row){
+        //TODO: test for result rows with null in any of the rows
         try {
             appointmentID = row.getInt("Appointment_ID");
             title = row.getString("Title");
@@ -56,6 +57,44 @@ public class Appointment {
         this.contactID = contactID;
     }
 
+    /**
+     * This method looks through all the instance variables and makes sure a value exists for each.
+     * If one has no value or an invalid value, then it returns false.
+     *
+     * @return      True if every instance variable has a value. False otherwise.
+     */
+    public boolean hasRequiredData() {
+        if (appointmentID <= 0)
+            return false;
+        if (title == null)
+            return false;
+        if (description == null)
+            return false;
+        if (location == null)
+            return false;
+        if (type == null)
+            return false;
+        if (start == null)
+            return false;
+        if (end == null)
+            return false;
+        if (customerID <= 0)
+            return false;
+        if (userID <= 0)
+            return false;
+        if (contactID <= 0)
+            return false;
+
+        return true;
+    }
+
+    /**
+     * An override for the Object.equals() method. It checks all instance variables and makes sure other object is
+     * Appointment and shares the same values for every instance variable.
+     *
+     * @param obj
+     * @return      True if other object is of type Appointment and matches all instance variables. False otherwise.
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

@@ -2,12 +2,14 @@ package test.dao;
 
 import main.dao.AppointmentDao;
 import main.dao.DBConnection;
+import main.dao.Query;
 import main.model.Appointment;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
@@ -44,12 +46,38 @@ public class AppointmentDaoTest {
     }
     @Test
     public void getAll() {
+        LocalDateTime expectedStartFirst = LocalDateTime.ofEpochSecond(1590667200L, 0, ZoneOffset.UTC);
+        LocalDateTime expectedEndFirst = LocalDateTime.ofEpochSecond(1590670800L, 0, ZoneOffset.UTC);
+        LocalDateTime expectedStartSecond = LocalDateTime.ofEpochSecond(1590753600L, 0, ZoneOffset.UTC);
+        LocalDateTime expectedEndSecond = LocalDateTime.ofEpochSecond(1590757200L, 0, ZoneOffset.UTC);
+        Appointment expectedFirstAppointment =
+                new Appointment(
+                        1, "title",
+                        "description", "location",
+                        "Planning Session", expectedStartFirst,
+                        expectedEndFirst, 1,
+                        1, 3
+                );
+        Appointment expectedSecondAppointment =
+                new Appointment(
+                        2, "title",
+                        "description", "location",
+                        "De-Briefing", expectedStartSecond,
+                        expectedEndSecond, 2,
+                        2, 2
+                );
+
+        ArrayList<Appointment> apts = testedDao.getAll();
+        assertTrue(apts != null);
+        assertEquals(2, apts.size());
+        assertEquals(expectedFirstAppointment, apts.get(0));
+        assertEquals(expectedSecondAppointment, apts.get(1));
     }
 
     @Test
     public void insert() {
-        LocalDateTime insertStart = LocalDateTime.ofEpochSecond(0L, 0, ZoneOffset.UTC);
-        LocalDateTime insertEnd = LocalDateTime.ofEpochSecond(3600L, 0, ZoneOffset.UTC);
+        LocalDateTime insertStart = LocalDateTime.ofEpochSecond(3600L, 0, ZoneOffset.UTC);
+        LocalDateTime insertEnd = LocalDateTime.ofEpochSecond(7200L, 0, ZoneOffset.UTC);
         Appointment expectedSuccess =
                 new Appointment(
                         3, "Insert Success Unit Test",
@@ -58,7 +86,7 @@ public class AppointmentDaoTest {
                         insertEnd, 1,
                         1, 3
                 );
-        Appointment expectedTimeFailure =
+        Appointment expectedMissingTimeFailure =
                 new Appointment(
                         4, "Insert Time Failure Unit Test",
                         "insert Test", "AppointmentDaoTest.java",
@@ -71,15 +99,14 @@ public class AppointmentDaoTest {
                         5, "Insert Foreign Key Failure Unit Test",
                         "Invalid foreign keys", "AppointmentDaoTest.java",
                         "Test failure", insertStart,
-                        insertEnd, 0,
-                        0, 0
+                        insertEnd, 100,
+                        100, 100
                 );
         assertEquals(0, testedDao.insert(expectedSuccess));
-        assertEquals(1, testedDao.insert(expectedTimeFailure));
+        assertEquals(1, testedDao.insert(expectedMissingTimeFailure));
         assertEquals(1, testedDao.insert(expectedForeignKeyFailure));
-        assertEquals(1, null);
 
-
+        assertEquals(expectedSuccess, testedDao.getByID(3));
     }
 
     @Test
