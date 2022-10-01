@@ -1,5 +1,7 @@
 package main.model;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 
 public class Customer {
@@ -9,6 +11,20 @@ public class Customer {
     private String postalCode;
     private String phone;
     private int divisionID;
+
+    public Customer(ResultSet row) {
+        //TODO: test for result rows with null in any of the rows
+        try {
+            customerID = row.getInt("Customer_ID");
+            customerName = row.getString("Customer_Name");
+            address = row.getString("Address");
+            postalCode = row.getString("Postal_Code");
+            phone = row.getString("Phone");
+            divisionID = row.getInt("Division_ID");
+        } catch (SQLException ex) {
+            System.out.println("Error with SQL " + ex.getMessage());
+        }
+    }
     public Customer(int customerID, String customerName,
                     String address, String postalCode,
                     String phone, int divisionID) {
@@ -18,6 +34,32 @@ public class Customer {
         this.postalCode = postalCode;
         this.phone = phone;
         this.divisionID = divisionID;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (this == null || !(obj instanceof Customer)) {
+            return false;
+        }
+
+        Customer other = (Customer) obj;
+        if (customerID != other.getCustomerID())
+            return false;
+        if (!customerName.equals(other.getCustomerName()))
+            return false;
+        if (!address.equals(other.getAddress()))
+            return false;
+        if (!postalCode.equals(other.getPostalCode()))
+            return false;
+        if (!phone.equals(other.getPhone()))
+            return false;
+        if (divisionID != other.getDivisionID())
+            return false;
+
+        return true;
     }
 
     public int getCustomerID() {
