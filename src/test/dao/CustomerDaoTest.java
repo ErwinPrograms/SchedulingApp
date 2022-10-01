@@ -65,9 +65,29 @@ public class CustomerDaoTest {
 
     @Test
     public void update() {
+        Customer firstCustomer = new Customer(1, "Daddy Warbucks",
+                "1919 Boardwalk", "01291", "869-908-1875", 29);
+        Customer updatedNameFirstCustomer = new Customer(1, "Father Warbucks",
+                "1919 Boardwalk", "01291", "869-908-1875", 29);
+        Customer badDivisionIDFirstCustomer = new Customer(1, "Daddy Warbucks",
+                "1919 Boardwalk", "01291", "869-908-1875", 5000);
+
+        assertEquals(1, testedDao.update(badDivisionIDFirstCustomer));
+        assertEquals(0, testedDao.update(updatedNameFirstCustomer));
+        assertEquals(updatedNameFirstCustomer, testedDao.getByID(1));
+        assertEquals(0, testedDao.update(firstCustomer));
+        assertEquals(firstCustomer, testedDao.getByID(1));
     }
 
     @Test
     public void delete() {
+        Customer updateTestObject = new Customer(4, "Bob", "123 St",
+                "00000", "555-5555", 29);
+
+        assertEquals(1, testedDao.delete(1000));
+        assertEquals(1, testedDao.delete(0));
+        assertEquals(updateTestObject, testedDao.getByID(4));
+        assertEquals(0, testedDao.delete(4));
+        assertEquals(null, testedDao.getByID(4));
     }
 }

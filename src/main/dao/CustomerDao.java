@@ -73,11 +73,26 @@ public class CustomerDao implements CrudDAO<Customer> {
 
     @Override
     public int update(Customer model) {
-        return 0;
+        if (!model.hasRequiredData())
+            return 1;
+
+        Query update = new Query(connDB, "UPDATE customers " +
+                "SET " +
+                "Customer_ID = " + model.getCustomerID() + ", " +
+                "Customer_Name = '" + model.getCustomerName() + "', " +
+                "Address = '" + model.getAddress() + "', " +
+                "Postal_Code = '" + model.getPostalCode() + "', " +
+                "Phone = '" + model.getPhone() + "', " +
+                "Division_ID = " + model.getDivisionID() + " " +
+                "WHERE Customer_ID = " + model.getCustomerID());
+
+        return update.executeQuery();
     }
 
     @Override
     public int delete(int id) {
-        return 0;
+        Query delete = new Query(connDB, "DELETE FROM customers " +
+                "WHERE Customer_ID = " + id);
+        return delete.executeQuery();
     }
 }
