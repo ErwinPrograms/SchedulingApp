@@ -35,7 +35,7 @@ public class User {
         if (this == obj) {
             return true;
         }
-        if (this == null || !(obj instanceof User)) {
+        if (!(obj instanceof User)) {
             return false;
         }
 

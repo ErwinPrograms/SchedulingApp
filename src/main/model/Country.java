@@ -27,7 +27,7 @@ public class Country {
         if (this == obj) {
             return true;
         }
-        if (this == null || !(obj instanceof Country)) {
+        if (!(obj instanceof Country)) {
             return false;
         }
 

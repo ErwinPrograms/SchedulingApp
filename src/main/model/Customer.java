@@ -62,7 +62,7 @@ public class Customer {
         if (this == obj) {
             return true;
         }
-        if (this == null || !(obj instanceof Customer)) {
+        if (!(obj instanceof Customer)) {
             return false;
         }
 

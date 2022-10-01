@@ -41,7 +41,7 @@ public class FirstLevelDivision {
         if (this == obj) {
             return true;
         }
-        if (this == null || !(obj instanceof FirstLevelDivision)) {
+        if (!(obj instanceof FirstLevelDivision)) {
             return false;
         }
 

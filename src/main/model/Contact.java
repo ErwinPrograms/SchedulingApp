@@ -48,7 +48,7 @@ public class Contact {
         if (this == obj) {
             return true;
         }
-        if (this == null || !(obj instanceof Contact)) {
+        if (!(obj instanceof Contact)) {
             return false;
         }
 

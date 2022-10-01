@@ -100,7 +100,7 @@ public class Appointment {
         if (this == obj) {
             return true;
         }
-        if (this == null || !(obj instanceof Appointment)) {
+        if (!(obj instanceof Appointment)) {
             return false;
         }
 
