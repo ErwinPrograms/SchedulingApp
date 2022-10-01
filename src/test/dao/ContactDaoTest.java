@@ -57,6 +57,12 @@ public class ContactDaoTest {
 
     @Test
     public void update() {
+        Contact expectedFirstContact = new Contact(1, "Anika Costa", "acoasta@company.com");
+        Contact updatedFirstContact = new Contact(1, "Anika Costa", "acoasta@business.com");
+
+        assertEquals(0, testedDao.update(updatedFirstContact));
+        assertEquals(updatedFirstContact, testedDao.getByID(1));
+        assertEquals(0, testedDao.update(expectedFirstContact));
     }
 
     @Test

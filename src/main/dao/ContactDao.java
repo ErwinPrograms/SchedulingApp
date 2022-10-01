@@ -70,7 +70,16 @@ public class ContactDao implements DAO<Contact>{
 
     @Override
     public int update(Contact model) {
-        return 0;
+        if (!model.hasRequiredData())
+            return 1;
+
+        Query update = new Query(connDB, "UPDATE contacts " +
+                "SET Contact_ID = " + model.getContactID() + ", " +
+                "Contact_Name = '" + model.getContactName() + "', " +
+                "Email = '" + model.getEmail() + "' " +
+                "WHERE Contact_ID = " + model.getContactID());
+
+        return update.executeQuery();
     }
 
     @Override
