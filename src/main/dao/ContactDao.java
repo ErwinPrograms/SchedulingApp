@@ -1,6 +1,5 @@
 package main.dao;
 
-import main.model.Appointment;
 import main.model.Contact;
 
 import java.sql.Connection;
@@ -8,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class ContactDao implements DAO<Contact>{
+public class ContactDao implements CrudDAO<Contact> {
 
     Connection connDB;
 

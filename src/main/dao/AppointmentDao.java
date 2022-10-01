@@ -5,7 +5,7 @@ import main.model.Appointment;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class AppointmentDao implements DAO<Appointment>{
+public class AppointmentDao implements CrudDAO<Appointment> {
 
     Connection connDB;
 

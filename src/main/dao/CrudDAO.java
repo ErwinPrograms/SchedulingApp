@@ -1,27 +1,8 @@
 package main.dao;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 
-public interface DAO<T> {
-
-    /**
-     * Returns a single object of the DAO's datatype which contains the information from a particular
-     * row defined by the unique key ID.
-     *
-     * @param   id  The id primary key of any particular model
-     * @return      The model datatype with attributes filled. Null if object isn't found
-     */
-    public T getByID(int id);
-
-
-    /**
-     * Returns an ArrayList of the model type. ArrayList can be easily converted to ObservableList if needed for
-     * view or main.controller.
-     *
-     * @return      An ArrayList with the model type
-     */
-    public ArrayList<T> getAll();
+public interface CrudDAO<T> extends ReadDAO<T> {
 
     /**
      *  Inserts a single object into the database. Fails if model isn't valid.
