@@ -26,6 +26,23 @@ public class Contact {
         this.email = email;
     }
 
+    /**
+     * This method looks through all the instance variables and makes sure a value exists for each.
+     * If one has no value or an invalid value, then it returns false.
+     *
+     * @return      True if every instance variable has a value. False otherwise.
+     */
+    public boolean hasRequiredData() {
+        if (contactID <= 0)
+            return false;
+        if (contactName == null)
+            return false;
+        if (email == null)
+            return false;
+
+        return true;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
