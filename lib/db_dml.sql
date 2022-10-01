@@ -112,7 +112,7 @@ INSERT INTO first_level_divisions(Division, Division_ID, Create_Date, Created_By
 
 INSERT INTO customers VALUES(1, 'Daddy Warbucks', '1919 Boardwalk', '01291', '869-908-1875', NOW(), 'script', NOW(), 'script', 29);
 INSERT INTO customers VALUES(2, 'Lady McAnderson', '2 Wonder Way', 'AF19B', '11-445-910-2135', NOW(), 'script', NOW(), 'script', 103);
-INSERT INTO customers VALUES(3, 'Dudley Do-Right', '48 Horse Manor ', '28198', '874-916-2671', NOW(), 'script', NOW(), 'script', 60);
+INSERT INTO customers VALUES(3, 'Dudley Do-Right', '48 Horse Manor', '28198', '874-916-2671', NOW(), 'script', NOW(), 'script', 60);
 
 -- Appointments
 
