@@ -36,6 +36,27 @@ public class Customer {
         this.divisionID = divisionID;
     }
 
+    /**
+     * This method looks through all the instance variables and makes sure a value exists for each.
+     * If one has no value or an invalid value, then it returns false.
+     *
+     * @return      True if every instance variable has a value. False otherwise.
+     */
+    public boolean hasRequiredData() {
+        if (customerID <= 0)
+            return false;
+        if (customerName == null)
+            return false;
+        if (address == null)
+            return false;
+        if (postalCode == null)
+            return false;
+        if (divisionID <= 0)
+            return false;
+
+        return true;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
