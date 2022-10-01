@@ -46,6 +46,13 @@ public class ContactDaoTest {
 
     @Test
     public void insert() {
+        Contact expectedSuccess = new Contact(4, "Kjorg Kjorgson", "kkjorgson@company.com");
+        Contact existingIDFailure = new Contact(1, "Tom Tomson", "ttomson@company.com");
+        Contact missingNameFailure = new Contact(5, null, "rnoname@company.com");
+
+        assertEquals(0, testedDao.insert(expectedSuccess));
+        assertEquals(1, testedDao.insert(existingIDFailure));
+        assertEquals(1, testedDao.insert(missingNameFailure));
     }
 
     @Test

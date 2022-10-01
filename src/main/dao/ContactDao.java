@@ -54,7 +54,18 @@ public class ContactDao implements DAO<Contact>{
 
     @Override
     public int insert(Contact model) {
-        return 0;
+        if (!model.hasRequiredData())
+            return 1;
+
+        Query insert = new Query(connDB, "INSERT INTO contacts " +
+                "(Contact_ID, Contact_Name, Email) " +
+                "VALUES ( " +
+                model.getContactID() + ", " +
+                "'" + model.getContactName() + "', " +
+                "'" + model.getEmail() + "'" +
+                " )");
+
+        return insert.executeQuery();
     }
 
     @Override
