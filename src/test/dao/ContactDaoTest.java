@@ -7,6 +7,8 @@ import main.model.Contact;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.Assert.*;
 
 public class ContactDaoTest {
@@ -32,6 +34,14 @@ public class ContactDaoTest {
 
     @Test
     public void getAll() {
+        Contact expectedFirstContact = new Contact(1, "Anika Costa", "acoasta@company.com");
+        Contact expectedThirdContact = new Contact(3, "Li Lee", "llee@company.com");
+
+        ArrayList<Contact> contacts = testedDao.getAll();
+        assertTrue(contacts != null);
+        assertEquals(3, contacts.size());
+        assertEquals(expectedFirstContact, contacts.get(0));
+        assertEquals(expectedThirdContact, contacts.get(2));
     }
 
     @Test

@@ -35,7 +35,21 @@ public class ContactDao implements DAO<Contact>{
 
     @Override
     public ArrayList<Contact> getAll() {
-        return null;
+        ArrayList<Contact> allAppointments = new ArrayList<>();
+
+        Query queryAll = new Query(connDB, "SELECT * FROM contacts");
+        queryAll.executeQuery();
+        ResultSet resultCursor = queryAll.getResult();
+
+        try {
+            while (resultCursor.next()) {
+                allAppointments.add(new Contact(resultCursor));
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error: " + ex.getMessage());
+        }
+
+        return allAppointments;
     }
 
     @Override
