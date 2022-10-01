@@ -34,7 +34,7 @@ public class ContactDao implements CrudDAO<Contact> {
 
     @Override
     public ArrayList<Contact> getAll() {
-        ArrayList<Contact> allAppointments = new ArrayList<>();
+        ArrayList<Contact> allContacts = new ArrayList<>();
 
         Query queryAll = new Query(connDB, "SELECT * FROM contacts");
         queryAll.executeQuery();
@@ -42,13 +42,13 @@ public class ContactDao implements CrudDAO<Contact> {
 
         try {
             while (resultCursor.next()) {
-                allAppointments.add(new Contact(resultCursor));
+                allContacts.add(new Contact(resultCursor));
             }
         } catch (SQLException ex) {
             System.out.println("Error: " + ex.getMessage());
         }
 
-        return allAppointments;
+        return allContacts;
     }
 
     @Override
