@@ -84,6 +84,8 @@ public class ContactDao implements DAO<Contact>{
 
     @Override
     public int delete(int id) {
-        return 0;
+        Query delete = new Query(connDB, "DELETE FROM contacts " +
+                "WHERE Contact_ID = " + id);
+        return delete.executeQuery();
     }
 }

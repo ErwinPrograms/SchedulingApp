@@ -67,5 +67,8 @@ public class ContactDaoTest {
 
     @Test
     public void delete() {
+        assertEquals(1, testedDao.delete(0));
+        assertEquals(1, testedDao.delete(9999));
+        assertEquals(0, testedDao.delete(4));
     }
 }
