@@ -54,7 +54,21 @@ public class CustomerDao implements CrudDAO<Customer> {
 
     @Override
     public int insert(Customer model) {
-        return 0;
+        if (!model.hasRequiredData())
+            return 1;
+
+        Query insert = new Query(connDB, "INSERT INTO customers " +
+                "(Customer_ID, Customer_Name, Address, Postal_Code, Phone, Division_ID) " +
+                "VALUES ( " +
+                model.getCustomerID() + ", " +
+                "'" + model.getCustomerName() + "', " +
+                "'" + model.getAddress() + "', " +
+                "'" + model.getPostalCode() + "', " +
+                "'" + model.getPhone() + "', " +
+                model.getDivisionID() +
+                " )");
+
+        return insert.executeQuery();
     }
 
     @Override

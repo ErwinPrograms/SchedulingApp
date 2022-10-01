@@ -50,6 +50,17 @@ public class CustomerDaoTest {
 
     @Test
     public void insert() {
+        Customer expectedSuccess = new Customer(4, "Bob", "123 St",
+                "00000", "555-5555", 29);
+        Customer idAlreadyExists = new Customer(1, "New Person",
+                "98 Ave", "12345", "000-000-0000", 103);
+        Customer noForeignKey = new Customer(5, "Mermaid Man",
+                "Bikini Bottom", "999999", "111-111-1111", 2000);
+
+        assertEquals(0, testedDao.insert(expectedSuccess));
+        assertEquals(1, testedDao.insert(idAlreadyExists));
+        assertEquals(1, testedDao.insert(noForeignKey));
+        assertEquals(expectedSuccess, testedDao.getByID(4));
     }
 
     @Test
