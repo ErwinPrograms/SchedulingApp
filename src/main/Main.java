@@ -1,12 +1,27 @@
 package main;
 
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import main.dao.DBConnection;
-import main.dao.Query;
 
-import java.sql.ResultSet;
+import static javafx.application.Application.launch;
 
-public class Main {
+public class Main extends Application {
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource("/main/view/LoginForm.fxml"));
+        primaryStage.setTitle("Hello World");
+        primaryStage.setScene(new Scene(root, 800, 600));
+        primaryStage.show();
+    }
+
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+        DBConnection.makeConnection("jdbc:mysql://localhost:3306/test_client_db", "jdbc", "password1");
+        launch(args);
+        DBConnection.closeConnection();
     }
 }
