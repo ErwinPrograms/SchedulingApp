@@ -12,6 +12,10 @@ public class FirstLevelDivisionDao implements ReadDAO<FirstLevelDivision> {
 
     private Connection connDB;
 
+    public FirstLevelDivisionDao() {
+        this.connDB = DBConnection.getConnection();
+    }
+
     public FirstLevelDivisionDao(Connection connDB) {
         this.connDB = connDB;
     }

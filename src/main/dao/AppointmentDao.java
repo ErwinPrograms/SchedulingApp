@@ -9,6 +9,10 @@ public class AppointmentDao implements CrudDAO<Appointment> {
 
     Connection connDB;
 
+    public AppointmentDao() {
+        this.connDB = DBConnection.getConnection();
+    }
+
     public AppointmentDao(Connection connDB) {
         this.connDB = connDB;
     }

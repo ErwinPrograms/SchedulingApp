@@ -11,6 +11,10 @@ public class ContactDao implements CrudDAO<Contact> {
 
     Connection connDB;
 
+    public ContactDao() {
+        this.connDB = DBConnection.getConnection();
+    }
+
     public ContactDao(Connection connDB) {
         this.connDB = connDB;
     }

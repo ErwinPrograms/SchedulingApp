@@ -12,6 +12,10 @@ public class CustomerDao implements CrudDAO<Customer> {
 
     Connection connDB;
 
+    public CustomerDao() {
+        this.connDB = DBConnection.getConnection();
+    }
+
     public CustomerDao(Connection connDB) {
         this.connDB = connDB;
     }

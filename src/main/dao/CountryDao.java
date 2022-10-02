@@ -13,6 +13,10 @@ public class CountryDao implements ReadDAO<Country> {
 
     private Connection connDB;
 
+    public CountryDao() {
+        this.connDB = DBConnection.getConnection();
+    }
+
     public CountryDao(Connection connDB) {
         this.connDB = connDB;
     }
