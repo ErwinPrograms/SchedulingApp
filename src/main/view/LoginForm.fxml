@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controller.LoginFormController">
+   <children>
+      <Label fx:id="labelLogIn" layoutX="345.0" layoutY="84.0" text="Log In">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Label>
+      <PasswordField fx:id="passwordField" layoutX="282.0" layoutY="338.0">
+         <font>
+            <Font size="18.0" />
+         </font></PasswordField>
+      <TextField fx:id="usernameField" layoutX="282.0" layoutY="274.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </TextField>
+      <Label fx:id="usernameLabel" layoutX="158.0" layoutY="280.0" text="User Name:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="passwordLabel" layoutX="158.0" layoutY="344.0" text="Password:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="zoneLabel" alignment="CENTER_RIGHT" layoutX="381.0" layoutY="553.0" prefHeight="16.0" prefWidth="410.0" />
+      <Button fx:id="submitButton" layoutX="356.0" layoutY="400.0" mnemonicParsing="false" onAction="#loginUser" text="Submit">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

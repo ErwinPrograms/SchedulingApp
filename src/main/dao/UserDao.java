@@ -12,6 +12,10 @@ public class UserDao implements ReadDAO<User> {
 
     private Connection connDB;
 
+    public UserDao() {
+        this.connDB = DBConnection.getConnection();
+    }
+
     public UserDao(Connection connDB) {
         this.connDB = connDB;
     }
@@ -51,5 +55,27 @@ public class UserDao implements ReadDAO<User> {
         }
 
         return allUsers;
+    }
+
+    public User getByUsername(String username) {
+        Query queryByUsername = new Query(connDB,
+                "SELECT * FROM users " +
+                "WHERE User_Name = '" + username + "'");
+
+        queryByUsername.executeQuery();
+        ResultSet resultCursor = queryByUsername.getResult();
+        if(resultCursor == null){
+            return null;
+        }
+
+        try {
+            if (resultCursor.next()) {
+                return new User(resultCursor);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error: " + ex.getMessage());
+        }
+        return null;
+
     }
 }
