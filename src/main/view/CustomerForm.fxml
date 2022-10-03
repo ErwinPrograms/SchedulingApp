@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
@@ -10,5 +11,21 @@
          <font>
             <Font size="24.0" />
          </font></Label>
+      <TableView fx:id="customerTable" layoutX="50.0" layoutY="98.0" onMouseClicked="#populateCustomerToForm" prefHeight="300.0" prefWidth="700.0" />
+      <Group fx:id="inputFields">
+         <TextField fx:id="customerIDField" disable="true" layoutX="50.0" layoutY="416.0" promptText="Customer ID" />
+         <TextField fx:id="customerNameField" layoutX="50.0" layoutY="452.0" promptText="Customer Name" />
+         <TextField fx:id="phoneField" layoutX="247.0" layoutY="452.0" promptText="Phone" />
+         <ComboBox fx:id="countryBox" layoutX="50.0" layoutY="488.0" prefHeight="24.0" prefWidth="171.0" promptText="Country" />
+         <ComboBox fx:id="divisionBox" layoutX="247.0" layoutY="488.0" prefHeight="24.0" prefWidth="171.0" promptText="Division" />
+         <TextField fx:id="addressField" layoutX="50.0" layoutY="526.0" promptText="Address" />
+         <TextField fx:id="postalCodeField" layoutX="247.0" layoutY="526.0" promptText="Postal Code" />
+      </Group>
+      <Group fx:id="buttons">
+         <Button fx:id="clearButton" layoutX="617.0" layoutY="416.0" mnemonicParsing="false" onAction="#clearForm" prefHeight="24.0" prefWidth="133.0" text="Clear Form" />
+         <Button fx:id="addButton" layoutX="617.0" layoutY="452.0" mnemonicParsing="false" onAction="#addCustomer" prefHeight="24.0" prefWidth="133.0" text="Add Customer" />
+         <Button fx:id="updateButton" layoutX="617.0" layoutY="488.0" mnemonicParsing="false" onAction="#updateCustomer" text="Update Customer" />
+         <Button fx:id="deleteButton" layoutX="617.0" layoutY="526.0" mnemonicParsing="false" onAction="#deleteCustomer" prefHeight="24.0" prefWidth="133.0" text="Delete Customer" />
+      </Group>
    </children>
 </AnchorPane>
