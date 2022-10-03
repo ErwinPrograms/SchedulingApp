@@ -1,11 +1,67 @@
 package main.controller;
 
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.*;
+import main.model.Appointment;
+import main.model.Contact;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class AppointmentFormController implements Initializable {
+
+    @FXML
+    TableView<Appointment> appointmentTable;
+
+    @FXML
+    TextField appointmentIDField;
+
+    @FXML
+    TextField titleField;
+
+    @FXML
+    TextField descriptionField;
+
+    @FXML
+    TextField locationField;
+
+    @FXML
+    ComboBox<String> contactBox;
+
+    @FXML
+    TextField typeField;
+
+    @FXML
+    DatePicker startDatePicker;
+
+    @FXML
+    ComboBox<String> startTimeBox;
+
+    @FXML
+    ComboBox<String> endTimeBox;
+
+    @FXML
+    DatePicker endDatePicker;
+
+    @FXML
+    TextField customerIDField;
+
+    @FXML
+    TextField userIDField;
+
+    @FXML
+    Button clearButton;
+
+    @FXML
+    Button addButton;
+
+    @FXML
+    Button updateButton;
+
+    @FXML
+    Button deleteButton;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
