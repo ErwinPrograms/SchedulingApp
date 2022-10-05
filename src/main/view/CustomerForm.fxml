@@ -11,31 +11,30 @@
          <font>
             <Font size="24.0" />
          </font></Label>
-      <TableView fx:id="customerTable" layoutX="50.0" layoutY="98.0" onMouseClicked="#populateCustomerToForm" prefHeight="300.0" prefWidth="700.0" />
+      <TableView fx:id="customerTable" layoutX="50.0" layoutY="98.0" onMouseClicked="#populateCustomerToForm" prefHeight="300.0" prefWidth="700.0">
+         <columns>
+            <TableColumn fx:id="idColumn" prefWidth="45.0" text="ID" />
+            <TableColumn fx:id="nameColumn" prefWidth="149.0" text="Name" />
+            <TableColumn fx:id="phoneColumn" prefWidth="131.0" text="Phone" />
+            <TableColumn fx:id="divisionColumn" prefWidth="95.0" text="Division" />
+            <TableColumn fx:id="addressColumn" prefWidth="179.0" text="Address" />
+            <TableColumn fx:id="postalColumn" prefWidth="100.0" text="Postal Code" />
+         </columns></TableView>
       <Group fx:id="inputFields">
-         <Group layoutX="-5.0">
-            <Label layoutX="55.0" layoutY="425.0" text="Customer ID:" />
-            <TextField fx:id="customerIDField" disable="true" layoutX="142.0" layoutY="421.0" promptText="Customer ID" />
-         </Group>
-         <Group layoutX="26.0" layoutY="-2.0">
-            <Label layoutY="456.0" text="Customer Name:" />
-            <TextField fx:id="customerNameField" layoutX="110.0" layoutY="452.0" promptText="Customer Name" />
-         </Group>
-         <Group layoutX="107.0">
-            <TextField fx:id="phoneField" layoutX="298.0" layoutY="450.0" promptText="Phone" />
-         </Group>
-         <ComboBox fx:id="countryBox" layoutX="135.0" layoutY="488.0" prefHeight="24.0" prefWidth="171.0" promptText="Country" />
-         <ComboBox fx:id="divisionBox" layoutX="324.0" layoutY="488.0" prefHeight="24.0" prefWidth="171.0" promptText="Division" />
-         <Group layoutX="17.0" layoutY="-2.0">
-            <TextField fx:id="addressField" layoutX="119.0" layoutY="526.0" promptText="Address" />
-         </Group>
-         <Group layoutX="74.0" layoutY="-2.0">
-            <Label layoutX="250.0" layoutY="530.0" text="Postal Code:" />
-            <TextField fx:id="postalCodeField" layoutX="332.0" layoutY="526.0" promptText="Postal Code" />
-         </Group>
-         <Label layoutX="360.0" layoutY="454.0" text="Phone:" />
-         <Label layoutX="78.0" layoutY="528.0" text="Address:" />
-
+         <Label layoutX="27.0" layoutY="419.0" text="Customer ID:" />
+         <TextField fx:id="customerIDField" disable="true" layoutX="141.0" layoutY="415.0" promptText="Customer ID" />
+         <Label layoutX="27.0" layoutY="456.0" text="Customer Name:" />
+         <TextField fx:id="customerNameField" layoutX="141.0" layoutY="452.0" promptText="Customer Name" />
+         <Label layoutX="319.0" layoutY="456.0" text="Phone:" />
+         <TextField fx:id="phoneField" layoutX="414.0" layoutY="452.0" promptText="Phone" />
+         <Label layoutX="27.0" layoutY="492.0" text="Country:" />
+         <ComboBox fx:id="countryBox" layoutX="141.0" layoutY="488.0" prefHeight="24.0" prefWidth="171.0" promptText="Country" />
+         <Label layoutX="319.0" layoutY="492.0" text="Division:" />
+         <ComboBox fx:id="divisionBox" layoutX="414.0" layoutY="488.0" prefHeight="24.0" prefWidth="171.0" promptText="Division" />
+         <Label layoutX="27.0" layoutY="528.0" text="Address:" />
+         <TextField fx:id="addressField" layoutX="141.0" layoutY="526.0" promptText="Address" />
+         <Label layoutX="319.0" layoutY="530.0" text="Postal Code:" />
+         <TextField fx:id="postalCodeField" layoutX="414.0" layoutY="526.0" promptText="Postal Code" />
       </Group>
       <Group fx:id="buttons">
          <Button fx:id="clearButton" layoutX="617.0" layoutY="416.0" mnemonicParsing="false" onAction="#clearForm" prefHeight="24.0" prefWidth="133.0" text="Clear Form" />
