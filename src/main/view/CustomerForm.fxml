@@ -28,7 +28,7 @@
          <Label layoutX="319.0" layoutY="456.0" text="Phone:" />
          <TextField fx:id="phoneField" layoutX="414.0" layoutY="452.0" promptText="Phone" />
          <Label layoutX="27.0" layoutY="492.0" text="Country:" />
-         <ComboBox fx:id="countryBox" layoutX="141.0" layoutY="488.0" prefHeight="24.0" prefWidth="171.0" promptText="Country" />
+         <ComboBox fx:id="countryBox" layoutX="141.0" layoutY="488.0" onAction="#updateDivisionBox" prefHeight="24.0" prefWidth="171.0" promptText="Country" />
          <Label layoutX="319.0" layoutY="492.0" text="Division:" />
          <ComboBox fx:id="divisionBox" layoutX="414.0" layoutY="488.0" prefHeight="24.0" prefWidth="171.0" promptText="Division" />
          <Label layoutX="27.0" layoutY="528.0" text="Address:" />

@@ -6,15 +6,18 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import main.dao.CountryDao;
 import main.dao.CustomerDao;
 import main.dao.DBConnection;
+import main.dao.FirstLevelDivisionDao;
 import main.model.Country;
 import main.model.Customer;
 import main.model.FirstLevelDivision;
 
 
+import javax.swing.*;
 import java.net.URL;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class CustomerFormController implements Initializable {
 
@@ -50,10 +53,10 @@ public class CustomerFormController implements Initializable {
     TextField postalCodeField;
 
     @FXML
-    ComboBox<Country> countryBox;
+    ComboBox<String> countryBox;
 
     @FXML
-    ComboBox<FirstLevelDivision> divisionBox;
+    ComboBox<String> divisionBox;
 
     @FXML
     Button clearButton;
@@ -67,13 +70,24 @@ public class CustomerFormController implements Initializable {
     @FXML
     Button deleteButton;
 
-    private CustomerDao customerDao = new CustomerDao();
+    private final CustomerDao customerDao = new CustomerDao();
+
+    // Store key value pairs of Country name and all of its division names
+    // Countries and divisions do not change in runtime so no updates are
+    // expected after initialization
+    private final Map<String, ObservableList<String>> countryDivisionsMap = new HashMap<>();
 
     //TODO: Add elements and events that allow to switch between forms
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         populateCustomerTable();
+        setupCountryDivisionsMap();
         activateInsertionButtons();
+
+        ObservableList<String> countryNames = FXCollections.observableArrayList();
+        countryNames.addAll(countryDivisionsMap.keySet());
+
+        countryBox.setItems(countryNames);
     }
 
     /**
@@ -92,6 +106,44 @@ public class CustomerFormController implements Initializable {
         customerTable.setItems(allCustomersObservable);
     }
 
+    /**
+     * Set up read only data to be used in the controller for use in countryBox and divisionBox.
+     *
+     * Lambda 1 - removeIf()
+     * This lambda is used to easily filter divisions with countryIDs that do match the current
+     * country's.
+     *
+     * Lambda 2 - forEach()
+     * Quickly takes the name String of each division and appends them to an ObservableList
+     */
+    private void setupCountryDivisionsMap() {
+        CountryDao countryDao = new CountryDao();
+        FirstLevelDivisionDao firstLevelDivisionDao = new FirstLevelDivisionDao();
+
+        ArrayList<Country> allCountries = countryDao.getAll();
+        ArrayList<FirstLevelDivision> allDivisions = firstLevelDivisionDao.getAll();
+
+        for (Country country: allCountries) {
+            // ArrayList's removeIf method modifies the original ArrayList, so
+            // a shallow clone is required before filtering
+            ArrayList<FirstLevelDivision> divisionsInCountry =
+                    (ArrayList<FirstLevelDivision>) allDivisions.clone();
+            // Lambda 1
+            divisionsInCountry.removeIf(div -> div.getCountryID() != country.getCountryID());
+
+            // Converted to ObservableList<String> so it can be inserted into ComboBoxes easily
+            ObservableList<String> divisionStrings = FXCollections.observableArrayList();
+            // Lambda 2
+            divisionsInCountry.forEach(divObj -> divisionStrings.add(divObj.getDivision()));
+
+            // Optional alphabetical sorting of divisions before inserting into map.
+            Collections.sort(divisionStrings);
+
+            // Finally, store in class variable for use throughout controller
+            countryDivisionsMap.put(country.getCountry(), divisionStrings);
+        }
+    }
+
     private void activateSelectionButtons() {
         clearButton.setDisable(false);
         addButton.setDisable(true);
@@ -107,6 +159,15 @@ public class CustomerFormController implements Initializable {
     }
 
     /**
+     * Runs when countryBox is changed and updates the contents of divisionBox
+     * to match the selected country.
+     */
+    public void updateDivisionBox() {
+        String selectedCountryName = countryBox.getValue();
+        divisionBox.setItems(countryDivisionsMap.get(selectedCountryName));
+    }
+
+    /**
      * When a row in the TableView is clicked, add the customer information
      * to the input fields.
      *
@@ -119,7 +180,7 @@ public class CustomerFormController implements Initializable {
             return;
         }
 
-        //TODO: grab country and division comboboxes
+        //TODO: grab country and division ComboBoxes
 
         customerIDField.setText(String.valueOf(selectedCustomer.getCustomerID()));
         customerNameField.setText(selectedCustomer.getCustomerName());
@@ -139,7 +200,7 @@ public class CustomerFormController implements Initializable {
         customerIDField.clear();
         customerNameField.clear();
         phoneField.clear();
-        //TODO: clear comboboxes
+        //TODO: clear ComboBoxes
         addressField.clear();
         postalCodeField.clear();
 
