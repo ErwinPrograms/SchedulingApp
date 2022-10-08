@@ -87,45 +87,60 @@ public class DataHandlingFacade {
     }
 
     public FirstLevelDivision divisionByID(int divisionID) {
-        ArrayList<FirstLevelDivision> filteredDivisions =
-                (ArrayList<FirstLevelDivision>) divisions.clone();
-        filteredDivisions.removeIf(division -> division.getDivisionID() != divisionID);
+        ArrayList<FirstLevelDivision> matchedDivisions = new ArrayList<>();
+        divisions.forEach(division -> {
+            if (division.getDivisionID() == divisionID)
+                matchedDivisions.add(division);
+        });
 
         // Return nothing for non-unique results
-        if (filteredDivisions.size() != 1) {
+        if (matchedDivisions.size() != 1) {
             return null;
         }
 
-        return filteredDivisions.get(0);
+        return matchedDivisions.get(0);
     }
-//
+
+//    public FirstLevelDivision divisionByName(String divisionName) {
+//        ArrayList<FirstLevelDivision> filteredDivisions =
+//    }
+
     public Country countryByID(int countryID) {
-        ArrayList<Country> filteredCountries =
-                (ArrayList<Country>) countries.clone();
-        filteredCountries.removeIf(country -> country.getCountryID() != countryID);
+        ArrayList<Country> matchedCountries = new ArrayList<>();
+        countries.forEach(country -> {
+            if (country.getCountryID() == countryID)
+                matchedCountries.add(country);
+        });
 
         // Return nothing for non-unique results
-        if (filteredCountries.size() != 1) {
+        if (matchedCountries.size() != 1) {
             return null;
         }
 
-        return filteredCountries.get(0);
+        return matchedCountries.get(0);
     }
 
     public Country countryByName(String countryName) {
-        ArrayList<Country> filteredCountries =
-                (ArrayList<Country>) countries.clone();
-        filteredCountries.removeIf(country -> !country.getCountry().equals(countryName));
+        ArrayList<Country> matchedCountries = new ArrayList<>();
+        countries.forEach(country -> {
+            if (country.getCountry().equals(countryName))
+                matchedCountries.add(country);
+        });
 
-        if (filteredCountries.size() != 1) {
+        // Return nothing for non-unique results
+        if (matchedCountries.size() != 1) {
             return null;
         }
 
-        return filteredCountries.get(0);
+        return matchedCountries.get(0);
     }
 
     public Country countryByDivision(FirstLevelDivision division) {
         return divisionCountryMap.get(division);
     }
 
+    public void insertCustomer(String name, String address, String postalCode,
+                               String phone, String divisionName, String countryName) {
+//        int divisionID = divisionByName(divisionName);
+    }
 }
