@@ -48,4 +48,12 @@ public class FirstLevelDivisionDaoTest {
         assertEquals(expected30thDivision, firstLevelDivisions.get(29));
         assertEquals(expected66thDivision, firstLevelDivisions.get(66));
     }
+
+    @Test
+    public void getDivisionID() {
+        assertEquals(1, testedDao.getDivisionID("U.S", "Alabama"));
+        assertEquals(17, testedDao.getDivisionID("U.S", "Louisiana"));
+        assertEquals(101, testedDao.getDivisionID("UK", "England"));
+        assertEquals(72, testedDao.getDivisionID("Canada", "Newfoundland and Labrador"));
+    }
 }

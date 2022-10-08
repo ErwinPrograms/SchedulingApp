@@ -55,4 +55,27 @@ public class FirstLevelDivisionDao implements ReadDAO<FirstLevelDivision> {
 
         return allDivisions;
     }
+
+    public int getDivisionID(String countryName, String divisionName) {
+        Query getWithStrings = new Query(connDB,
+                "SELECT Division_ID " +
+                "FROM first_level_divisions " +
+                "INNER JOIN countries " +
+                    "ON first_level_divisions.Country_ID = countries.Country_ID " +
+                "WHERE Division = '" + divisionName + "' " +
+                "AND Country = '" + countryName + "'" );
+        getWithStrings.executeQuery();
+        ResultSet resultCursor = getWithStrings.getResult();
+
+        try {
+            if (resultCursor.next()){
+                return resultCursor.getInt("Division_ID");
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error: " + ex.getMessage());
+        }
+
+        // failure result
+        return -1;
+    }
 }
