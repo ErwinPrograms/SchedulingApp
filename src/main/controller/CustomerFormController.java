@@ -147,10 +147,12 @@ public class CustomerFormController implements Initializable {
      * Disables clearButton, updateButton and deleteButton.
      */
     public void clearForm() {
+        customerTable.getSelectionModel().clearSelection();
         customerIDField.clear();
         customerNameField.clear();
         phoneField.clear();
-        //TODO: clear ComboBoxes
+        countryBox.setValue("Country");
+        divisionBox.setValue("Division");
         addressField.clear();
         postalCodeField.clear();
 
