@@ -75,6 +75,8 @@ public class CustomerDao implements CrudDAO<Customer> {
         return insert.executeQuery();
     }
 
+    //TODO add insert with creation and update time data
+
     @Override
     public int update(Customer model) {
         if (!model.hasRequiredData())

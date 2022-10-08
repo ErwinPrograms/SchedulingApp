@@ -101,9 +101,27 @@ public class DataHandlingFacade {
         return matchedDivisions.get(0);
     }
 
-//    public FirstLevelDivision divisionByName(String divisionName) {
-//        ArrayList<FirstLevelDivision> filteredDivisions =
-//    }
+    /**
+     *
+     * @param divisionName  Required parameter. Finds a stored division with the same name.
+     * @param countryName   Optional parameter. Allows for further checking by a countryName string
+     * @return
+     */
+    public FirstLevelDivision divisionByStrings(String divisionName, String... countryName) {
+        ArrayList<FirstLevelDivision> matchedDivisions = new ArrayList<>();
+        divisions.forEach(division -> {
+            if(division.getDivision().equals(divisionName))
+                matchedDivisions.add(division);
+        });
+
+        // When only one division matches, return it
+        if (matchedDivisions.size() == 1) {
+            return matchedDivisions.get(0);
+        }
+
+        //TODO: narrow down matchedDivisions by countryName as well before returning null
+        return null;
+    }
 
     public Country countryByID(int countryID) {
         ArrayList<Country> matchedCountries = new ArrayList<>();
@@ -139,8 +157,37 @@ public class DataHandlingFacade {
         return divisionCountryMap.get(division);
     }
 
-    public void insertCustomer(String name, String address, String postalCode,
+    public int customerMaxID() {
+        int maxID = 0;
+
+        for (Customer customer: customers) {
+            if (customer.getCustomerID() > maxID){
+                maxID = customer.getCustomerID();
+            }
+        }
+
+        return maxID;
+    }
+
+    //TODO: accept User/UserName as a parameter to be relayed to DAO
+    public int insertCustomer(String name, String address, String postalCode,
                                String phone, String divisionName, String countryName) {
-//        int divisionID = divisionByName(divisionName);
+        int divisionID = divisionByStrings(divisionName).getDivisionID();
+        int customerID = customerMaxID() + 1;
+
+        Customer insertingCustomer = new Customer(
+                customerID,
+                name,
+                address,
+                postalCode,
+                phone,
+                divisionID
+        );
+        int status =  new CustomerDao().insert(insertingCustomer);
+
+        if(status == 0) {
+            refreshData();
+        }
+        return status;
     }
 }

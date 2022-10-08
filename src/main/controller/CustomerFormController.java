@@ -8,9 +8,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import main.model.Country;
 import main.model.Customer;
 import main.model.FirstLevelDivision;
+import main.model.User;
 import main.utility.DataHandlingFacade;
 
 
+import javax.swing.*;
 import java.net.URL;
 import java.util.*;
 
@@ -65,12 +67,20 @@ public class CustomerFormController implements Initializable {
     @FXML
     Button deleteButton;
 
+    private User loggedInUser;
     private final DataHandlingFacade dataHandler = new DataHandlingFacade();
 
     //TODO: Add elements and events that allow to switch between forms
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        populateCustomerTable();
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("customerID"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("customerName"));
+        phoneColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
+        divisionColumn.setCellValueFactory(new PropertyValueFactory<>("divisionID"));
+        addressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
+        postalColumn.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
+        refreshCustomerTable();
+
         activateInsertionButtons();
 
         ObservableList<String> countryNames = dataHandler.countriesObservableList();
@@ -81,14 +91,7 @@ public class CustomerFormController implements Initializable {
      * A private helper function populates columns and rows based
      * on a call to the database.
      */
-    private void populateCustomerTable() {
-        idColumn.setCellValueFactory(new PropertyValueFactory<>("customerID"));
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("customerName"));
-        phoneColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
-        divisionColumn.setCellValueFactory(new PropertyValueFactory<>("divisionID"));
-        addressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
-        postalColumn.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
-
+    private void refreshCustomerTable() {
         ObservableList<Customer> allCustomersObservable = dataHandler.customersObservableList();
         customerTable.setItems(allCustomersObservable);
     }
@@ -160,6 +163,21 @@ public class CustomerFormController implements Initializable {
     }
 
     /**
+     *
+     * @return  True if all fields and ComboBoxes have a value
+     *          False if there is any missing data
+     */
+    private boolean isFormComplete() {
+        // Ignores CustomerID since user shouldn't be able to modify
+        return  !(customerNameField.getText().equals("")
+                || phoneField.getText().equals("")
+                || countryBox.getValue() == null
+                || divisionBox.getValue() == null
+                || addressField.getText().equals("")
+                || postalCodeField.getText().equals(""));
+    }
+
+    /**
      * Attempts to add customer into database and maintains form on success.
      * This allows for multiple customers to be added in quick succession
      * if they share multiple fields (e.g. division and postal code)
@@ -169,7 +187,33 @@ public class CustomerFormController implements Initializable {
      * No new customer is added to database and TableView is not refreshed.
      */
     public void addCustomer() {
+         if (!isFormComplete()) {
+            JOptionPane.showMessageDialog(null, "Complete the form before submission");
+            return;
+         }
 
+         //TODO: Pass logged in user to dataHandler
+         int status = dataHandler.insertCustomer(
+                 customerNameField.getText(),
+                 addressField.getText(),
+                 postalCodeField.getText(),
+                 phoneField.getText(),
+                 divisionBox.getValue(),
+                 countryBox.getValue()
+         );
+
+         // switch allows for new execution codes to be easily added
+         switch (status) {
+             case 0:
+                 refreshCustomerTable();
+                 JOptionPane.showMessageDialog(null, "New customer added!");
+                 //TODO: more success stuff
+                 break;
+             case 1:
+                 JOptionPane.showMessageDialog(null, "Failed to add customer");
+                 //TODO: more fail stuff
+                 break;
+         }
     }
 
     /**
@@ -195,5 +239,4 @@ public class CustomerFormController implements Initializable {
     public void deleteCustomer() {
 
     }
-
 }
