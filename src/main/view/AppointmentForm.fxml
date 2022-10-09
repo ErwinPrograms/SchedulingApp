@@ -31,12 +31,18 @@
             <Label layoutX="357.0" layoutY="500.0" text="User ID:" />
             <TextField fx:id="userIDField" focusTraversable="false" layoutX="488.0" layoutY="496.0" prefHeight="25.0" prefWidth="213.0" promptText="User ID" />
         </Group>
-
-           <Group fx:id="buttons">
-             <Button fx:id="clearButton" layoutX="26.0" layoutY="555.0" mnemonicParsing="false" onAction="#clearForm" prefHeight="24.0" prefWidth="154.0" text="Clear Form" />
-             <Button fx:id="addButton" layoutX="224.0" layoutY="555.0" mnemonicParsing="false" onAction="#addAppointment" prefHeight="24.0" prefWidth="154.0" text="Add Appointment" />
-             <Button fx:id="updateButton" layoutX="423.0" layoutY="555.0" mnemonicParsing="false" onAction="#updateAppointment" prefHeight="24.0" prefWidth="154.0" text="Update Appointment" />
-             <Button fx:id="deleteButton" layoutX="622.0" layoutY="555.0" mnemonicParsing="false" onAction="#deleteAppointment" prefHeight="24.0" prefWidth="154.0" text="Delete Appointment" />
-           </Group>
+       <Group fx:id="buttons">
+         <Button fx:id="clearButton" layoutX="26.0" layoutY="555.0" mnemonicParsing="false" onAction="#clearForm" prefHeight="24.0" prefWidth="154.0" text="Clear Form" />
+         <Button fx:id="addButton" layoutX="224.0" layoutY="555.0" mnemonicParsing="false" onAction="#addAppointment" prefHeight="24.0" prefWidth="154.0" text="Add Appointment" />
+         <Button fx:id="updateButton" layoutX="423.0" layoutY="555.0" mnemonicParsing="false" onAction="#updateAppointment" prefHeight="24.0" prefWidth="154.0" text="Update Appointment" />
+         <Button fx:id="deleteButton" layoutX="622.0" layoutY="555.0" mnemonicParsing="false" onAction="#deleteAppointment" prefHeight="24.0" prefWidth="154.0" text="Delete Appointment" />
+       </Group>
+        <RadioButton layoutX="321.0" layoutY="25.0" mnemonicParsing="false" onAction="#toCustomerForm" text="Customer Form">
+            <toggleGroup>
+                <ToggleGroup fx:id="formSelectors" />
+            </toggleGroup>
+        </RadioButton>
+        <RadioButton disable="true" layoutX="471.0" layoutY="25.0" mnemonicParsing="false" selected="true" text="Appointment Form" toggleGroup="$formSelectors" />
+        <RadioButton layoutX="637.0" layoutY="25.0" mnemonicParsing="false" onAction="#toReportForm" text="Reports Form" toggleGroup="$formSelectors" />
     </children>
 </AnchorPane>

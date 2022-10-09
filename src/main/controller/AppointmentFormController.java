@@ -1,16 +1,25 @@
 package main.controller;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import main.model.Appointment;
 import main.model.Contact;
 
+import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class AppointmentFormController implements Initializable {
 
+    @FXML
+    AnchorPane appointmentFormParent;
     @FXML
     TableView<Appointment> appointmentTable;
 
@@ -128,5 +137,21 @@ public class AppointmentFormController implements Initializable {
      */
     public void deleteAppointment() {
 
+    }
+
+    public void toCustomerForm() {
+        try {
+            Parent nextForm = FXMLLoader.load(Objects.requireNonNull(
+                    getClass().getResource("/main/view/CustomerForm.fxml")
+            ));
+            Stage applicationStage = (Stage) appointmentFormParent.getScene().getWindow();
+            applicationStage.setScene(new Scene(nextForm, 800, 600));
+        } catch (IOException ex) {
+            System.out.println("Customer from could not be loaded: " + ex.getMessage());
+        }
+    }
+
+    public void toReportForm() {
+        //TODO: create report form and transition stage to that form
     }
 }
