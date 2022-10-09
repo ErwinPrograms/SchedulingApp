@@ -192,4 +192,25 @@ public class DataHandlingFacade {
         }
         return status;
     }
+
+    public int updateCustomer(int customerID, String name, String address, String postalCode,
+                              String phone, String divisionName, String countryName) {
+        int divisionID = divisionByStrings(divisionName).getDivisionID();
+
+        Customer updatingCustomer = new Customer(
+                customerID,
+                name,
+                address,
+                postalCode,
+                phone,
+                divisionID
+        );
+
+        int status = new CustomerDao().update(updatingCustomer);
+
+        if (status == 0) {
+            refreshData();
+        }
+        return status;
+    }
 }

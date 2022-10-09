@@ -3,6 +3,7 @@ package main.dao;
 import main.model.Contact;
 import main.model.Customer;
 import main.model.User;
+import main.utility.UniversalApplicationData;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -116,6 +117,9 @@ public class CustomerDao implements CrudDAO<Customer> {
                 "Address = '" + model.getAddress() + "', " +
                 "Postal_Code = '" + model.getPostalCode() + "', " +
                 "Phone = '" + model.getPhone() + "', " +
+                //TODO: Refactor following 2 lines which add metadata with Singleton
+                "Last_Updated_By = '" + UniversalApplicationData.getLoggedInUser().getUserName() + "', " +
+                "Last_Update = '" + Timestamp.valueOf(LocalDateTime.now()) + "', " +
                 "Division_ID = " + model.getDivisionID() + " " +
                 "WHERE Customer_ID = " + model.getCustomerID());
 

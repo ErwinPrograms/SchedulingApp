@@ -227,7 +227,33 @@ public class CustomerFormController implements Initializable {
      * The update does not occur in the database.
      */
     public void updateCustomer() {
+        if (!isFormComplete()) {
+            JOptionPane.showMessageDialog(null, "Not all data was filled in. Update cancelled.");
+            return;
+        }
 
+        int status = dataHandler.updateCustomer(
+                Integer.parseInt(customerIDField.getText()),
+                customerNameField.getText(),
+                addressField.getText(),
+                postalCodeField.getText(),
+                phoneField.getText(),
+                divisionBox.getValue(),
+                countryBox.getValue()
+        );
+
+        // switch allows for new execution codes to be easily added
+        switch (status) {
+            case 0:
+                refreshCustomerTable();
+                JOptionPane.showMessageDialog(null, "Updated customer!");
+                //TODO: more success stuff
+                break;
+            case 1:
+                JOptionPane.showMessageDialog(null, "Failed to update customer");
+                //TODO: more fail stuff
+                break;
+        }
     }
 
     /**
