@@ -10,6 +10,7 @@ import main.model.Customer;
 import main.model.FirstLevelDivision;
 import main.model.User;
 import main.utility.DataHandlingFacade;
+import main.utility.UniversalApplicationData;
 
 
 import javax.swing.*;
@@ -67,7 +68,7 @@ public class CustomerFormController implements Initializable {
     @FXML
     Button deleteButton;
 
-    private User loggedInUser;
+    private final User loggedInUser = UniversalApplicationData.getLoggedInUser();
     private final DataHandlingFacade dataHandler = new DataHandlingFacade();
 
     //TODO: Add elements and events that allow to switch between forms

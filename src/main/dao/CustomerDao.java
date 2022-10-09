@@ -87,7 +87,7 @@ public class CustomerDao implements CrudDAO<Customer> {
 
         Query insert = new Query(connDB, "INSERT INTO customers " +
                 "(Customer_ID, Customer_Name, Address, Postal_Code, Phone, Division_ID, " +
-                "Create_Date, Create_By, Last_Update, Last_Updated_By ) " +
+                "Create_Date, Created_By, Last_Update, Last_Updated_By ) " +
                 "VALUES ( " +
                 model.getCustomerID() + ", " +
                 "'" + model.getCustomerName() + "', " +
@@ -98,7 +98,7 @@ public class CustomerDao implements CrudDAO<Customer> {
                 "'" + Timestamp.valueOf(creationDateTime) + "', " +
                 "'" + creationUser.getUserName() + "', " +
                 "'" + Timestamp.valueOf(creationDateTime) + "', " +
-                "'" + creationUser.getUserName() + "', " +
+                "'" + creationUser.getUserName() + "' " +
                 " )");
 
         return insert.executeQuery();
