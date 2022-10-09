@@ -40,6 +40,7 @@ public class LoginFormController implements Initializable {
             //TODO: Translate all visible elements on LoginForm.fxml
             //TODO: Translate alerts
         ZoneId currentZone = ZoneId.systemDefault();
+        UniversalApplicationData.setUserZone(ZoneId.systemDefault());
         zoneLabel.setText("Location: " + currentZone);
     }
 

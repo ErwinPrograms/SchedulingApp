@@ -1,15 +1,14 @@
 package main.dao;
 
-import main.model.Contact;
 import main.model.Customer;
 import main.model.User;
+import main.utility.TimeUtility;
 import main.utility.UniversalApplicationData;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class CustomerDao implements CrudDAO<Customer> {
@@ -84,7 +83,7 @@ public class CustomerDao implements CrudDAO<Customer> {
         if (!model.hasRequiredData())
             return 1;
 
-        LocalDateTime creationDateTime = LocalDateTime.now();
+        Timestamp creationTimestamp = new TimeUtility().getUTCTime();
 
         Query insert = new Query(connDB, "INSERT INTO customers " +
                 "(Customer_ID, Customer_Name, Address, Postal_Code, Phone, Division_ID, " +
@@ -96,9 +95,9 @@ public class CustomerDao implements CrudDAO<Customer> {
                 "'" + model.getPostalCode() + "', " +
                 "'" + model.getPhone() + "', " +
                 model.getDivisionID() + ", " +
-                "'" + Timestamp.valueOf(creationDateTime) + "', " +
+                "'" + creationTimestamp + "', " +
                 "'" + creationUser.getUserName() + "', " +
-                "'" + Timestamp.valueOf(creationDateTime) + "', " +
+                "'" + creationTimestamp + "', " +
                 "'" + creationUser.getUserName() + "' " +
                 " )");
 
@@ -110,6 +109,8 @@ public class CustomerDao implements CrudDAO<Customer> {
         if (!model.hasRequiredData())
             return 1;
 
+        Timestamp updateTimestamp = new TimeUtility().getUTCTime();
+
         Query update = new Query(connDB, "UPDATE customers " +
                 "SET " +
                 "Customer_ID = " + model.getCustomerID() + ", " +
@@ -119,7 +120,7 @@ public class CustomerDao implements CrudDAO<Customer> {
                 "Phone = '" + model.getPhone() + "', " +
                 //TODO: Refactor following 2 lines which add metadata with Singleton
                 "Last_Updated_By = '" + UniversalApplicationData.getLoggedInUser().getUserName() + "', " +
-                "Last_Update = '" + Timestamp.valueOf(LocalDateTime.now()) + "', " +
+                "Last_Update = '" + updateTimestamp + "', " +
                 "Division_ID = " + model.getDivisionID() + " " +
                 "WHERE Customer_ID = " + model.getCustomerID());
 

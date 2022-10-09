@@ -30,6 +30,7 @@ public class Appointment {
             description = row.getString("Description");
             location = row.getString("Location");
             type = row.getString("Type");
+            //TODO: change start and end to convert ResultSet
             start = row.getTimestamp("Start").toLocalDateTime();
             end = row.getTimestamp("End").toLocalDateTime();
             customerID = row.getInt("Customer_ID");
