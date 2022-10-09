@@ -213,4 +213,16 @@ public class DataHandlingFacade {
         }
         return status;
     }
+
+    public int deleteCustomer(int id){
+        //TODO: add checks to handle delete cascade (can't rely on database config)
+
+        //TODO: test to see if related appointments are deleted as well
+        int status = new CustomerDao().delete(id);
+
+        if(status == 0) {
+            refreshData();
+        }
+        return status;
+    }
 }

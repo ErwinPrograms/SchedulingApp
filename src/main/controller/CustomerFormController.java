@@ -265,6 +265,22 @@ public class CustomerFormController implements Initializable {
      * the update does not occur in the database.
      */
     public void deleteCustomer() {
+        //TODO: add some kind of guard to prevent accidental deletion
 
+        int targetsID = customerTable.getSelectionModel().getSelectedItem().getCustomerID();
+        int status = dataHandler.deleteCustomer(targetsID);
+
+        // switch allows for new execution codes to be easily added
+        switch (status) {
+            case 0:
+                refreshCustomerTable();
+                JOptionPane.showMessageDialog(null, "Deleted customer!");
+                //TODO: more success stuff
+                break;
+            case 1:
+                JOptionPane.showMessageDialog(null, "Failed to delete customer.");
+                //TODO: more fail stuff
+                break;
+        }
     }
 }
