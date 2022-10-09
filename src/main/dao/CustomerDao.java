@@ -2,10 +2,13 @@ package main.dao;
 
 import main.model.Contact;
 import main.model.Customer;
+import main.model.User;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class CustomerDao implements CrudDAO<Customer> {
@@ -75,7 +78,31 @@ public class CustomerDao implements CrudDAO<Customer> {
         return insert.executeQuery();
     }
 
-    //TODO add insert with creation and update time data
+    //TODO refactor with insert so that most code isn't repeated
+    public int insertWithUser(Customer model, User creationUser) {
+        if (!model.hasRequiredData())
+            return 1;
+
+        LocalDateTime creationDateTime = LocalDateTime.now();
+
+        Query insert = new Query(connDB, "INSERT INTO customers " +
+                "(Customer_ID, Customer_Name, Address, Postal_Code, Phone, Division_ID, " +
+                "Create_Date, Create_By, Last_Update, Last_Updated_By ) " +
+                "VALUES ( " +
+                model.getCustomerID() + ", " +
+                "'" + model.getCustomerName() + "', " +
+                "'" + model.getAddress() + "', " +
+                "'" + model.getPostalCode() + "', " +
+                "'" + model.getPhone() + "', " +
+                model.getDivisionID() + ", " +
+                "'" + Timestamp.valueOf(creationDateTime) + "', " +
+                "'" + creationUser.getUserName() + "', " +
+                "'" + Timestamp.valueOf(creationDateTime) + "', " +
+                "'" + creationUser.getUserName() + "', " +
+                " )");
+
+        return insert.executeQuery();
+    }
 
     @Override
     public int update(Customer model) {

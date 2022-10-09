@@ -199,7 +199,8 @@ public class CustomerFormController implements Initializable {
                  postalCodeField.getText(),
                  phoneField.getText(),
                  divisionBox.getValue(),
-                 countryBox.getValue()
+                 countryBox.getValue(),
+                 loggedInUser
          );
 
          // switch allows for new execution codes to be easily added

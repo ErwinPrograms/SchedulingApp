@@ -8,6 +8,7 @@ import main.dao.FirstLevelDivisionDao;
 import main.model.Country;
 import main.model.Customer;
 import main.model.FirstLevelDivision;
+import main.model.User;
 
 import java.util.*;
 
@@ -171,7 +172,8 @@ public class DataHandlingFacade {
 
     //TODO: accept User/UserName as a parameter to be relayed to DAO
     public int insertCustomer(String name, String address, String postalCode,
-                               String phone, String divisionName, String countryName) {
+                              String phone, String divisionName, String countryName,
+                              User loggedInUser) {
         int divisionID = divisionByStrings(divisionName).getDivisionID();
         int customerID = customerMaxID() + 1;
 
@@ -183,7 +185,7 @@ public class DataHandlingFacade {
                 phone,
                 divisionID
         );
-        int status =  new CustomerDao().insert(insertingCustomer);
+        int status =  new CustomerDao().insertWithUser(insertingCustomer, loggedInUser);
 
         if(status == 0) {
             refreshData();
