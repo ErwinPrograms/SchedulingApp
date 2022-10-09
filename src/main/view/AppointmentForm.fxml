@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controller.AppointmentFormController">
+<AnchorPane fx:id="appointmentFormParent" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controller.AppointmentFormController">
     <children>
         <TableView fx:id="appointmentTable" layoutX="26.0" layoutY="56.0" onMouseClicked="#populateAppointmentToForm" prefHeight="300.0" prefWidth="750.0" />
         <Group fx:id="inputFields" layoutX="12.0" layoutY="3.0">
