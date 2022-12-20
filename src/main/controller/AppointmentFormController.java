@@ -154,11 +154,20 @@ public class AppointmentFormController implements Initializable {
             Stage applicationStage = (Stage) appointmentFormParent.getScene().getWindow();
             applicationStage.setScene(new Scene(nextForm, 800, 600));
         } catch (IOException ex) {
-            System.out.println("Customer from could not be loaded: " + ex.getMessage());
+            System.out.println("Customer form could not be loaded: " + ex.getMessage());
         }
     }
 
     public void toReportForm() {
-        //TODO: create report form and transition stage to that form
+        try {
+            Parent nextForm = FXMLLoader.load(Objects.requireNonNull(
+                    getClass().getResource("/main/view/ReportForm.fxml")
+            ));
+            Stage applicationStage = (Stage) appointmentFormParent.getScene().getWindow();
+
+            applicationStage.setScene(new Scene(nextForm, 800, 600));
+        } catch (IOException ex) {
+            System.out.println("Report form could not be loaded: " + ex.getMessage());
+        }
     }
 }
