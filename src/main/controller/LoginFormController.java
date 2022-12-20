@@ -39,9 +39,10 @@ public class LoginFormController implements Initializable {
         //TODO: Translation based on computer language setting (Use enums?)
             //TODO: Translate all visible elements on LoginForm.fxml
             //TODO: Translate alerts
+            //TODO: Use language resource bundles (different from parameter)
         ZoneId currentZone = ZoneId.systemDefault();
         UniversalApplicationData.setUserZone(ZoneId.systemDefault());
-        zoneLabel.setText("Location: " + currentZone);
+        zoneLabel.setText(currentZone.toString());
     }
 
     public void loginUser() {

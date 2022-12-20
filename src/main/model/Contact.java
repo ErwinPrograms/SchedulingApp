@@ -74,4 +74,7 @@ public class Contact {
     public String getEmail() {
         return email;
     }
+
+    //TODO: override toString for display
+    // observableList always calls toString
 }

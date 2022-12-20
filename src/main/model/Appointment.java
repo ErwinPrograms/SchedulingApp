@@ -22,6 +22,7 @@ public class Appointment {
      *
      * @param row   ResultSet object already pointing at a row that can be made into an Appointment object
      */
+    // Tight coupling to database
     public Appointment(ResultSet row){
         //TODO: test for result rows with null in any of the rows
         try {

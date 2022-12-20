@@ -77,6 +77,7 @@ public class CustomerFormController implements Initializable {
     Button deleteButton;
 
     private final User loggedInUser = UniversalApplicationData.getLoggedInUser();
+    //TODO: add column for country name/id
     private final DataHandlingFacade dataHandler = new DataHandlingFacade();
 
     //TODO: Add elements and events that allow to switch between forms
@@ -274,6 +275,7 @@ public class CustomerFormController implements Initializable {
      */
     public void deleteCustomer() {
         //TODO: add some kind of guard to prevent accidental deletion
+        //TODO: Prompt to confirm delete, delete related appointments first before customer
 
         int targetsID = customerTable.getSelectionModel().getSelectedItem().getCustomerID();
         int status = dataHandler.deleteCustomer(targetsID);
@@ -298,6 +300,7 @@ public class CustomerFormController implements Initializable {
                     getClass().getResource("/main/view/AppointmentForm.fxml")
             ));
             Stage applicationStage = (Stage) customerFormParent.getScene().getWindow();
+            //size arguments are optional
             applicationStage.setScene(new Scene(nextForm, 800, 600));
         } catch (IOException ex) {
             System.out.println("Customer from could not be loaded: " + ex.getMessage());
