@@ -1,7 +1,7 @@
 package main.model;
 
 /**
- * Model class that stores aggregate data for appoint months,
+ * Model class that stores aggregate data for appointment months,
  * types, and count. Intended to be displayed in ReportForm.fxml.
  * Read only after object instantiation
  */
