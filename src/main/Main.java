@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import main.dao.DBConnection;
 
+import java.util.Locale;
 import java.util.Objects;
 
 import static javafx.application.Application.launch;
@@ -25,7 +26,10 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         DBConnection.makeConnection("jdbc:mysql://localhost:3306/test_client_db", "jdbc", "password1");
+        //To test for other locales
+        Locale.setDefault(new Locale("fr", "FR"));
         launch(args);
+        Locale.setDefault(new Locale("en", "US"));
         DBConnection.closeConnection();
     }
 }
