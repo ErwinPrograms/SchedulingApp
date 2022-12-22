@@ -122,6 +122,7 @@ public class AppointmentDao implements CrudDAO<Appointment> {
 
     @Override
     public int delete(int id) {
+        //Danger for SQL injection
         Query deleteQuery = new Query(connDB, "DELETE FROM appointments WHERE Appointment_ID = " + id);
         return deleteQuery.executeQuery();
     }

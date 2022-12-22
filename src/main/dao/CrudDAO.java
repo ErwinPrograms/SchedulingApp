@@ -8,9 +8,7 @@ public interface CrudDAO<T> extends ReadDAO<T> {
      *  Inserts a single object into the database. Fails if model isn't valid.
      *
      * @param   model   A model object with attribute data to be inserted into database
-     * @return          A result code
-     *                      0: success
-     *                      1: error
+     * @return          Returns 0 if successful, 1 otherwise
      */
     public int insert(T model);
 
