@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -30,41 +31,46 @@ public class LoginFormController implements Initializable {
     PasswordField passwordField;
     @FXML
     Label zoneLabel;
-
+    @FXML
+    Label loginLabel;
+    @FXML
+    Label usernameLabel;
+    @FXML
+    Label passwordLabel;
+    @FXML
+    Button submitButton;
     @FXML
     AnchorPane loginFormParent;
 
     ResourceBundle languageResourceBundle = ResourceBundle.getBundle("main/resources/Nat", Locale.getDefault());
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        //TODO: Determine user location and displays on log-in form
-        //TODO: Translation based on computer language setting (Use enums?)
-            //TODO: Translate all visible elements on LoginForm.fxml
-            //TODO: Translate alerts
-            //TODO: Use language resource bundles (different from parameter)
-        ZoneId currentZone = ZoneId.systemDefault();
+        //Stored in singleton class for time conversions elsewhere
         UniversalApplicationData.setUserZone(ZoneId.systemDefault());
-        zoneLabel.setText(currentZone.toString());
 
-        Locale currentLocale = Locale.getDefault();
         String currentLang = Locale.getDefault().getLanguage();
-//        ResourceBundle.getBundle("main/resources/Nat", currentLocale);
-        boolean hasSupportedLocalization = currentLocale.getLanguage().equals("fr")
-                                        || currentLocale.getLanguage().equals("en");
+        boolean hasSupportedLocalization = currentLang.equals("fr")
+                                        || currentLang.equals("en");
         if (hasSupportedLocalization) {
-            localize();
+            localizeDisplayedElements();
         }
     }
 
-    private void localize() {
-        //TODO: Figure out how to localize alerts and message popups (What is best practice?)
-            //TODO: Potentially create instance variable ResourceBundle that gets used for all alerts
-                //Makes sense since it has the potential to be shared and extended to other pages
-            //TODO: Potentially create String instance variables that store message for all alerts
-                //Not as extensible but allows for all localization of login form to be done in one method
+    private void localizeDisplayedElements() {
+        loginLabel.setText(languageResourceBundle.getString("Login"));
+        usernameLabel.setText(languageResourceBundle.getString("Username") + ":");
+        passwordLabel.setText(languageResourceBundle.getString("Password") + ":");
+        submitButton.setText(languageResourceBundle.getString("Submit"));
 
-
-        System.out.println(languageResourceBundle.getString("Login"));
+        //TODO: add fallbacks and edge case testing for when the user's country isn't supported by resource bundles
+        //TODO: Might have to make method throw a MissingResourceException error
+            //TODO: alternatively, try-catch inside this method and set label to untranslated String.
+        String zone = ZoneId.systemDefault().toString();
+        int separatorIndex = zone.indexOf("/");
+        String country = zone.substring(0, separatorIndex);
+        String location = zone.substring(separatorIndex + 1);
+        zoneLabel.setText(
+                languageResourceBundle.getString(country) + "/" + location);
     }
 
     public void loginUser() {
@@ -81,7 +87,7 @@ public class LoginFormController implements Initializable {
             changeToCustomerForm();
         } else {
             JOptionPane.showMessageDialog(null,
-                    "Failed to login with those credentials.");
+                    languageResourceBundle.getString("LoginFail"));
         }
     }
 
@@ -93,7 +99,7 @@ public class LoginFormController implements Initializable {
             Stage applicationStage = (Stage) loginFormParent.getScene().getWindow();
             applicationStage.setScene(new Scene(nextForm, 800, 600));
         } catch (IOException ex) {
-            System.out.println("Customer from could not be loaded: " + ex.getMessage());
+            System.out.println("Customer form could not be loaded: " + ex.getMessage());
         }
     }
 
