@@ -1,12 +1,24 @@
 package main.controller;
 
+import com.mysql.cj.xdevapi.Table;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import main.dao.ReportDao;
+import main.model.Appointment;
+import main.model.Contact;
+import main.model.DivisionCount;
+import main.model.MonthTypeCount;
 
 import java.io.IOException;
 import java.net.URL;
@@ -17,6 +29,14 @@ public class ReportFormController implements Initializable {
 
     @FXML
     AnchorPane reportFormParent;
+    @FXML
+    TableView<MonthTypeCount> monthTypeCountTable;
+    @FXML
+    TableView<Appointment> contactTable;
+    @FXML
+    ComboBox<Contact> contactBox;
+    @FXML
+    TableView<DivisionCount> divisionCountTable;
 
     //TODO: Report 1 - # of appointment by month and type
         //TODO: Option 1 would require a new model object ("MonthType")
@@ -26,7 +46,23 @@ public class ReportFormController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        loadStaticElements();
+    }
 
+    /**
+     * Loads data into the elements that do not change after page initialization.
+     * This includes Report 1 and Report 3 as well as the ComboBox for Report 2
+     */
+    private void loadStaticElements() {
+        //TODO: refactor this hacky, tightly coupled, unsightly mess.
+        ObservableList<TableColumn<MonthTypeCount, ?>> monthTypeCountColumns = monthTypeCountTable.getColumns();
+        monthTypeCountColumns.get(0).setCellValueFactory(new PropertyValueFactory<>("monthYear"));
+        monthTypeCountColumns.get(1).setCellValueFactory(new PropertyValueFactory<>("type"));
+        monthTypeCountColumns.get(2).setCellValueFactory(new PropertyValueFactory<>("count"));
+
+        ObservableList<MonthTypeCount> monthTypeReportData =
+                FXCollections.observableList(new ReportDao().getMonthTypeCountReport());
+        monthTypeCountTable.setItems(monthTypeReportData);
     }
 
 

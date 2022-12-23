@@ -15,11 +15,11 @@
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                   <children>
-                     <TableView layoutX="13.0" layoutY="40.0" prefHeight="420.0" prefWidth="750.0">
+                     <TableView fx:id="monthTypeCountTable" layoutX="13.0" layoutY="40.0" prefHeight="420.0" prefWidth="750.0">
                        <columns>
                          <TableColumn prefWidth="144.0" text="Date" />
                          <TableColumn prefWidth="474.0" text="Appointment Type" />
-                           <TableColumn minWidth="8.0" prefWidth="108.0" text="Total" />
+                         <TableColumn minWidth="8.0" prefWidth="108.0" text="Total" />
                        </columns>
                      </TableView>
                   </children></AnchorPane>
@@ -44,7 +44,7 @@
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                   <children>
-                     <TableView layoutX="13.0" layoutY="40.0" prefHeight="420.0" prefWidth="750.0">
+                     <TableView fx:id="divisionCountTable" layoutX="13.0" layoutY="40.0" prefHeight="420.0" prefWidth="750.0">
                        <columns>
                          <TableColumn prefWidth="533.0" text="Division Name" />
                          <TableColumn prefWidth="166.0" text="Total Appointments" />
