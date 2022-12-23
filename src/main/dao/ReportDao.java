@@ -5,16 +5,18 @@ import main.model.DivisionCount;
 import main.model.MonthTypeCount;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
  * DAO responsible for gathering aggregate data to be used in ReportForm. Because
  * of that, this DAO does not implement the CrudDAO or ReadDAO interfaces.
- * Can gather the following data from the database:
- * - Total number of customers appointments by type and month
+ * Can gather the following data from the database:<br>
+ * - Total number of customers appointments by type and month <br>
  * - A schedule for each contact which include appointmentID, title, type and
- *   description, start date and time, end date and time, and customerID
- * - Total number of appointments in each division
+ *   description, start date and time, end date and time, and customerID <br>
+ * - Total number of appointments in each division <br>
  */
 public class ReportDao {
 
@@ -90,6 +92,41 @@ public class ReportDao {
      * all aggregated appointment data ordered by recency and amount
      */
     public ArrayList<MonthTypeCount> getMonthTypeCountReport() {
+        Query monthTypeCountQuery = new Query(connDB,
+                "SELECT " +
+                        "MONTHNAME(Start) AS month, " +
+                        "YEAR(start) AS year, " +
+                        "Type, " +
+                        "COUNT(*) AS count " +
+                    "FROM " +
+                        "appointments " +
+                    "GROUP BY " +
+                        "YEAR(Start), " +
+                        "MONTH(Start), " +
+                        "Type " +
+                    "ORDER BY " +
+                        "year DESC," +
+                        "month DESC, " +
+                        "count DESC;"
+        );
+
+        monthTypeCountQuery.executeQuery();
+        ResultSet resultCursor = monthTypeCountQuery.getResult();
+
+        try {
+            ArrayList<MonthTypeCount> report = new ArrayList<>();
+            while(resultCursor.next()) {
+                report.add(new MonthTypeCount(
+                        resultCursor.getString("month") + " " +  resultCursor.getString("year"),
+                        resultCursor.getString("type"),
+                        resultCursor.getInt("count")
+                ));
+            }
+
+            return report;
+        } catch (SQLException ex) {
+            System.out.println("Error: " + ex.getMessage());
+        }
         return null;
     }
 
@@ -106,8 +143,8 @@ public class ReportDao {
     }
 
     /**
-     * Queries the database and assembles an ArrayList that holds data on all
-     * division names and a count of the number of appointments in each division.
+     * Queries the database and assembles an ArrayList that holds data on all division names and a count of the number
+     * of appointments in each division.
      * This is intended to show which divisions are the most active for the business.
      *
      * @return  ArrayList<DivisionCount> object that holds paired data of Division name and number
