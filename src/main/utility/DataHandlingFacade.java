@@ -2,6 +2,7 @@ package main.utility;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import main.dao.AppointmentDao;
 import main.dao.CountryDao;
 import main.dao.CustomerDao;
 import main.dao.FirstLevelDivisionDao;
@@ -25,6 +26,7 @@ public class DataHandlingFacade {
 
     public DataHandlingFacade() {
         refreshData();
+        refreshAppointmentData();
     }
 
     /**
@@ -68,6 +70,10 @@ public class DataHandlingFacade {
             // Finally, store in class variable for use throughout controller
             countryDivisionNamesMap.put(country, divisionStrings);
         }
+    }
+
+    private void refreshAppointmentData() {
+        appointments = new AppointmentDao().getAll();
     }
 
     public ObservableList<Customer> customersObservableList() {
