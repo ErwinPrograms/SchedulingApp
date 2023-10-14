@@ -1,18 +1,25 @@
 package main.controller;
 
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import main.model.Appointment;
 import main.model.Contact;
+import main.model.Customer;
+import main.model.User;
+import main.utility.DataHandlingFacade;
+import main.utility.UniversalApplicationData;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -22,6 +29,26 @@ public class AppointmentFormController implements Initializable {
     AnchorPane appointmentFormParent;
     @FXML
     TableView<Appointment> appointmentTable;
+    @FXML
+    TableColumn<Appointment, Integer> idColumn;
+    @FXML
+    TableColumn<Appointment, String> titleColumn;
+    @FXML
+    TableColumn<Appointment, String> descriptionColumn;
+    @FXML
+    TableColumn<Appointment, String> locationColumn;
+    @FXML
+    TableColumn<Appointment, Integer> contactIDColumn;
+    @FXML
+    TableColumn<Appointment, String> typeColumn;
+    @FXML
+    TableColumn<Appointment, LocalDateTime> startDateTimeColumn;
+    @FXML
+    TableColumn<Appointment, LocalDateTime> endDateTimeColumn;
+    @FXML
+    TableColumn<Appointment, Integer> customerIDColumn;
+    @FXML
+    TableColumn<Appointment, Integer> userIDColumn;
 
     @FXML
     TextField appointmentIDField;
@@ -71,15 +98,50 @@ public class AppointmentFormController implements Initializable {
     @FXML
     Button deleteButton;
 
+    private final User loggedInUser = UniversalApplicationData.getLoggedInUser();
+    private final DataHandlingFacade dataHandler = new DataHandlingFacade();
 
     //TODO: Calendar week is sunday - saturday
     //TODO: Business hours 8AM - (EST) convert to EST
-    //TODO: Use localdatetime
+    //TODO: Use localDateTime
     // LocalTime already has a toString in 24h format
     //TODO: potentially replace radio with buttons
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("appointmentID"));
+        titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
+        locationColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
+        contactIDColumn.setCellValueFactory(new PropertyValueFactory<>("contactID"));
+        typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
+        startDateTimeColumn.setCellValueFactory(new PropertyValueFactory<>("start"));
+        endDateTimeColumn.setCellValueFactory(new PropertyValueFactory<>("end"));
+        customerIDColumn.setCellValueFactory(new PropertyValueFactory<>("customerID"));
+        userIDColumn.setCellValueFactory(new PropertyValueFactory<>("userID"));
+        activateInsertionButtons();
+    }
 
+    /**
+     * A private helper function populates columns and rows based
+     * on a call to the database.
+     */
+    private void refreshAppointmentTable() {
+        ObservableList<Appointment> allAppointmentsObservable = dataHandler.appointmentsObservableList();
+        appointmentTable.setItems(allAppointmentsObservable);
+    }
+
+    private void activateSelectionButtons() {
+        clearButton.setDisable(false);
+        addButton.setDisable(true);
+        updateButton.setDisable(false);
+        deleteButton.setDisable(false);
+    }
+
+    private void activateInsertionButtons() {
+        clearButton.setDisable(true);
+        addButton.setDisable(false);
+        updateButton.setDisable(true);
+        deleteButton.setDisable(true);
     }
 
     /**

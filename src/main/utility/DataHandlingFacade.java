@@ -5,10 +5,7 @@ import javafx.collections.ObservableList;
 import main.dao.CountryDao;
 import main.dao.CustomerDao;
 import main.dao.FirstLevelDivisionDao;
-import main.model.Country;
-import main.model.Customer;
-import main.model.FirstLevelDivision;
-import main.model.User;
+import main.model.*;
 
 import java.util.*;
 
@@ -24,6 +21,7 @@ public class DataHandlingFacade {
     private ArrayList<Country> countries = new ArrayList<>();
     private ArrayList<FirstLevelDivision> divisions = new ArrayList<>();
     private ArrayList<Customer> customers = new ArrayList<>();
+    private ArrayList<Appointment> appointments = new ArrayList<>();
 
     public DataHandlingFacade() {
         refreshData();
@@ -74,6 +72,10 @@ public class DataHandlingFacade {
 
     public ObservableList<Customer> customersObservableList() {
         return FXCollections.observableList(customers);
+    }
+
+    public ObservableList<Appointment> appointmentsObservableList() {
+        return FXCollections.observableList(appointments);
     }
 
     public ObservableList<String> divisionNamesObservableList(String countryName) {
