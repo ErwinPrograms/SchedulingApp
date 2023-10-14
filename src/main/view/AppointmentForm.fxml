@@ -4,9 +4,21 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
 <AnchorPane fx:id="appointmentFormParent" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controller.AppointmentFormController">
     <children>
         <TableView fx:id="appointmentTable" layoutX="26.0" layoutY="56.0" onMouseClicked="#populateAppointmentToForm" prefHeight="300.0" prefWidth="750.0" />
+        <Label layoutX="26.0" layoutY="26.0" text="Display Range:" />
+        <ComboBox fx:id="timeRangeBox" layoutX="144.0" layoutY="22.0" prefWidth="150.0" promptText="Time Range" >
+            <items>
+                <FXCollections fx:factory="observableArrayList" >
+                    <String fx:value="Week"/>
+                    <String fx:value="Month"/>
+                    <String fx:value="Year"/>
+                </FXCollections>
+            </items>
+        </ComboBox>
         <Group fx:id="inputFields" layoutX="12.0" layoutY="3.0">
             <Label layoutX="14.0" layoutY="364.0" text="Appointment ID:" />
             <TextField fx:id="appointmentIDField" disable="true" focusTraversable="false" layoutX="126.0" layoutY="360.0" prefHeight="25.0" prefWidth="213.0" promptText="AppointmentID" />
