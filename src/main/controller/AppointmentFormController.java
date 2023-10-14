@@ -152,7 +152,26 @@ public class AppointmentFormController implements Initializable {
      * Disables Add Appointment button until any other button is selected.
      */
     public void populateAppointmentToForm() {
+        Appointment selectedAppointment = appointmentTable.getSelectionModel().getSelectedItem();
 
+        if(selectedAppointment == null) {
+            return;
+        }
+
+        appointmentIDField.setText(String.valueOf(selectedAppointment.getAppointmentID()));
+        titleField.setText(selectedAppointment.getTitle());
+        descriptionField.setText(selectedAppointment.getDescription());
+        locationField.setText(selectedAppointment.getLocation());
+        //contactBox
+        typeField.setText(selectedAppointment.getType());
+        //startDatePicker
+        //startTimeBox
+        //endDatePicker
+        //endTimeBox
+        customerIDField.setText(String.valueOf(selectedAppointment.getCustomerID()));
+        userIDField.setText(String.valueOf(selectedAppointment.getUserID()));
+
+        activateSelectionButtons();
     }
 
     /**
@@ -160,7 +179,21 @@ public class AppointmentFormController implements Initializable {
      * Disables clearButton, updateButton and deleteButton.
      */
     public void clearForm() {
+        appointmentTable.getSelectionModel().clearSelection();
+        appointmentIDField.clear();
+        titleField.clear();
+        descriptionField.clear();
+        locationField.clear();
+        contactBox.setValue("Contact");
+        typeField.clear();
+        startDatePicker.setValue(null);
+        startTimeBox.setValue("Start Time");
+        endDatePicker.setValue(null);
+        endTimeBox.setValue("End Time");
+        customerIDField.clear();
+        userIDField.clear();
 
+        activateInsertionButtons();
     }
 
     /**
