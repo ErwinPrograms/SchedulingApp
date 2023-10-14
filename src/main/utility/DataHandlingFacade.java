@@ -25,7 +25,7 @@ public class DataHandlingFacade {
     private ArrayList<Appointment> appointments = new ArrayList<>();
 
     public DataHandlingFacade() {
-        refreshData();
+        refreshCustomerData();
         refreshAppointmentData();
     }
 
@@ -40,7 +40,7 @@ public class DataHandlingFacade {
      * from the Collection<E> interface. 2b then takes the DivisionNames from each object
      * in the ArrayList<FirstLevelDivision> and appends them into ObservableList<String>
      */
-    private void refreshData() {
+    private void refreshCustomerData() {
         countries = new CountryDao().getAll();
         divisions = new FirstLevelDivisionDao().getAll();
         customers = new CustomerDao().getAll();
@@ -196,7 +196,7 @@ public class DataHandlingFacade {
         int status =  new CustomerDao().insertWithUser(insertingCustomer, loggedInUser);
 
         if(status == 0) {
-            refreshData();
+            refreshCustomerData();
         }
         return status;
     }
@@ -217,7 +217,7 @@ public class DataHandlingFacade {
         int status = new CustomerDao().update(updatingCustomer);
 
         if (status == 0) {
-            refreshData();
+            refreshCustomerData();
         }
         return status;
     }
@@ -229,7 +229,7 @@ public class DataHandlingFacade {
         int status = new CustomerDao().delete(id);
 
         if(status == 0) {
-            refreshData();
+            refreshCustomerData();
         }
         return status;
     }
