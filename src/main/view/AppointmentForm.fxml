@@ -8,7 +8,20 @@
 <?import java.lang.String?>
 <AnchorPane fx:id="appointmentFormParent" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controller.AppointmentFormController">
     <children>
-        <TableView fx:id="appointmentTable" layoutX="26.0" layoutY="56.0" onMouseClicked="#populateAppointmentToForm" prefHeight="300.0" prefWidth="750.0" />
+        <TableView fx:id="appointmentTable" layoutX="26.0" layoutY="56.0" onMouseClicked="#populateAppointmentToForm" prefHeight="300.0" prefWidth="750.0" >
+            <columns>
+                <TableColumn fx:id="idColumn" text="ID" />
+                <TableColumn fx:id="titleColumn" text="Title" />
+                <TableColumn fx:id="descriptionColumn" text="Description" />
+                <TableColumn fx:id="locationColumn" text="Location" />
+                <TableColumn fx:id="contactColumn" text="Contact" />
+                <TableColumn fx:id="typeColumn" text="Type" />
+                <TableColumn fx:id="startDateTimeColumn" text="Start" />
+                <TableColumn fx:id="endDateTimeColumn" text="End" />
+                <TableColumn fx:id="customerColumn" text="Customer" />
+                <TableColumn fx:id="userColumn" text="User" />
+            </columns>
+        </TableView>
         <Label layoutX="26.0" layoutY="26.0" text="Display Range:" />
         <ComboBox fx:id="timeRangeBox" layoutX="144.0" layoutY="22.0" prefWidth="150.0" promptText="Time Range" >
             <items>
