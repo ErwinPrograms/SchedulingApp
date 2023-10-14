@@ -26,10 +26,10 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         DBConnection.makeConnection("jdbc:mysql://localhost:3306/test_client_db", "jdbc", "password1");
-        //To test for other locales
-        Locale.setDefault(new Locale("fr", "FR"));
+        //To test for other locales (remove before submission)
+//        Locale.setDefault(new Locale("fr", "FR"));
         launch(args);
-        Locale.setDefault(new Locale("en", "US"));
+//        Locale.setDefault(new Locale("en", "US"));
         DBConnection.closeConnection();
     }
 }
