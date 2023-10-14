@@ -118,6 +118,8 @@ public class AppointmentFormController implements Initializable {
         endDateTimeColumn.setCellValueFactory(new PropertyValueFactory<>("end"));
         customerIDColumn.setCellValueFactory(new PropertyValueFactory<>("customerID"));
         userIDColumn.setCellValueFactory(new PropertyValueFactory<>("userID"));
+        refreshAppointmentTable();
+
         activateInsertionButtons();
     }
 
