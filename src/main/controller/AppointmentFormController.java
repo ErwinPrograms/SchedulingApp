@@ -17,6 +17,7 @@ import main.model.User;
 import main.utility.DataHandlingFacade;
 import main.utility.UniversalApplicationData;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
@@ -198,11 +199,21 @@ public class AppointmentFormController implements Initializable {
 
     /**
      *
-     * @return  True if time doesn't overlap with another appointment and
-     *          within business hours.
-     *          False if outside business hours or overlaps with another appointment.
+     * @return  True if time is within business hours, defined as 8:00 a.m.
+     *          to 10:00 p.m. ET, including weekends
+     *          False if outside business hours
      */
-    private boolean isValidAppointmentTime() {
+    private boolean isAppointInBusinessHours() {
+        return false;
+    }
+
+    /**
+     *
+     * @return  True if appointment time and date is overlapping with
+     *          another appointment for the same customer
+     *          False if there is no overlap in hours
+     */
+    private boolean isAppointmentOverlapping() {
         return false;
     }
 
@@ -216,6 +227,15 @@ public class AppointmentFormController implements Initializable {
      * No new appointment is added to database and TableView is not refreshed.
      */
     public void addAppointment() {
+        if(!isAppointInBusinessHours()) {
+            JOptionPane.showMessageDialog(null, "Appointment is outside operating hours.");
+            return;
+        }
+        if(isAppointmentOverlapping()) {
+            JOptionPane.showMessageDialog(null,
+                    "Appointment time overlaps with another for this customer.");
+            return;
+        }
 
     }
 
