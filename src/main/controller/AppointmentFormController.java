@@ -264,6 +264,21 @@ public class AppointmentFormController implements Initializable {
      */
     public void deleteAppointment() {
 
+        int targetsID = appointmentTable.getSelectionModel().getSelectedItem().getAppointmentID();
+        int status = dataHandler.deleteAppointment(targetsID);
+
+        // switch allows for new execution codes to be easily added
+        switch (status) {
+            case 0:
+                refreshAppointmentTable();
+                JOptionPane.showMessageDialog(null, "Deleted appointment!");
+                //TODO: more success stuff
+                break;
+            case 1:
+                JOptionPane.showMessageDialog(null, "Failed to delete appointment.");
+                //TODO: more fail stuff
+                break;
+        }
     }
 
     public void toCustomerForm() {

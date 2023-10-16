@@ -261,4 +261,13 @@ public class DataHandlingFacade {
         }
         return status;
     }
+
+    public int deleteAppointment(int id) {
+        int status = new AppointmentDao().delete(id);
+
+        if(status == 0) {
+            refreshAppointmentData();
+        }
+        return status;
+    }
 }
