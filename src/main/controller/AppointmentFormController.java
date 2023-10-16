@@ -64,7 +64,7 @@ public class AppointmentFormController implements Initializable {
     TextField locationField;
 
     @FXML
-    ComboBox<String> contactBox;
+    ComboBox<Contact> contactBox;
 
     @FXML
     TextField typeField;
@@ -160,12 +160,13 @@ public class AppointmentFormController implements Initializable {
         }
 
         String contactName = dataHandler.contactByID(selectedAppointment.getContactID()).getContactName();
+        Contact contact = dataHandler.contactByID(selectedAppointment.getContactID());
 
         appointmentIDField.setText(String.valueOf(selectedAppointment.getAppointmentID()));
         titleField.setText(selectedAppointment.getTitle());
         descriptionField.setText(selectedAppointment.getDescription());
         locationField.setText(selectedAppointment.getLocation());
-        contactBox.setValue(contactName);
+        contactBox.setValue(contact);
         typeField.setText(selectedAppointment.getType());
         startDatePicker.setValue(selectedAppointment.getStart().toLocalDate());
         startTimeBox.setValue(selectedAppointment.getStart().toLocalTime().toString());
@@ -187,7 +188,7 @@ public class AppointmentFormController implements Initializable {
         titleField.clear();
         descriptionField.clear();
         locationField.clear();
-        contactBox.setValue("Contact");
+        contactBox.setValue(null);
         typeField.clear();
         startDatePicker.setValue(null);
         startTimeBox.setValue("Start Time");

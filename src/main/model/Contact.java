@@ -77,4 +77,9 @@ public class Contact {
 
     //TODO: override toString for display
     // observableList always calls toString
+
+    @Override
+    public String toString() {
+        return contactName;
+    }
 }
