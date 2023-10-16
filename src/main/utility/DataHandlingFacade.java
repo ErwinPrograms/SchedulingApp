@@ -8,6 +8,7 @@ import main.dao.CustomerDao;
 import main.dao.FirstLevelDivisionDao;
 import main.model.*;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 /**
@@ -230,6 +231,32 @@ public class DataHandlingFacade {
 
         if(status == 0) {
             refreshCustomerData();
+        }
+        return status;
+    }
+
+    public int insertAppointment(int appointmentID, String title,
+                                 String description, String location,
+                                 String type, LocalDateTime start,
+                                 LocalDateTime end, int customerID,
+                                 int userID, int contactID) {
+        Appointment insertingAppointment = new Appointment(
+                appointmentID,
+                title,
+                description,
+                location,
+                type,
+                start,
+                end,
+                customerID,
+                userID,
+                contactID
+        );
+
+        int status = new AppointmentDao().insert(insertingAppointment);
+
+        if(status == 0) {
+            refreshAppointmentData();
         }
         return status;
     }
