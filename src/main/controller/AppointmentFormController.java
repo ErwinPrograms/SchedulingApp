@@ -159,16 +159,18 @@ public class AppointmentFormController implements Initializable {
             return;
         }
 
+        String contactName = dataHandler.contactByID(selectedAppointment.getContactID()).getContactName();
+
         appointmentIDField.setText(String.valueOf(selectedAppointment.getAppointmentID()));
         titleField.setText(selectedAppointment.getTitle());
         descriptionField.setText(selectedAppointment.getDescription());
         locationField.setText(selectedAppointment.getLocation());
-        //contactBox
+        contactBox.setValue(contactName);
         typeField.setText(selectedAppointment.getType());
-        //startDatePicker
-        //startTimeBox
-        //endDatePicker
-        //endTimeBox
+        startDatePicker.setValue(selectedAppointment.getStart().toLocalDate());
+        startTimeBox.setValue(selectedAppointment.getStart().toLocalTime().toString());
+        endDatePicker.setValue(selectedAppointment.getEnd().toLocalDate());
+        endTimeBox.setValue(selectedAppointment.getEnd().toLocalTime().toString());
         customerIDField.setText(String.valueOf(selectedAppointment.getCustomerID()));
         userIDField.setText(String.valueOf(selectedAppointment.getUserID()));
 

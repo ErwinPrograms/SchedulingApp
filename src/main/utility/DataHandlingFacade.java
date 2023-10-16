@@ -2,10 +2,7 @@ package main.utility;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import main.dao.AppointmentDao;
-import main.dao.CountryDao;
-import main.dao.CustomerDao;
-import main.dao.FirstLevelDivisionDao;
+import main.dao.*;
 import main.model.*;
 
 import java.time.LocalDateTime;
@@ -165,6 +162,10 @@ public class DataHandlingFacade {
 
     public Country countryByDivision(FirstLevelDivision division) {
         return divisionCountryMap.get(division);
+    }
+
+    public Contact contactByID(int contactID) {
+        return new ContactDao().getByID(contactID);
     }
 
     public int customerMaxID() {
