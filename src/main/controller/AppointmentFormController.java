@@ -206,7 +206,7 @@ public class AppointmentFormController implements Initializable {
      *          to 10:00 p.m. ET, including weekends
      *          False if outside business hours
      */
-    private boolean isAppointInBusinessHours() {
+    private boolean isAppointmentInBusinessHours() {
         return false;
     }
 
@@ -230,7 +230,7 @@ public class AppointmentFormController implements Initializable {
      * No new appointment is added to database and TableView is not refreshed.
      */
     public void addAppointment() {
-        if(!isAppointInBusinessHours()) {
+        if(!isAppointmentInBusinessHours()) {
             JOptionPane.showMessageDialog(null, "Appointment is outside operating hours.");
             return;
         }
