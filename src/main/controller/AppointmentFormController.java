@@ -21,6 +21,7 @@ import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -73,10 +74,10 @@ public class AppointmentFormController implements Initializable {
     DatePicker startDatePicker;
 
     @FXML
-    ComboBox<String> startTimeBox;
+    ComboBox<LocalTime> startTimeBox;
 
     @FXML
-    ComboBox<String> endTimeBox;
+    ComboBox<LocalTime> endTimeBox;
 
     @FXML
     DatePicker endDatePicker;
@@ -169,9 +170,9 @@ public class AppointmentFormController implements Initializable {
         contactBox.setValue(contact);
         typeField.setText(selectedAppointment.getType());
         startDatePicker.setValue(selectedAppointment.getStart().toLocalDate());
-        startTimeBox.setValue(selectedAppointment.getStart().toLocalTime().toString());
+        startTimeBox.setValue(selectedAppointment.getStart().toLocalTime());
         endDatePicker.setValue(selectedAppointment.getEnd().toLocalDate());
-        endTimeBox.setValue(selectedAppointment.getEnd().toLocalTime().toString());
+        endTimeBox.setValue(selectedAppointment.getEnd().toLocalTime());
         customerIDField.setText(String.valueOf(selectedAppointment.getCustomerID()));
         userIDField.setText(String.valueOf(selectedAppointment.getUserID()));
 
@@ -191,9 +192,9 @@ public class AppointmentFormController implements Initializable {
         contactBox.setValue(null);
         typeField.clear();
         startDatePicker.setValue(null);
-        startTimeBox.setValue("Start Time");
+        startTimeBox.setValue(null);
         endDatePicker.setValue(null);
-        endTimeBox.setValue("End Time");
+        endTimeBox.setValue(null);
         customerIDField.clear();
         userIDField.clear();
 
@@ -220,6 +221,19 @@ public class AppointmentFormController implements Initializable {
         return false;
     }
 
+    private boolean isFormComplete() {
+        return  !(titleField.getText().equals("")
+                || descriptionField.getText().equals("")
+                || locationField.getText().equals("")
+                || typeField.getText().equals("")
+                || startDatePicker.getValue() == null
+                || startTimeBox.getValue() == null
+                || endDatePicker.getValue() == null
+                || endTimeBox.getValue() == null
+                || customerIDField.getText().equals("")
+                || userIDField.getText().equals(""));
+    }
+
     /**
      * Attempts to add appointment into database and maintains form on success.
      * This allows for multiple appointments to be added in quick succession
@@ -230,6 +244,11 @@ public class AppointmentFormController implements Initializable {
      * No new appointment is added to database and TableView is not refreshed.
      */
     public void addAppointment() {
+        if(!isFormComplete()) {
+            JOptionPane.showMessageDialog(null,
+                    "Please complete form before attempting to submit");
+            return;
+        }
         if(!isAppointmentInBusinessHours()) {
             JOptionPane.showMessageDialog(null, "Appointment is outside operating hours.");
             return;
@@ -240,6 +259,39 @@ public class AppointmentFormController implements Initializable {
             return;
         }
 
+        LocalDateTime appointmentStart = LocalDateTime.of(
+                startDatePicker.getValue(),
+                startTimeBox.getValue()
+        );
+        LocalDateTime appointmentEnd = LocalDateTime.of(
+                endDatePicker.getValue(),
+                endTimeBox.getValue()
+        );
+
+        //TODO: non-integer values for customerID and userID WILL cause errors
+        int status = dataHandler.insertAppointment(
+                titleField.getText(),
+                descriptionField.getText(),
+                locationField.getText(),
+                typeField.getText(),
+                appointmentStart,
+                appointmentEnd,
+                Integer.parseInt(customerIDField.getText()),
+                Integer.parseInt(userIDField.getText()),
+                contactBox.getValue().getContactID()
+        );
+
+        switch (status) {
+            case 0:
+                refreshAppointmentTable();
+                JOptionPane.showMessageDialog(null, "New appointment added!");
+                //TODO: more success stuff
+                break;
+            case 1:
+                JOptionPane.showMessageDialog(null, "Failed to add appointment");
+                //TODO: more fail stuff
+                break;
+        }
     }
 
     /**

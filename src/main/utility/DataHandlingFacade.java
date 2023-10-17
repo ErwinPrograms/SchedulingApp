@@ -236,11 +236,25 @@ public class DataHandlingFacade {
         return status;
     }
 
-    public int insertAppointment(int appointmentID, String title,
-                                 String description, String location,
-                                 String type, LocalDateTime start,
-                                 LocalDateTime end, int customerID,
-                                 int userID, int contactID) {
+    //TODO: refactor this so that DAO takes care of getting maxID
+    public int appointmentMaxID() {
+        int maxID = 0;
+
+        for (Appointment appointment: appointments) {
+            if (appointment.getAppointmentID() > maxID){
+                maxID = appointment.getAppointmentID();
+            }
+        }
+
+        return maxID;
+    }
+    public int insertAppointment(String title, String description,
+                                 String location, String type,
+                                 LocalDateTime start, LocalDateTime end,
+                                 int customerID, int userID,
+                                 int contactID) {
+        int appointmentID = appointmentMaxID() + 1;
+
         Appointment insertingAppointment = new Appointment(
                 appointmentID,
                 title,
