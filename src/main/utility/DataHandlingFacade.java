@@ -19,10 +19,13 @@ public class DataHandlingFacade {
     private Map<Country, ObservableList<String>> countryDivisionNamesMap = new HashMap<>();
     private ArrayList<Country> countries = new ArrayList<>();
     private ArrayList<FirstLevelDivision> divisions = new ArrayList<>();
+
+    private ArrayList<Contact> contacts = new ArrayList<>();
     private ArrayList<Customer> customers = new ArrayList<>();
     private ArrayList<Appointment> appointments = new ArrayList<>();
 
     public DataHandlingFacade() {
+        fetchInitialData();
         refreshCustomerData();
         refreshAppointmentData();
     }
@@ -70,6 +73,14 @@ public class DataHandlingFacade {
         }
     }
 
+    /**
+     * Retrieves data from database that is unlikely to change during runtime of application.
+     * This currently includes Contact data, country data, and division data.
+     */
+    private void fetchInitialData() {
+        contacts = new ContactDao().getAll();
+    }
+
     private void refreshAppointmentData() {
         appointments = new AppointmentDao().getAll();
     }
@@ -91,6 +102,10 @@ public class DataHandlingFacade {
         countries.forEach(countryObj -> countryNames.add(countryObj.getCountry()));
 
         return countryNames;
+    }
+
+    public ObservableList<Contact> contactObservableList() {
+        return FXCollections.observableList(contacts);
     }
 
     public FirstLevelDivision divisionByID(int divisionID) {
@@ -164,6 +179,7 @@ public class DataHandlingFacade {
         return divisionCountryMap.get(division);
     }
 
+    //TODO: lookup contact using private member variable contacts so less database calls are made
     public Contact contactByID(int contactID) {
         return new ContactDao().getByID(contactID);
     }

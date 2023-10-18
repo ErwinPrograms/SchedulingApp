@@ -122,6 +122,8 @@ public class AppointmentFormController implements Initializable {
         userIDColumn.setCellValueFactory(new PropertyValueFactory<>("userID"));
         refreshAppointmentTable();
 
+        updateContactBox();
+
         activateInsertionButtons();
     }
 
@@ -146,6 +148,10 @@ public class AppointmentFormController implements Initializable {
         addButton.setDisable(false);
         updateButton.setDisable(true);
         deleteButton.setDisable(true);
+    }
+
+    public void updateContactBox() {
+        contactBox.setItems(dataHandler.contactObservableList());
     }
 
     /**
