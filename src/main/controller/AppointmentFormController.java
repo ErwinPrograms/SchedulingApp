@@ -21,6 +21,7 @@ import main.utility.UniversalApplicationData;
 import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -228,13 +229,36 @@ public class AppointmentFormController implements Initializable {
     }
 
     /**
-     *
      * @return  True if time is within business hours, defined as 8:00 a.m.
      *          to 10:00 p.m. ET, including weekends
+     *          Does not validate that all UI boxes aren't null
+     *          Does not check if start is before end
+     *          Does not check if time is in the past
      *          False if outside business hours
      */
     private boolean isAppointmentInBusinessHours() {
-        return false;
+        LocalTime startTime = startTimeBox.getValue();
+        LocalTime endTime = endTimeBox.getValue();
+
+        LocalTime openingTime = LocalTime.of(8, 0);
+        LocalTime closingTime = LocalTime.of(22, 0);
+
+        if(     !(startTime.isAfter(closingTime)
+                || startTime.isBefore(openingTime)
+                || endTime.isAfter(closingTime)
+                || endTime.isBefore(closingTime))) {
+            return false;
+        }
+
+        LocalDate startDate = startDatePicker.getValue();
+        LocalDate endDate = endDatePicker.getValue();
+
+        //if dates are ever different, then appointment must take place outside business hours
+        if (!startDate.isEqual(endDate)) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
