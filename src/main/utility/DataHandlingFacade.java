@@ -17,7 +17,6 @@ public class DataHandlingFacade {
 
     private Map<FirstLevelDivision, Country> divisionCountryMap = new HashMap<>();
     private Map<Country, ObservableList<String>> countryDivisionNamesMap = new HashMap<>();
-    private Map<Customer, ArrayList<Appointment>> customerAppointmentsMap = new HashMap<>();
     private ArrayList<Country> countries = new ArrayList<>();
     private ArrayList<FirstLevelDivision> divisions = new ArrayList<>();
     private ArrayList<Contact> contacts = new ArrayList<>();
@@ -250,6 +249,18 @@ public class DataHandlingFacade {
             refreshCustomerData();
         }
         return status;
+    }
+
+    public ArrayList<Appointment> appointmentsByCustomerID(int customerID) {
+        ArrayList<Appointment> customerAppointments = new ArrayList<>();
+
+        for (Appointment appointment: appointments) {
+            if (appointment.getCustomerID() == customerID) {
+                customerAppointments.add(appointment);
+            }
+        }
+
+        return customerAppointments;
     }
 
     //TODO: refactor this so that DAO takes care of getting maxID
