@@ -17,9 +17,9 @@ public class DataHandlingFacade {
 
     private Map<FirstLevelDivision, Country> divisionCountryMap = new HashMap<>();
     private Map<Country, ObservableList<String>> countryDivisionNamesMap = new HashMap<>();
+    private Map<Customer, ArrayList<Appointment>> customerAppointmentsMap = new HashMap<>();
     private ArrayList<Country> countries = new ArrayList<>();
     private ArrayList<FirstLevelDivision> divisions = new ArrayList<>();
-
     private ArrayList<Contact> contacts = new ArrayList<>();
     private ArrayList<Customer> customers = new ArrayList<>();
     private ArrayList<Appointment> appointments = new ArrayList<>();
@@ -31,8 +31,8 @@ public class DataHandlingFacade {
     }
 
     /**
-     * Helper method that refreshes the private instance variables by calling database.
-     * Usually called whenever database has been manipulated.   <br>
+     * Retrieves data from database that is unlikely to change during runtime of application.
+     * This currently includes Contact data, country data, and division data.<br>
      * Lambda 1 - mapping FirstLevelDivisions into Countries
      * This lambda easily finds the related Country using a helper method in the class, then
      * stores the connection in a HashMap object for quick retrieval later. <br>
@@ -41,10 +41,10 @@ public class DataHandlingFacade {
      * from the Collection<E> interface. 2b then takes the DivisionNames from each object
      * in the ArrayList<FirstLevelDivision> and appends them into ObservableList<String>
      */
-    private void refreshCustomerData() {
+    private void fetchInitialData() {
+        contacts = new ContactDao().getAll();
         countries = new CountryDao().getAll();
         divisions = new FirstLevelDivisionDao().getAll();
-        customers = new CustomerDao().getAll();
 
         //Lambda 1 - maps FirstLevelDivisions objects to Country objects
         divisions.forEach(division -> {
@@ -74,11 +74,11 @@ public class DataHandlingFacade {
     }
 
     /**
-     * Retrieves data from database that is unlikely to change during runtime of application.
-     * This currently includes Contact data, country data, and division data.
+     * Helper method that refreshes the private instance variables by calling database.
+     * Usually called whenever database has been manipulated.
      */
-    private void fetchInitialData() {
-        contacts = new ContactDao().getAll();
+    private void refreshCustomerData() {
+        customers = new CustomerDao().getAll();
     }
 
     private void refreshAppointmentData() {
