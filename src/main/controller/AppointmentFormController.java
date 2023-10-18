@@ -1,5 +1,6 @@
 package main.controller;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,6 +23,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -123,6 +125,7 @@ public class AppointmentFormController implements Initializable {
         refreshAppointmentTable();
 
         updateContactBox();
+        updateTimeBoxes();
 
         activateInsertionButtons();
     }
@@ -152,6 +155,23 @@ public class AppointmentFormController implements Initializable {
 
     public void updateContactBox() {
         contactBox.setItems(dataHandler.contactObservableList());
+    }
+
+    public void updateTimeBoxes() {
+        ArrayList<LocalTime> timeList = new ArrayList<>();
+
+        //TODO: move logic for list creation to DataHandlingFacade
+        LocalTime startTime = LocalTime.of(8, 0);
+        LocalTime endTime = LocalTime.of(22, 0);
+        int minutesInterval = 15;
+
+        while(!startTime.isAfter(endTime)) {
+            timeList.add(startTime);
+            startTime = startTime.plusMinutes(minutesInterval);
+        }
+
+        startTimeBox.setItems(FXCollections.observableList(timeList));
+        endTimeBox.setItems(FXCollections.observableList(timeList));
     }
 
     /**
