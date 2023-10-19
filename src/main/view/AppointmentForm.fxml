@@ -23,7 +23,7 @@
             </columns>
         </TableView>
         <Label layoutX="26.0" layoutY="26.0" text="Display Range:" />
-        <ComboBox fx:id="tableTimeRangeBox" layoutX="144.0" layoutY="22.0" onAction="#displayRangeUpdate" prefWidth="150.0" promptText="Time Range">
+        <ComboBox fx:id="tableTimeRangeBox" layoutX="144.0" layoutY="22.0" onAction="#refreshAppointmentTable" prefWidth="150.0" promptText="Time Range">
             <items>
                 <FXCollections fx:factory="observableArrayList">
                     <String fx:value="Week" />

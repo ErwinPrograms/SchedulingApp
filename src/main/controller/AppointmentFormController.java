@@ -125,6 +125,8 @@ public class AppointmentFormController implements Initializable {
         endDateTimeColumn.setCellValueFactory(new PropertyValueFactory<>("end"));
         customerIDColumn.setCellValueFactory(new PropertyValueFactory<>("customerID"));
         userIDColumn.setCellValueFactory(new PropertyValueFactory<>("userID"));
+
+        tableTimeRangeBox.setValue("All");
         refreshAppointmentTable();
 
         updateContactBox();
@@ -137,9 +139,21 @@ public class AppointmentFormController implements Initializable {
      * A private helper function populates columns and rows based
      * on a call to the database.
      */
-    private void refreshAppointmentTable() {
-        ObservableList<Appointment> allAppointmentsObservable = dataHandler.appointmentsObservableList();
-        appointmentTable.setItems(allAppointmentsObservable);
+    public void refreshAppointmentTable() {
+        String rangeString = tableTimeRangeBox.getValue();
+
+        //TODO: rewrite time filtering to better match project requirements
+        if(rangeString.equals("Week")) {
+            LocalDateTime oneWeekAgo = LocalDateTime.now().minusDays(7);
+            appointmentTable.setItems(dataHandler.appointmentsObservableList(oneWeekAgo));
+        }
+        if(rangeString.equals("Month")) {
+            LocalDateTime oneMonthAgo = LocalDateTime.now().minusMonths(1);
+            appointmentTable.setItems(dataHandler.appointmentsObservableList(oneMonthAgo));
+        }
+        if(rangeString.equals("All")) {
+            appointmentTable.setItems(dataHandler.appointmentsObservableList());
+        }
     }
 
     private void activateSelectionButtons() {
@@ -154,22 +168,6 @@ public class AppointmentFormController implements Initializable {
         addButton.setDisable(false);
         updateButton.setDisable(true);
         deleteButton.setDisable(true);
-    }
-
-    public void displayRangeUpdate() {
-        String rangeString = tableTimeRangeBox.getValue();
-
-        if(rangeString.equals("Week")) {
-            LocalDateTime oneWeekAgo = LocalDateTime.now().minusDays(7);
-            appointmentTable.setItems(dataHandler.appointmentsObservableList(oneWeekAgo));
-        }
-        if(rangeString.equals("Month")) {
-            LocalDateTime oneMonthAgo = LocalDateTime.now().minusMonths(1);
-            appointmentTable.setItems(dataHandler.appointmentsObservableList(oneMonthAgo));
-        }
-        if(rangeString.equals("All")) {
-            appointmentTable.setItems(dataHandler.appointmentsObservableList());
-        }
     }
 
     public void updateContactBox() {
