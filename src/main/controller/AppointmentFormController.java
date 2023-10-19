@@ -258,18 +258,26 @@ public class AppointmentFormController implements Initializable {
             return false;
         }
 
+        //TODO: Add check against weekends
+
         return true;
+    }
+
+    private boolean isAppointmentOverlapping() {
+        //there are no appointments with ID equal to -1
+        return isAppointmentOverlapping(-1);
     }
 
     /**
      *
+     * @param excludedAppointmentID Used in updates to prevent an appointment checking against itself.
      * @return  True if appointment time and date is overlapping with
      *          another appointment for the same customer
      *          Does not check if start is before end
      *          Does not check if appointment is scheduled for the future or past
      *          False if there is no overlap in hours
      */
-    private boolean isAppointmentOverlapping() {
+    private boolean isAppointmentOverlapping(int excludedAppointmentID) {
         //TODO: non-integer values inside customerIDField WILL cause errors
         int customerID = Integer.parseInt(customerIDField.getText());
         ArrayList<Appointment> appointmentsToCheck = dataHandler.appointmentsByCustomerID(customerID);
@@ -278,6 +286,10 @@ public class AppointmentFormController implements Initializable {
         LocalDateTime checkedAppointmentEnd = LocalDateTime.of(endDatePicker.getValue(), endTimeBox.getValue());
 
         for (Appointment appointment: appointmentsToCheck) {
+            if(appointment.getAppointmentID() == excludedAppointmentID) {
+                continue;
+            }
+
             if (
                     !(appointment.getStart().compareTo(checkedAppointmentStart) <= 0
                     && appointment.getEnd().compareTo(checkedAppointmentStart) <= 0)
