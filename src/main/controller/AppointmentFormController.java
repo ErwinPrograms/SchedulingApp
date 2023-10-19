@@ -265,9 +265,30 @@ public class AppointmentFormController implements Initializable {
      *
      * @return  True if appointment time and date is overlapping with
      *          another appointment for the same customer
+     *          Does not check if start is before end
+     *          Does not check if appointment is scheduled for the future or past
      *          False if there is no overlap in hours
      */
     private boolean isAppointmentOverlapping() {
+        //TODO: non-integer values inside customerIDField WILL cause errors
+        int customerID = Integer.parseInt(customerIDField.getText());
+        ArrayList<Appointment> appointmentsToCheck = dataHandler.appointmentsByCustomerID(customerID);
+
+        LocalDateTime checkedAppointmentStart = LocalDateTime.of(startDatePicker.getValue(), startTimeBox.getValue());
+        LocalDateTime checkedAppointmentEnd = LocalDateTime.of(endDatePicker.getValue(), endTimeBox.getValue());
+
+        for (Appointment appointment: appointmentsToCheck) {
+            if (
+                    !(appointment.getStart().compareTo(checkedAppointmentStart) <= 0
+                    && appointment.getEnd().compareTo(checkedAppointmentStart) <= 0)
+                    &&
+                    !(appointment.getStart().compareTo(checkedAppointmentEnd) >= 0
+                    && appointment.getEnd().compareTo(checkedAppointmentEnd) >= 0)
+            ){
+              return true;
+            }
+        }
+
         return false;
     }
 
