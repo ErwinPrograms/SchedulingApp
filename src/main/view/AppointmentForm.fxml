@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.collections.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<?import javafx.collections.FXCollections?>
-<?import java.lang.String?>
 <AnchorPane fx:id="appointmentFormParent" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controller.AppointmentFormController">
     <children>
-        <TableView fx:id="appointmentTable" layoutX="26.0" layoutY="56.0" onMouseClicked="#populateAppointmentToForm" prefHeight="300.0" prefWidth="750.0" >
+        <TableView fx:id="appointmentTable" layoutX="26.0" layoutY="56.0" onMouseClicked="#populateAppointmentToForm" prefHeight="300.0" prefWidth="750.0">
             <columns>
                 <TableColumn fx:id="idColumn" text="ID" />
                 <TableColumn fx:id="titleColumn" text="Title" />
@@ -23,12 +23,12 @@
             </columns>
         </TableView>
         <Label layoutX="26.0" layoutY="26.0" text="Display Range:" />
-        <ComboBox fx:id="timeRangeBox" layoutX="144.0" layoutY="22.0" prefWidth="150.0" promptText="Time Range" >
+        <ComboBox fx:id="tableTimeRangeBox" layoutX="144.0" layoutY="22.0" onAction="#displayRangeUpdate" prefWidth="150.0" promptText="Time Range">
             <items>
-                <FXCollections fx:factory="observableArrayList" >
-                    <String fx:value="Week"/>
-                    <String fx:value="Month"/>
-                    <String fx:value="All"/>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="Week" />
+                    <String fx:value="Month" />
+                    <String fx:value="All" />
                 </FXCollections>
             </items>
         </ComboBox>

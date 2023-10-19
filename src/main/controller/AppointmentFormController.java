@@ -33,6 +33,8 @@ public class AppointmentFormController implements Initializable {
     @FXML
     AnchorPane appointmentFormParent;
     @FXML
+    ComboBox<String> tableTimeRangeBox;
+    @FXML
     TableView<Appointment> appointmentTable;
     @FXML
     TableColumn<Appointment, Integer> idColumn;
@@ -152,6 +154,22 @@ public class AppointmentFormController implements Initializable {
         addButton.setDisable(false);
         updateButton.setDisable(true);
         deleteButton.setDisable(true);
+    }
+
+    public void displayRangeUpdate() {
+        String rangeString = tableTimeRangeBox.getValue();
+
+        if(rangeString.equals("Week")) {
+            LocalDateTime oneWeekAgo = LocalDateTime.now().minusDays(7);
+            appointmentTable.setItems(dataHandler.appointmentsObservableList(oneWeekAgo));
+        }
+        if(rangeString.equals("Month")) {
+            LocalDateTime oneMonthAgo = LocalDateTime.now().minusMonths(1);
+            appointmentTable.setItems(dataHandler.appointmentsObservableList(oneMonthAgo));
+        }
+        if(rangeString.equals("All")) {
+            appointmentTable.setItems(dataHandler.appointmentsObservableList());
+        }
     }
 
     public void updateContactBox() {

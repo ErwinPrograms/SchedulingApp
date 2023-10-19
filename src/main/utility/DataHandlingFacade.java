@@ -92,6 +92,18 @@ public class DataHandlingFacade {
         return FXCollections.observableList(appointments);
     }
 
+    public ObservableList<Appointment> appointmentsObservableList(LocalDateTime timesAfterToInclude) {
+        ObservableList<Appointment> result = FXCollections.observableArrayList();
+
+        appointments.forEach(appointment -> {
+            if(appointment.getEnd().compareTo(timesAfterToInclude) >= 0) {
+                result.add(appointment);
+            }
+        });
+
+        return result;
+    }
+
     public ObservableList<String> divisionNamesObservableList(String countryName) {
         return countryDivisionNamesMap.get(countryByName(countryName));
     }
