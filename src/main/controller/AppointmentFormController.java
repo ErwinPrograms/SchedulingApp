@@ -258,8 +258,6 @@ public class AppointmentFormController implements Initializable {
             return false;
         }
 
-        //TODO: Add check against weekends
-
         return true;
     }
 
@@ -386,7 +384,54 @@ public class AppointmentFormController implements Initializable {
      * The update does not occur in the database.
      */
     public void updateAppointment() {
+        if(!isFormComplete()) {
+            JOptionPane.showMessageDialog(null,
+                    "Please complete form before attempting to submit");
+            return;
+        }
+        if(!isAppointmentInBusinessHours()) {
+            JOptionPane.showMessageDialog(null, "Appointment is outside operating hours.");
+            return;
+        }
+        if(isAppointmentOverlapping(Integer.parseInt(appointmentIDField.getText()))) {
+            JOptionPane.showMessageDialog(null,
+                    "Appointment time overlaps with another for this customer.");
+            return;
+        }
 
+        LocalDateTime appointmentStart = LocalDateTime.of(
+                startDatePicker.getValue(),
+                startTimeBox.getValue()
+        );
+        LocalDateTime appointmentEnd = LocalDateTime.of(
+                endDatePicker.getValue(),
+                endTimeBox.getValue()
+        );
+
+        int status = dataHandler.updateAppointment(
+                Integer.parseInt(appointmentIDField.getText()),
+                titleField.getText(),
+                descriptionField.getText(),
+                locationField.getText(),
+                typeField.getText(),
+                appointmentStart,
+                appointmentEnd,
+                Integer.parseInt(customerIDField.getText()),
+                Integer.parseInt(userIDField.getText()),
+                contactBox.getValue().getContactID()
+        );
+
+        switch (status) {
+            case 0:
+                refreshAppointmentTable();
+                JOptionPane.showMessageDialog(null, "Updated appointment!");
+                //TODO: more success stuff
+                break;
+            case 1:
+                JOptionPane.showMessageDialog(null, "Failed to update appointment.");
+                //TODO: more fail stuff
+                break;
+        }
     }
 
     /**

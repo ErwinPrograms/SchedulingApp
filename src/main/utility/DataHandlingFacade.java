@@ -308,6 +308,38 @@ public class DataHandlingFacade {
         return status;
     }
 
+    public int updateAppointment(int appointmentID,
+                                 String title,
+                                 String description,
+                                 String location,
+                                 String type,
+                                 LocalDateTime start,
+                                 LocalDateTime end,
+                                 int customerID,
+                                 int userID,
+                                 int contactID){
+
+        Appointment updatingAppointment = new Appointment(
+                appointmentID,
+                title,
+                description,
+                location,
+                type,
+                start,
+                end,
+                customerID,
+                userID,
+                contactID
+        );
+
+        int status = new AppointmentDao().update(updatingAppointment);
+
+        if (status == 0) {
+            refreshAppointmentData();
+        }
+        return status;
+    }
+
     public int deleteAppointment(int id) {
         int status = new AppointmentDao().delete(id);
 
