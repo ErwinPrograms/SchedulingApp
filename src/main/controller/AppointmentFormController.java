@@ -127,6 +127,7 @@ public class AppointmentFormController implements Initializable {
         customerIDColumn.setCellValueFactory(new PropertyValueFactory<>("customerID"));
         userIDColumn.setCellValueFactory(new PropertyValueFactory<>("userID"));
 
+        //Arbitrarily set the default display to be all appointments
         tableTimeRangeBox.setValue("All");
         refreshAppointmentTable();
 
@@ -137,13 +138,21 @@ public class AppointmentFormController implements Initializable {
     }
 
     /**
-     * A private helper function populates columns and rows based
-     * on a call to the database.
+     * A private helper function which re-populates the table with up-to-date information
+     * on appointment data
      */
     public void refreshAppointmentTable() {
         String rangeString = tableTimeRangeBox.getValue();
+        appointmentTable.setItems(fetchAppointmentsObservableList(rangeString));
+    }
 
-        //TODO: rewrite time filtering to better match project requirements
+    /**
+     *
+     * @param   rangeString A String value: "Week", "Month", or "All" which specifies which appointments to include
+     * @return  An ObservableList<Appointment> with all Appointment entries in the database, filtered based on
+     *          the input string.
+     */
+    private ObservableList<Appointment> fetchAppointmentsObservableList(String rangeString){
         //Week includes all appointments between the previous Sunday and the upcoming Sunday
         if(rangeString.equals("Week")) {
             DayOfWeek currentDay = LocalDateTime.now().getDayOfWeek();
@@ -158,7 +167,7 @@ public class AppointmentFormController implements Initializable {
             }
             LocalDateTime endOfWeek = LocalDateTime.now().plusDays(daysToAdd)
                     .with(LocalTime.MIDNIGHT);
-            appointmentTable.setItems(dataHandler.appointmentsObservableList(startOfWeek, endOfWeek));
+            return dataHandler.appointmentsObservableList(startOfWeek, endOfWeek);
         }
         //Month includes all appointments between the start of the current calendar month and the beginning of the next
         if(rangeString.equals("Month")) {
@@ -168,11 +177,13 @@ public class AppointmentFormController implements Initializable {
             LocalDateTime startOfNextMonth = currentDate.plusMonths(1).withDayOfMonth(1).
                     atTime(LocalTime.MIDNIGHT);
 
-            appointmentTable.setItems(dataHandler.appointmentsObservableList(startOfMonth, startOfNextMonth));
+            return dataHandler.appointmentsObservableList(startOfMonth, startOfNextMonth);
         }
         if(rangeString.equals("All")) {
-            appointmentTable.setItems(dataHandler.appointmentsObservableList());
+            return dataHandler.appointmentsObservableList();
         }
+
+        return FXCollections.observableArrayList();
     }
 
     private void activateSelectionButtons() {
