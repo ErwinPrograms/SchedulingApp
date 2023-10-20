@@ -21,6 +21,7 @@ import main.utility.UniversalApplicationData;
 import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -143,13 +144,31 @@ public class AppointmentFormController implements Initializable {
         String rangeString = tableTimeRangeBox.getValue();
 
         //TODO: rewrite time filtering to better match project requirements
+        //Week includes all appointments between the previous Sunday and the upcoming Sunday
         if(rangeString.equals("Week")) {
-            LocalDateTime oneWeekAgo = LocalDateTime.now().minusDays(7);
-            appointmentTable.setItems(dataHandler.appointmentsObservableList(oneWeekAgo));
+            DayOfWeek currentDay = LocalDateTime.now().getDayOfWeek();
+
+            int daysToSubtract = currentDay.getValue() % 7;
+            LocalDateTime startOfWeek = LocalDateTime.now().minusDays(daysToSubtract)
+                    .with(LocalTime.MIDNIGHT);
+
+            int daysToAdd = DayOfWeek.SUNDAY.getValue() - currentDay.getValue();
+            if(daysToAdd <= 0){
+                daysToAdd += 7;
+            }
+            LocalDateTime endOfWeek = LocalDateTime.now().plusDays(daysToAdd)
+                    .with(LocalTime.MIDNIGHT);
+            appointmentTable.setItems(dataHandler.appointmentsObservableList(startOfWeek, endOfWeek));
         }
+        //Month includes all appointments between the start of the current calendar month and the beginning of the next
         if(rangeString.equals("Month")) {
-            LocalDateTime oneMonthAgo = LocalDateTime.now().minusMonths(1);
-            appointmentTable.setItems(dataHandler.appointmentsObservableList(oneMonthAgo));
+            LocalDate currentDate = LocalDate.now();
+
+            LocalDateTime startOfMonth = currentDate.withDayOfMonth(1).atTime(LocalTime.MIDNIGHT);
+            LocalDateTime startOfNextMonth = currentDate.plusMonths(1).withDayOfMonth(1).
+                    atTime(LocalTime.MIDNIGHT);
+
+            appointmentTable.setItems(dataHandler.appointmentsObservableList(startOfMonth, startOfNextMonth));
         }
         if(rangeString.equals("All")) {
             appointmentTable.setItems(dataHandler.appointmentsObservableList());

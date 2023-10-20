@@ -92,11 +92,14 @@ public class DataHandlingFacade {
         return FXCollections.observableList(appointments);
     }
 
-    public ObservableList<Appointment> appointmentsObservableList(LocalDateTime timesAfterToInclude) {
+    public ObservableList<Appointment> appointmentsObservableList(LocalDateTime startOfTimeRange,
+                                                                  LocalDateTime endOfTimeRange) {
         ObservableList<Appointment> result = FXCollections.observableArrayList();
 
+        //Include appointments even if they're only partially inside specified range
         appointments.forEach(appointment -> {
-            if(appointment.getEnd().compareTo(timesAfterToInclude) >= 0) {
+            if( appointment.getEnd().compareTo(startOfTimeRange) > 0
+                && appointment.getStart().compareTo(endOfTimeRange) < 0) {
                 result.add(appointment);
             }
         });
