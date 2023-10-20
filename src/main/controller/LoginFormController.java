@@ -12,13 +12,16 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import main.dao.UserDao;
+import main.model.Appointment;
 import main.model.User;
+import main.utility.DataHandlingFacade;
 import main.utility.UniversalApplicationData;
 
 import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -84,10 +87,30 @@ public class LoginFormController implements Initializable {
             //TODO: track user activity
             //TODO: alert when appointment within 15 minutes of login or custom message
             UniversalApplicationData.setLoggedInUser(dbUserMatch);
+            displayUpcomingAppointments();
             changeToCustomerForm();
         } else {
             JOptionPane.showMessageDialog(null,
                     languageResourceBundle.getString("LoginFail"));
+        }
+    }
+
+    //TODO: add User parameter which only checks appointments with matching User
+    private void displayUpcomingAppointments() {
+        ArrayList<Appointment> upcomingAppointments = new DataHandlingFacade().upcomingAppointments(15);
+
+        if(upcomingAppointments.size() == 0) {
+            JOptionPane.showMessageDialog(null,
+                    languageResourceBundle.getString("NoAppointments"));
+        } else {
+            String appointmentList = "";
+            for (Appointment appointment: upcomingAppointments) {
+                appointmentList = "\n" + appointmentList + appointment.toString();
+            }
+
+            JOptionPane.showMessageDialog(null,
+                    languageResourceBundle.getString("UpcomingAppointment")
+                            + appointmentList);
         }
     }
 

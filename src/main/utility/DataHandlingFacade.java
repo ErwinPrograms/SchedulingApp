@@ -283,6 +283,21 @@ public class DataHandlingFacade {
         return customerAppointments;
     }
 
+    public ArrayList<Appointment> upcomingAppointments(int minutesUntilStart) {
+        LocalDateTime currentTime = LocalDateTime.now();
+        LocalDateTime latestToCheck = currentTime.plusMinutes(minutesUntilStart);
+        ArrayList<Appointment> upcomingAppointments = new ArrayList<>();
+
+        for (Appointment appointment: appointments) {
+            if( appointment.getStart().compareTo(currentTime) > 0
+                && appointment.getStart().compareTo(latestToCheck) < 0){
+                upcomingAppointments.add(appointment);
+            }
+        }
+
+        return upcomingAppointments;
+    }
+
     //TODO: refactor this so that DAO takes care of getting maxID
     public int appointmentMaxID() {
         int maxID = 0;
