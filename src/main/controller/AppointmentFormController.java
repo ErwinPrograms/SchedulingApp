@@ -153,6 +153,8 @@ public class AppointmentFormController implements Initializable {
      *          the input string.
      */
     private ObservableList<Appointment> fetchAppointmentsObservableList(String rangeString){
+        //TODO: Specify if filters should work based on local time or a single timezone (e.g. ET)
+
         //Week includes all appointments between the previous Sunday and the upcoming Sunday
         if(rangeString.equals("Week")) {
             DayOfWeek currentDay = LocalDateTime.now().getDayOfWeek();
@@ -208,6 +210,7 @@ public class AppointmentFormController implements Initializable {
         ArrayList<LocalTime> timeList = new ArrayList<>();
 
         //TODO: move logic for list creation to DataHandlingFacade
+        //TODO: change startTime and endTime to adjust for 8:00-22:00ET
         LocalTime startTime = LocalTime.of(8, 0);
         LocalTime endTime = LocalTime.of(22, 0);
         int minutesInterval = 15;
@@ -286,6 +289,7 @@ public class AppointmentFormController implements Initializable {
         LocalTime startTime = startTimeBox.getValue();
         LocalTime endTime = endTimeBox.getValue();
 
+        //TODO: Adjust openingTime and closingTime to be based off 8:00-22:00 ET
         LocalTime openingTime = LocalTime.of(8, 0);
         LocalTime closingTime = LocalTime.of(22, 0);
 
