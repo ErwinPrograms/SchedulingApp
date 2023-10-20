@@ -181,7 +181,10 @@ public class Appointment {
 
     @Override
     public String toString() {
-        return String.format("AppointmentID: %d%nDate: %tF%nTime:%tT%n",
+        return String.format(
+                "AppointmentID: %d%n" +
+                "Date: %tF%n" +
+                "Time:%tT%n",
                 appointmentID, start.toLocalDate(), start.toLocalTime());
     }
 }

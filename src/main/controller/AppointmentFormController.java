@@ -114,6 +114,7 @@ public class AppointmentFormController implements Initializable {
     //TODO: Use localDateTime
     // LocalTime already has a toString in 24h format
     //TODO: potentially replace radio with buttons
+    //TODO: Time zones for project: UTC, EST, SystemDefault
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         idColumn.setCellValueFactory(new PropertyValueFactory<>("appointmentID"));
