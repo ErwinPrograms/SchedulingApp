@@ -207,6 +207,7 @@ public class AppointmentFormController implements Initializable {
     public void updateTimeBoxes() {
         ArrayList<LocalTime> timeList = new ArrayList<>();
 
+        //TODO: refactor time conversion as a new method
         //Start and End times are based around 8:00-22:00EST
         LocalTime referenceStartTime = LocalTime.of(8,0);//8:00, 8am, is reference start
         LocalTime referenceEndTime = LocalTime.of(22,0); //22:00, 10pm, is reference end
@@ -297,20 +298,35 @@ public class AppointmentFormController implements Initializable {
         LocalTime startTime = startTimeBox.getValue();
         LocalTime endTime = endTimeBox.getValue();
 
-        //TODO: Adjust openingTime and closingTime to be based off 8:00-22:00 ET
-        LocalTime openingTime = LocalTime.of(8, 0);
-        LocalTime closingTime = LocalTime.of(22, 0);
+        //TODO: refactor time conversion as a new method
+        LocalTime referenceStartTime = LocalTime.of(8,0);//8:00, 8am, is reference start
+        LocalTime referenceEndTime = LocalTime.of(22,0); //22:00, 10pm, is reference end
+        ZoneId referenceZone = ZoneId.of("America/New_York"); //EST is reference timezone
 
-        if(     !(startTime.isAfter(closingTime)
+        ZonedDateTime estStartTime = ZonedDateTime.of(
+                ZonedDateTime.now().toLocalDate(), referenceStartTime, referenceZone);
+        LocalDateTime systemStartTime = estStartTime.withZoneSameInstant(ZoneId.systemDefault()).toLocalDateTime();
+
+        ZonedDateTime estEndTime = ZonedDateTime.of(
+                ZonedDateTime.now().toLocalDate(), referenceEndTime, referenceZone);
+        LocalDateTime systemEndTime = estEndTime.withZoneSameInstant(ZoneId.systemDefault()).toLocalDateTime();
+
+        LocalTime openingTime = systemStartTime.toLocalTime();
+        System.out.println(openingTime);
+        LocalTime closingTime = systemEndTime.toLocalTime();
+        System.out.println(closingTime);
+
+        if(     (startTime.isAfter(closingTime)
                 || startTime.isBefore(openingTime)
                 || endTime.isAfter(closingTime)
-                || endTime.isBefore(closingTime))) {
+                || endTime.isBefore(openingTime))) {
             return false;
         }
 
         LocalDate startDate = startDatePicker.getValue();
         LocalDate endDate = endDatePicker.getValue();
 
+        //TODO: check validity for European time zones
         //if dates are ever different, then appointment must take place outside business hours
         if (!startDate.isEqual(endDate)) {
             return false;
