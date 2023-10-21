@@ -21,10 +21,7 @@ import main.utility.UniversalApplicationData;
 import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -210,15 +207,25 @@ public class AppointmentFormController implements Initializable {
     public void updateTimeBoxes() {
         ArrayList<LocalTime> timeList = new ArrayList<>();
 
-        //TODO: move logic for list creation to DataHandlingFacade
-        //TODO: change startTime and endTime to adjust for 8:00-22:00ET
-        LocalTime startTime = LocalTime.of(8, 0);
-        LocalTime endTime = LocalTime.of(22, 0);
+        //Start and End times are based around 8:00-22:00EST
+        LocalTime referenceStartTime = LocalTime.of(8,0);//8:00, 8am, is reference start
+        LocalTime referenceEndTime = LocalTime.of(22,0); //22:00, 10pm, is reference end
+        ZoneId referenceZone = ZoneId.of("America/New_York"); //EST is reference timezone
+
+        ZonedDateTime estStartTime = ZonedDateTime.of(
+                ZonedDateTime.now().toLocalDate(), referenceStartTime, referenceZone);
+        LocalDateTime systemStartTime = estStartTime.withZoneSameInstant(ZoneId.systemDefault()).toLocalDateTime();
+
+        ZonedDateTime estEndTime = ZonedDateTime.of(
+                ZonedDateTime.now().toLocalDate(), referenceEndTime, referenceZone);
+        LocalDateTime systemEndTime = estEndTime.withZoneSameInstant(ZoneId.systemDefault()).toLocalDateTime();
+
         int minutesInterval = 15;
 
-        while(!startTime.isAfter(endTime)) {
-            timeList.add(startTime);
-            startTime = startTime.plusMinutes(minutesInterval);
+        //TODO: test if this works when time zones make business hours cross days (e.g. European Time Zones)
+        while(!systemStartTime.isAfter(systemEndTime)) {
+            timeList.add(systemStartTime.toLocalTime());
+            systemStartTime = systemStartTime.plusMinutes(minutesInterval);
         }
 
         startTimeBox.setItems(FXCollections.observableList(timeList));
