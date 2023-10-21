@@ -14,65 +14,9 @@ import java.util.ArrayList;
  * of that, this DAO does not implement the CrudDAO or ReadDAO interfaces.
  * Can gather the following data from the database:<br>
  * - Total number of customers appointments by type and month <br>
- * - A schedule for each contact which include appointmentID, title, type and
- *   description, start date and time, end date and time, and customerID <br>
  * - Total number of appointments in each division <br>
  */
 public class ReportDao {
-
-    /*
-    SQL query for number of customer appointments by type and month
-    SELECT
-        MONTHNAME(Start) AS month,
-        YEAR(Start) AS year,
-        Type,
-        COUNT(*) AS count
-    FROM
-        appointments
-    GROUP BY
-        YEAR(Start),
-        MONTH(Start),
-        Type
-    ORDER BY
-        year DESC,
-        month DESC,
-        count DESC;
-     */
-
-    /*
-    SQL query to get schedule for each contact that includes appointmentID, title, type and description,
-    start date and time, end date and time, and customerID
-    SELECT
-        appointments.Appointment_ID AS Appointment_ID,
-        appointments.Title AS Title,
-        appointments.Type AS Type,
-        appointments.Description AS Description,
-        appointments.Start AS Start,
-        appointments.End AS End,
-        appointments.Customer_ID AS Customer_ID
-    FROM
-        appointments
-    RIGHT JOIN contacts
-        ON appointments.Contact_ID = contacts.Contact_ID
-    WHERE
-        contacts.Contact_ID = 1;
-     */
-
-    /*
-    SQL query for appointment division count report.
-    SELECT
-        first_level_divisions.Division AS Division,
-        COUNT(*) as Num_Appointments
-    FROM
-        customers
-    RIGHT JOIN appointments
-        ON customers.Customer_ID = appointments.Customer_ID
-    LEFT JOIN first_level_divisions
-        ON customers.Division_ID = first_level_divisions.Division_ID
-    GROUP BY
-        customers.Division_ID;
-     */
-
     Connection connDB;
 
     public ReportDao() {
@@ -127,18 +71,6 @@ public class ReportDao {
         } catch (SQLException ex) {
             System.out.println("Error: " + ex.getMessage());
         }
-        return null;
-    }
-
-    /**
-     * Queries the database and assembles an ArrayList that holds appointment information
-     * for a provided contactID.
-     *
-     * @param contactID     The ID of the contact for which the schedule will be built
-     * @return  ArrayList<Appointment> object that contains all appointments related to
-     * the input contactID.
-     */
-    public ArrayList<Appointment> getContactSchedule(int contactID) {
         return null;
     }
 
