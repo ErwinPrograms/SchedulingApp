@@ -151,6 +151,34 @@ public class ReportDao {
      * of appointments in that division.
      */
     public ArrayList<DivisionCount> getDivisionCountReport() {
+        Query divisionCountQuery = new Query(connDB,
+                "SELECT " +
+                            "first_level_divisions.Division AS Division, " +
+                            "COUNT(*) as Num_Appointments " +
+                        "FROM " +
+                            "customers " +
+                        "RIGHT JOIN appointments " +
+                            "ON customers.Customer_ID = appointments.Customer_ID " +
+                        "LEFT JOIN first_level_divisions " +
+                            "ON customers.Division_ID = first_level_divisions.Division_ID " +
+                        "GROUP BY " +
+                            "customers.Division_ID;");
+        divisionCountQuery.executeQuery();
+        ResultSet resultCursor = divisionCountQuery.getResult();
+
+        try {
+            ArrayList<DivisionCount> report = new ArrayList<>();
+            while(resultCursor.next()) {
+                report.add(new DivisionCount(
+                        resultCursor.getString("Division"),
+                        resultCursor.getInt("Num_Appointments")
+                ));
+            }
+            return report;
+        } catch (SQLException ex) {
+            System.out.println("Error: " + ex.getMessage());
+        }
+
         return null;
     }
 }

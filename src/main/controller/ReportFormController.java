@@ -62,6 +62,10 @@ public class ReportFormController implements Initializable {
         contactAppointmentColumns.get(5).setCellValueFactory(new PropertyValueFactory<>("end"));
         contactAppointmentColumns.get(6).setCellValueFactory(new PropertyValueFactory<>("customerID"));
 
+        ObservableList<TableColumn<DivisionCount, ?>> divisionCountColumns = divisionCountTable.getColumns();
+        divisionCountColumns.get(0).setCellValueFactory(new PropertyValueFactory<>("division"));
+        divisionCountColumns.get(1).setCellValueFactory(new PropertyValueFactory<>("count"));
+
         loadStaticElements();
     }
 
@@ -74,6 +78,10 @@ public class ReportFormController implements Initializable {
         ObservableList<MonthTypeCount> monthTypeReportData =
                 FXCollections.observableList(new ReportDao().getMonthTypeCountReport());
         monthTypeCountTable.setItems(monthTypeReportData);
+
+        ObservableList<DivisionCount> divisionCountReportData =
+                FXCollections.observableList(new ReportDao().getDivisionCountReport());
+        divisionCountTable.setItems(divisionCountReportData);
 
         contactBox.setItems(dataHandler.contactObservableList());
     }
