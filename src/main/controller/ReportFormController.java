@@ -74,14 +74,8 @@ public class ReportFormController implements Initializable {
      * This includes Report 1 and Report 3 as well as the ComboBox for Report 2
      */
     private void loadStaticElements() {
-        //TODO: refactor this hacky, tightly coupled, unsightly mess.
-        ObservableList<MonthTypeCount> monthTypeReportData =
-                FXCollections.observableList(new ReportDao().getMonthTypeCountReport());
-        monthTypeCountTable.setItems(monthTypeReportData);
-
-        ObservableList<DivisionCount> divisionCountReportData =
-                FXCollections.observableList(new ReportDao().getDivisionCountReport());
-        divisionCountTable.setItems(divisionCountReportData);
+        monthTypeCountTable.setItems(dataHandler.getMonthTypeCountReport());
+        divisionCountTable.setItems(dataHandler.getDivisionCountReport());
 
         contactBox.setItems(dataHandler.contactObservableList());
     }

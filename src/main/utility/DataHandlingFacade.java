@@ -390,4 +390,17 @@ public class DataHandlingFacade {
 
         return contactAppointments;
     }
+
+    public ObservableList<MonthTypeCount> getMonthTypeCountReport() {
+        return FXCollections.observableList(
+                new ReportDao().getMonthTypeCountReport()
+        );
+    }
+
+    public ObservableList<DivisionCount> getDivisionCountReport() {
+        //Potential to implement caching so database isn't excessively called
+        return FXCollections.observableList(
+                new ReportDao().getDivisionCountReport()
+        );
+    }
 }
