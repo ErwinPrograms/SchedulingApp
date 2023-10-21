@@ -18,9 +18,13 @@ import main.utility.DataHandlingFacade;
 import main.utility.UniversalApplicationData;
 
 import javax.swing.*;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Objects;
@@ -88,8 +92,10 @@ public class LoginFormController implements Initializable {
             //TODO: alert when appointment within 15 minutes of login or custom message
             UniversalApplicationData.setLoggedInUser(dbUserMatch);
             displayUpcomingAppointments();
+            trackLoginAttempt(true);
             changeToCustomerForm();
         } else {
+            trackLoginAttempt(false);
             JOptionPane.showMessageDialog(null,
                     languageResourceBundle.getString("LoginFail"));
         }
@@ -112,6 +118,37 @@ public class LoginFormController implements Initializable {
                     languageResourceBundle.getString("UpcomingAppointment")
                             + appointmentList);
         }
+    }
+
+    private void trackLoginAttempt(boolean wasLoginSuccessful) {
+        LocalDateTime attemptLocalDateTime = LocalDateTime.now();
+        ZonedDateTime attemptUTCDateTime = attemptLocalDateTime.atZone(ZoneId.of("UTC"));
+
+        String attemptUsername = usernameField.getText();
+
+        String attemptAsString;
+        if (wasLoginSuccessful) {
+            attemptAsString = String.format(
+                    "User %s successfully logged in at %s%n",
+                    attemptUsername, attemptUTCDateTime
+
+            );
+        } else {
+            attemptAsString = String.format(
+                    "User %s gave invalid log-in at %s%n",
+                    attemptUsername, attemptUTCDateTime
+            );
+        }
+         
+        try {
+            FileWriter fileWriter = new FileWriter("login_activity.txt", true);
+            PrintWriter outputFile = new PrintWriter(fileWriter);
+            outputFile.print(attemptAsString);
+            outputFile.close();
+        } catch (IOException ex) {
+            System.out.println("File write error: " + ex.getMessage());
+        }
+
     }
 
     public void changeToCustomerForm(){
