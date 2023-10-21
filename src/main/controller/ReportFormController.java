@@ -19,6 +19,7 @@ import main.model.Appointment;
 import main.model.Contact;
 import main.model.DivisionCount;
 import main.model.MonthTypeCount;
+import main.utility.DataHandlingFacade;
 
 import java.io.IOException;
 import java.net.URL;
@@ -37,6 +38,7 @@ public class ReportFormController implements Initializable {
     ComboBox<Contact> contactBox;
     @FXML
     TableView<DivisionCount> divisionCountTable;
+    DataHandlingFacade dataHandler = new DataHandlingFacade();
 
     //TODO: Report 1 - # of appointment by month and type
         //TODO: Option 1 would require a new model object ("MonthType")
@@ -46,6 +48,20 @@ public class ReportFormController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        ObservableList<TableColumn<MonthTypeCount, ?>> monthTypeCountColumns = monthTypeCountTable.getColumns();
+        monthTypeCountColumns.get(0).setCellValueFactory(new PropertyValueFactory<>("monthYear"));
+        monthTypeCountColumns.get(1).setCellValueFactory(new PropertyValueFactory<>("type"));
+        monthTypeCountColumns.get(2).setCellValueFactory(new PropertyValueFactory<>("count"));
+
+        ObservableList<TableColumn<Appointment, ?>> contactAppointmentColumns = contactTable.getColumns();
+        contactAppointmentColumns.get(0).setCellValueFactory(new PropertyValueFactory<>("appointmentID"));
+        contactAppointmentColumns.get(1).setCellValueFactory(new PropertyValueFactory<>("title"));
+        contactAppointmentColumns.get(2).setCellValueFactory(new PropertyValueFactory<>("type"));
+        contactAppointmentColumns.get(3).setCellValueFactory(new PropertyValueFactory<>("description"));
+        contactAppointmentColumns.get(4).setCellValueFactory(new PropertyValueFactory<>("start"));
+        contactAppointmentColumns.get(5).setCellValueFactory(new PropertyValueFactory<>("end"));
+        contactAppointmentColumns.get(6).setCellValueFactory(new PropertyValueFactory<>("customerID"));
+
         loadStaticElements();
     }
 
@@ -55,14 +71,15 @@ public class ReportFormController implements Initializable {
      */
     private void loadStaticElements() {
         //TODO: refactor this hacky, tightly coupled, unsightly mess.
-        ObservableList<TableColumn<MonthTypeCount, ?>> monthTypeCountColumns = monthTypeCountTable.getColumns();
-        monthTypeCountColumns.get(0).setCellValueFactory(new PropertyValueFactory<>("monthYear"));
-        monthTypeCountColumns.get(1).setCellValueFactory(new PropertyValueFactory<>("type"));
-        monthTypeCountColumns.get(2).setCellValueFactory(new PropertyValueFactory<>("count"));
-
         ObservableList<MonthTypeCount> monthTypeReportData =
                 FXCollections.observableList(new ReportDao().getMonthTypeCountReport());
         monthTypeCountTable.setItems(monthTypeReportData);
+
+        contactBox.setItems(dataHandler.contactObservableList());
+    }
+
+    public void loadContactAppointments() {
+        contactTable.setItems(dataHandler.appointmentsByContact(contactBox.getValue()));
     }
 
 

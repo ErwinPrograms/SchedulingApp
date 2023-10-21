@@ -378,4 +378,16 @@ public class DataHandlingFacade {
         }
         return status;
     }
+
+    public ObservableList<Appointment> appointmentsByContact(Contact contact) {
+        ObservableList<Appointment> contactAppointments = FXCollections.observableArrayList();
+
+        for (Appointment appointment : appointments) {
+            if (appointment.getContactID() == contact.getContactID()) {
+                contactAppointments.add(appointment);
+            }
+        }
+
+        return contactAppointments;
+    }
 }
