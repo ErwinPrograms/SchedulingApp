@@ -1,7 +1,10 @@
 package main.dao;
 
-import java.util.ArrayList;
-
+/**
+ * An object that can create, read, update, and delete model data. The user of this interface must be able to
+ * modify the database by creating new entries, updating existing entries, and deleting existing entries.
+ * @param <T>   Model object that DAO is responsible for
+ */
 public interface CrudDAO<T> extends ReadDAO<T> {
 
     /**
