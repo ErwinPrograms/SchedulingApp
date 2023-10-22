@@ -2,8 +2,11 @@ package main.model;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
 
+/**
+ * Model class that stores data about an entry inside the database's "customers" table.
+ * Read only after object instantiation.
+ */
 public class Customer {
     private int customerID;
     private String customerName;
@@ -12,8 +15,14 @@ public class Customer {
     private String phone;
     private int divisionID;
 
+
+    //TODO: delete this constructor and migrate logic to CustomerDAO
+    /**
+     * Constructor that takes a ResultSet which is already pointing to a record in the "customers" table. Fills in all
+     * provided fields.
+     * @param row   ResultSet object already pointing at a row that can be made into a Customer object
+     */
     public Customer(ResultSet row) {
-        //TODO: test for result rows with null in any of the rows
         try {
             customerID = row.getInt("Customer_ID");
             customerName = row.getString("Customer_Name");
@@ -25,6 +34,16 @@ public class Customer {
             System.out.println("Error with SQL " + ex.getMessage());
         }
     }
+
+    /**
+     * Constructor where all instance variables are being set by the parameters
+     * @param customerID    ID of customer inside database
+     * @param customerName  full name of customer
+     * @param address       address of customer, without postal code or country
+     * @param postalCode    postal code of customer
+     * @param phone         telephone number of customer
+     * @param divisionID    ID of division that customer belongs to
+     */
     public Customer(int customerID, String customerName,
                     String address, String postalCode,
                     String phone, int divisionID) {
@@ -57,6 +76,12 @@ public class Customer {
         return true;
     }
 
+    /**
+     * An override for the Object.equals() method. It checks all instance variables and makes sure other object is
+     * Customer and shares the same values for every instance variable.
+     * @param obj   The object being checked for equality
+     * @return      True if other object is of type Customer and matches all instance variables. False otherwise.
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

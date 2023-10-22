@@ -4,6 +4,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 
+/**
+ * A model class to store the data of an entry inside the database's "appointments" table.
+ * Read only after object instantiation.
+ */
 public class Appointment {
     private int appointmentID;
     private String title;
@@ -16,13 +20,13 @@ public class Appointment {
     private int userID;
     private int contactID;
 
+    //TODO: delete this constructor and migrate logic to AppointmentDAO
     /**
      * Constructor that takes a ResultSet which is already pointing to a record in the Appointment table. Fills in all
      * provided fields.
      *
      * @param row   ResultSet object already pointing at a row that can be made into an Appointment object
      */
-    // Tight coupling to database
     public Appointment(ResultSet row){
         //TODO: test for result rows with null in any of the rows
         try {
@@ -42,6 +46,20 @@ public class Appointment {
         }
     }
 
+    /**
+     * Constructor for Appointment. All member variables are being set.
+     *
+     * @param appointmentID id of appointment in database
+     * @param title title of appointment
+     * @param description description of appointment
+     * @param location location of appointment
+     * @param type type of appointment
+     * @param start start time of appointment
+     * @param end end time of appointment
+     * @param customerID id of customer the appointment is associated with
+     * @param userID id of user the appointment is associated with
+     * @param contactID id of contact the appointment is associated with
+     */
     public Appointment(int appointmentID, String title,
                        String description, String location,
                        String type, LocalDateTime start,
@@ -94,7 +112,7 @@ public class Appointment {
      * An override for the Object.equals() method. It checks all instance variables and makes sure other object is
      * Appointment and shares the same values for every instance variable.
      *
-     * @param obj
+     * @param obj   The object being checked for equality
      * @return      True if other object is of type Appointment and matches all instance variables. False otherwise.
      */
     @Override
@@ -179,6 +197,10 @@ public class Appointment {
         return contactID;
     }
 
+    /**
+     * Formats into a String the most important parts of an appointment: appointmentID, and start.
+     * @return Formatted String with appointmentID and start date and time.
+     */
     @Override
     public String toString() {
         return String.format(

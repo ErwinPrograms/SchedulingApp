@@ -11,6 +11,12 @@ public class MonthTypeCount {
     private String type;
     private int count;
 
+    /**
+     * Constructor where all instance variables are being set by the parameters
+     * @param monthYear     String which holds the month and year of cluster
+     * @param type          the shared type of cluster
+     * @param count         the number of appointments in cluster
+     */
     public MonthTypeCount(String monthYear, String type, int count) {
         this.monthYear = monthYear;
         this.type = type;
@@ -29,6 +35,10 @@ public class MonthTypeCount {
         return count;
     }
 
+    /**
+     * Formats all instance variables into a string
+     * @return Formatted String with all instance variables
+     */
     @Override
     public String toString() {
         return String.format(
