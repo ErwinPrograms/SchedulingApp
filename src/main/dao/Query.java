@@ -2,12 +2,20 @@ package main.dao;
 
 import java.sql.*;
 
+/**
+ * A helper class that abstracts execution of a query
+ */
 public class Query {
     private String query;
     private Statement stmt;
     private ResultSet result;
     private Connection conn;
 
+    /**
+     * Constructor that requires a connection object and string query.
+     * @param conn
+     * @param query
+     */
     public Query(Connection conn, String query) {
         this.conn = conn;
         this.query = query;
@@ -46,14 +54,24 @@ public class Query {
         return 1;
     }
 
+    /**
+     * @return query from object instantiation
+     */
     public String getQuery() {
         return query;
     }
 
+    /**
+     * After query is executed, the result is stored in variable result
+     * @return  result
+     */
     public ResultSet getResult() {
         return result;
     }
 
+    /**
+     * Closes query
+     */
     public void close() {
         try {
             stmt.close();
