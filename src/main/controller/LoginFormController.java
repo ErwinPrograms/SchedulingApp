@@ -121,8 +121,7 @@ public class LoginFormController implements Initializable {
     }
 
     private void trackLoginAttempt(boolean wasLoginSuccessful) {
-        LocalDateTime attemptLocalDateTime = LocalDateTime.now();
-        ZonedDateTime attemptUTCDateTime = attemptLocalDateTime.atZone(ZoneId.of("UTC"));
+        ZonedDateTime attemptUTCDateTime = ZonedDateTime.now(ZoneId.of("UTC"));
 
         String attemptUsername = usernameField.getText();
 
