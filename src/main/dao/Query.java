@@ -13,8 +13,8 @@ public class Query {
 
     /**
      * Constructor that requires a connection object and string query.
-     * @param conn
-     * @param query
+     * @param conn  Connection object that's connected to database
+     * @param query SQL query as a string
      */
     public Query(Connection conn, String query) {
         this.conn = conn;
