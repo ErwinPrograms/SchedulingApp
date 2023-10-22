@@ -1,6 +1,5 @@
 package main.dao;
 
-import main.model.Appointment;
 import main.model.DivisionCount;
 import main.model.MonthTypeCount;
 
@@ -19,10 +18,17 @@ import java.util.ArrayList;
 public class ReportDao {
     Connection connDB;
 
+    /**
+     * Default constructor which calls DBConnection singleton to get a Connection object
+     */
     public ReportDao() {
         this.connDB = DBConnection.getConnection();
     }
 
+    /**
+     * Constructor which takes a Connection object to use
+     * @param connDB    Connection object that DAO will use to access database
+     */
     public ReportDao(Connection connDB) {
         this.connDB = connDB;
     }
@@ -32,7 +38,7 @@ public class ReportDao {
      * aggregated counts of different types of appointments in each month.
      * The order is arbitrary but follows reverse chronological order, then by descending amount.
      *
-     * @return ArrayList<MonthTypeCount> object that holds
+     * @return ArrayList object that holds
      * all aggregated appointment data ordered by recency and amount
      */
     public ArrayList<MonthTypeCount> getMonthTypeCountReport() {
@@ -79,7 +85,7 @@ public class ReportDao {
      * of appointments in each division.
      * This is intended to show which divisions are the most active for the business.
      *
-     * @return  ArrayList<DivisionCount> object that holds paired data of Division name and number
+     * @return  ArrayList object that holds paired data of Division name and number
      * of appointments in that division.
      */
     public ArrayList<DivisionCount> getDivisionCountReport() {

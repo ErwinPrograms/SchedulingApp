@@ -8,14 +8,24 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/**
+ * DAO responsible for read operations on FirstLevelDivisions.
+ */
 public class FirstLevelDivisionDao implements ReadDAO<FirstLevelDivision> {
 
     private Connection connDB;
 
+    /**
+     * Default constructor which calls DBConnection singleton to get a Connection object
+     */
     public FirstLevelDivisionDao() {
         this.connDB = DBConnection.getConnection();
     }
 
+    /**
+     * Constructor which takes a Connection object to use
+     * @param connDB    Connection object that DAO will use to access database
+     */
     public FirstLevelDivisionDao(Connection connDB) {
         this.connDB = connDB;
     }
@@ -56,6 +66,12 @@ public class FirstLevelDivisionDao implements ReadDAO<FirstLevelDivision> {
         return allDivisions;
     }
 
+    /**
+     * Retrieves divisionID using both countryName and divisionName. Every ID should be accessible,
+     * @param countryName   name of country for query
+     * @param divisionName  name of division for query
+     * @return              ID of corresponding division or -1 if such combination doesn't exist.
+     */
     public int getDivisionID(String countryName, String divisionName) {
         Query getWithStrings = new Query(connDB,
                 "SELECT Division_ID " +

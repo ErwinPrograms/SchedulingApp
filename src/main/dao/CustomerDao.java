@@ -11,14 +11,24 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
+/**
+ * DAO responsible for CRUD operations on Customers.
+ */
 public class CustomerDao implements CrudDAO<Customer> {
 
     Connection connDB;
 
+    /**
+     * Default constructor which calls DBConnection singleton to get a Connection object
+     */
     public CustomerDao() {
         this.connDB = DBConnection.getConnection();
     }
 
+    /**
+     * Constructor which takes a Connection object to use
+     * @param connDB    Connection object that DAO will use to access database
+     */
     public CustomerDao(Connection connDB) {
         this.connDB = connDB;
     }
@@ -79,6 +89,14 @@ public class CustomerDao implements CrudDAO<Customer> {
     }
 
     //TODO refactor with insert so that most code isn't repeated
+    /**
+     * Insert customer into the database along with data about the creating User.
+     * @param model         The Customer object that holds data to be inserted
+     * @param creationUser  The User object that holds data about the user that created this Customer
+     * @return  A result code:
+     *              0: success
+     *              1: failure
+     */
     public int insertWithUser(Customer model, User creationUser) {
         if (!model.hasRequiredData())
             return 1;
@@ -126,6 +144,8 @@ public class CustomerDao implements CrudDAO<Customer> {
 
         return update.executeQuery();
     }
+
+    //TODO: add another update method that accepts a User object so Last_Update and Last_Updated_By is also changed
 
     @Override
     public int delete(int id) {

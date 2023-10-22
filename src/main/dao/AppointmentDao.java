@@ -5,14 +5,24 @@ import main.model.Appointment;
 import java.sql.*;
 import java.util.ArrayList;
 
+/**
+ * DAO responsible for CRUD operations on Appointments.
+ */
 public class AppointmentDao implements CrudDAO<Appointment> {
 
     Connection connDB;
 
+    /**
+     * Default constructor which calls DBConnection singleton to get a Connection object
+     */
     public AppointmentDao() {
         this.connDB = DBConnection.getConnection();
     }
 
+    /**
+     * Constructor which takes a Connection object to use
+     * @param connDB    Connection object that DAO will use to access database
+     */
     public AppointmentDao(Connection connDB) {
         this.connDB = connDB;
     }

@@ -7,14 +7,24 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/**
+ * DAO responsible for CRUD operations on Contacts.
+ */
 public class ContactDao implements CrudDAO<Contact> {
 
     Connection connDB;
 
+    /**
+     * Default constructor which calls DBConnection singleton to get a Connection object
+     */
     public ContactDao() {
         this.connDB = DBConnection.getConnection();
     }
 
+    /**
+     * Constructor which takes a Connection object to use
+     * @param connDB    Connection object that DAO will use to access database
+     */
     public ContactDao(Connection connDB) {
         this.connDB = connDB;
     }
