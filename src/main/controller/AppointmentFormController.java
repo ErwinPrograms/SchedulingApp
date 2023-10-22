@@ -1,5 +1,6 @@
 package main.controller;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -43,7 +44,7 @@ public class AppointmentFormController implements Initializable {
     @FXML
     TableColumn<Appointment, String> locationColumn;
     @FXML
-    TableColumn<Appointment, Integer> contactIDColumn;
+    TableColumn<Appointment, String> contactNameColumn;
     @FXML
     TableColumn<Appointment, String> typeColumn;
     @FXML
@@ -118,7 +119,10 @@ public class AppointmentFormController implements Initializable {
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
         locationColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
-        contactIDColumn.setCellValueFactory(new PropertyValueFactory<>("contactID"));
+        contactNameColumn.setCellValueFactory(appointmentContactCellData -> {
+            Appointment appointment = appointmentContactCellData.getValue();
+            return new SimpleStringProperty(dataHandler.contactByID(appointment.getContactID()).toString());
+        });
         typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
         startDateTimeColumn.setCellValueFactory(new PropertyValueFactory<>("start"));
         endDateTimeColumn.setCellValueFactory(new PropertyValueFactory<>("end"));

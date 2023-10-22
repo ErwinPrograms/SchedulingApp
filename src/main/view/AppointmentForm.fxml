@@ -14,7 +14,7 @@
                 <TableColumn fx:id="titleColumn" text="Title" />
                 <TableColumn fx:id="descriptionColumn" text="Description" />
                 <TableColumn fx:id="locationColumn" text="Location" />
-                <TableColumn fx:id="contactIDColumn" text="Contact" />
+                <TableColumn fx:id="contactNameColumn" text="Contact" />
                 <TableColumn fx:id="typeColumn" text="Type" />
                 <TableColumn fx:id="startDateTimeColumn" text="Start" />
                 <TableColumn fx:id="endDateTimeColumn" text="End" />
