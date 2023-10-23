@@ -307,6 +307,7 @@ public class DataHandlingFacade {
 
     /**
      * Creates a Customer object then accesses CustomerDao to update existing customer in database
+     * @param customerID    id of customer
      * @param name          name of customer
      * @param address       address of customer
      * @param postalCode    postal code of customer
@@ -454,6 +455,7 @@ public class DataHandlingFacade {
 
     /**
      * Creates an Appointment object, then attempts to update it into the database using AppointmentDao.
+     * @param appointmentID id of appointment
      * @param title         tile of appointment
      * @param description   description of appointment
      * @param location      location of appointment

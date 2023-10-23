@@ -7,11 +7,11 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import main.dao.DBConnection;
 
-import java.util.Locale;
 import java.util.Objects;
 
-import static javafx.application.Application.launch;
-
+/**
+ * The main class which starts the JavaFX application.
+ */
 public class Main extends Application {
 
     @Override
@@ -24,6 +24,10 @@ public class Main extends Application {
         primaryStage.show();
     }
 
+    /**
+     * Sets the database connection, launches the application, then closes the database connection.
+     * @param args arguments
+     */
     public static void main(String[] args) {
         DBConnection.makeConnection("jdbc:mysql://localhost:3306/test_client_db", "jdbc", "password1");
         //To test for other locales (remove before submission)
