@@ -64,10 +64,16 @@ public class Country {
         return true;
     }
 
+    /**
+     * @return countryID
+     */
     public int getCountryID() {
         return countryID;
     }
 
+    /**
+     * @return country
+     */
     public String getCountry() {
         return country;
     }

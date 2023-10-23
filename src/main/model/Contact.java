@@ -85,14 +85,23 @@ public class Contact {
         return true;
     }
 
+    /**
+     * @return contactID
+     */
     public int getContactID() {
         return contactID;
     }
 
+    /**
+     * @return contactName
+     */
     public String getContactName() {
         return contactName;
     }
 
+    /**
+     * @return email
+     */
     public String getEmail() {
         return email;
     }

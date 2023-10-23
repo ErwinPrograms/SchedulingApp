@@ -108,26 +108,44 @@ public class Customer {
         return true;
     }
 
+    /**
+     * @return customerID
+     */
     public int getCustomerID() {
         return customerID;
     }
 
+    /**
+     * @return customerName
+     */
     public String getCustomerName() {
         return customerName;
     }
 
+    /**
+     * @return address
+     */
     public String getAddress() {
         return address;
     }
 
+    /**
+     * @return postalCode
+     */
     public String getPostalCode() {
         return postalCode;
     }
 
+    /**
+     * @return phone
+     */
     public String getPhone() {
         return phone;
     }
 
+    /**
+     * @return divisionID
+     */
     public int getDivisionID() {
         return divisionID;
     }

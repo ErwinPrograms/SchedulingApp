@@ -21,10 +21,16 @@ public class DivisionCount {
         this.count = count;
     }
 
+    /**
+     * @return division
+     */
     public String getDivision() {
         return division;
     }
 
+    /**
+     * @return count
+     */
     public int getCount() {
         return count;
     }

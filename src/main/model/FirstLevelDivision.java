@@ -69,14 +69,23 @@ public class FirstLevelDivision {
         return true;
     }
 
+    /**
+     * @return divisionID
+     */
     public int getDivisionID() {
         return divisionID;
     }
 
+    /**
+     * @return division
+     */
     public String getDivision() {
         return division;
     }
 
+    /**
+     * @return countryID
+     */
     public int getCountryID() {
         return countryID;
     }

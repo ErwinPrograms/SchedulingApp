@@ -157,42 +157,72 @@ public class Appointment {
         return true;
     }
 
+    /**
+     * @return appointmentID
+     */
     public int getAppointmentID() {
         return appointmentID;
     }
 
+    /**
+     * @return title
+     */
     public String getTitle() {
         return title;
     }
 
+    /**
+     * @return description
+     */
     public String getDescription() {
         return description;
     }
 
+    /**
+     * @return location
+     */
     public String getLocation() {
         return location;
     }
 
+    /**
+     * @return type
+     */
     public String getType() {
         return type;
     }
 
+    /**
+     * @return start
+     */
     public LocalDateTime getStart() {
         return start;
     }
 
+    /**
+     * @return end
+     */
     public LocalDateTime getEnd() {
         return end;
     }
 
+    /**
+     * @return customerID
+     */
     public int getCustomerID() {
         return customerID;
     }
 
+    /**
+     * @return userID
+     */
     public int getUserID() {
         return userID;
     }
 
+    /**
+     * @return contactID
+     */
     public int getContactID() {
         return contactID;
     }

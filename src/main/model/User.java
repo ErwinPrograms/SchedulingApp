@@ -70,14 +70,23 @@ public class User {
         return true;
     }
 
+    /**
+     * @return userID
+     */
     public int getUserID() {
         return userID;
     }
 
+    /**
+     * @return userName
+     */
     public String getUserName() {
         return userName;
     }
 
+    /**
+     * @return password
+     */
     public String getPassword() {
         return password;
     }

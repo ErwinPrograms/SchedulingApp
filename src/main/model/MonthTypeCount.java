@@ -23,14 +23,23 @@ public class MonthTypeCount {
         this.count = count;
     }
 
+    /**
+     * @return monthYear
+     */
     public String getMonthYear() {
         return monthYear;
     }
 
+    /**
+     * @return type
+     */
     public String getType() {
         return type;
     }
 
+    /**
+     * @return count
+     */
     public int getCount() {
         return count;
     }
