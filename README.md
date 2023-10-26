@@ -20,9 +20,27 @@ This is a GUI-based Java desktop application made for scheduling across multiple
 ---
 
 ## How to run
-
-After cloning repository, make sure your environment matches the one described above. TODO: Complete instructions
-
+To use this repo:
+- Ensure Java FX 17 and JDK 11 are on your machine
+- In IntelliJ create a new project from existing sources
+  - Use the url "https://github.com/ErwinPrograms/SchedulingApp"
+- Ensure path "PATH_TO_FX" is set
+  - File -> Settings: Path Variables
+  - Make sure the path exists and is pointing to the directory for Java FX library
+- Set the SDK version
+  - File -> Project Structure : Project
+  - SDK: Version 11
+  - Language level: SDK default
+- Add the lib directory for Java FX
+  - File -> Project Structure : Libraries
+  - Add library pointing to the directory for Java FX
+- Add run configuration
+  - Run -> Edit Configurations: Application configuration
+  - Main class: main.Main
+  - Modify options -> Add VM options
+  - Inside VM options add "--module-path ${PATH_TO_FX} --add-modules javafx.fxml,javafx.controls,javafx.graphics"
+- Adjust code to work with your database 
+  - main.Main.java:32 adjust DBConnection.makeConnection(url, username, password) to your database credentials
 ---
 
 ## Goals
