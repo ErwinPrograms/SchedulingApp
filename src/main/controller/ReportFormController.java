@@ -26,6 +26,10 @@ import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+/**
+ * A controller class for the report form of the application. Responsible for handling the events and business
+ * logic of the application. Depends on DataHandlingFacade to interact with data.
+ */
 public class ReportFormController implements Initializable {
 
     @FXML
@@ -80,11 +84,17 @@ public class ReportFormController implements Initializable {
         contactBox.setItems(dataHandler.contactObservableList());
     }
 
+    /**
+     * An event that fires whenever the user selects a contact name in the contact box. It re-loads the table for that
+     * report with all the appointments associated with that contact.
+     */
     public void loadContactAppointments() {
         contactTable.setItems(dataHandler.appointmentsByContact(contactBox.getValue()));
     }
 
-
+    /**
+     * Event that fires whenever the user clicks the Report Form radio button. It changes the scene to the report form.
+     */
     public void toCustomerForm() {
         try {
             Parent nextForm = FXMLLoader.load(Objects.requireNonNull(
@@ -97,6 +107,9 @@ public class ReportFormController implements Initializable {
         }
     }
 
+    /**
+     * Event that fires whenever the user clicks the Appointment Form radio button. It changes the scene to the appointment form.
+     */
     public void toAppointmentForm() {
         try {
             Parent nextForm = FXMLLoader.load(Objects.requireNonNull(

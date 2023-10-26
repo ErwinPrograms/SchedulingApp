@@ -22,7 +22,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URL;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -30,6 +29,9 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+/**
+ * A controller class for the login form of the application.
+ */
 public class LoginFormController implements Initializable {
 
     @FXML
@@ -80,6 +82,10 @@ public class LoginFormController implements Initializable {
                 languageResourceBundle.getString(country) + "/" + location);
     }
 
+    /**
+     * An event that fires whenever the user attempts to submit the login form. Compares user input to data being
+     * retrieved from the database in order to attempt a login.
+     */
     public void loginUser() {
         String inputUsername = usernameField.getText();
         String inputPassword = passwordField.getText();
@@ -150,7 +156,7 @@ public class LoginFormController implements Initializable {
 
     }
 
-    public void changeToCustomerForm(){
+    private void changeToCustomerForm(){
         try {
             Parent nextForm = FXMLLoader.load(Objects.requireNonNull(
                     getClass().getResource("/main/view/CustomerForm.fxml")

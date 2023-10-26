@@ -14,7 +14,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import main.model.Appointment;
 import main.model.Contact;
-import main.model.Customer;
 import main.model.User;
 import main.utility.DataHandlingFacade;
 import main.utility.UniversalApplicationData;
@@ -27,6 +26,10 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+/**
+ * A controller class for the appointment form of the application. Responsible for handling the events and business
+ * logic of the application. Depends on DataHandlingFacade to interact with data.
+ */
 public class AppointmentFormController implements Initializable {
 
     @FXML
@@ -204,11 +207,11 @@ public class AppointmentFormController implements Initializable {
         deleteButton.setDisable(true);
     }
 
-    public void updateContactBox() {
+    private void updateContactBox() {
         contactBox.setItems(dataHandler.contactObservableList());
     }
 
-    public void updateTimeBoxes() {
+    private void updateTimeBoxes() {
         ArrayList<LocalTime> timeList = new ArrayList<>();
 
         //TODO: refactor time conversion as a new method
@@ -539,6 +542,9 @@ public class AppointmentFormController implements Initializable {
         }
     }
 
+    /**
+     * Event that fires whenever user clicks the Customer Form radio button. It changes the scene into the customer form.
+     */
     public void toCustomerForm() {
         try {
             Parent nextForm = FXMLLoader.load(Objects.requireNonNull(
@@ -551,6 +557,9 @@ public class AppointmentFormController implements Initializable {
         }
     }
 
+    /**
+     * Event that fires whenever the user clicks the Report Form radio button. It changes the scene to the report form.
+     */
     public void toReportForm() {
         try {
             Parent nextForm = FXMLLoader.load(Objects.requireNonNull(

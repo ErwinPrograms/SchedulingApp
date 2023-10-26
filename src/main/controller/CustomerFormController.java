@@ -23,6 +23,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
+/**
+ * A controller class for the customer form of the application. Responsible for handling the events and business
+ * logic of the application. Depends on DataHandlingFacade to interact with data.
+ */
 public class CustomerFormController implements Initializable {
 
 
@@ -294,6 +298,9 @@ public class CustomerFormController implements Initializable {
         }
     }
 
+    /**
+     * Event that fires whenever the user clicks the Appointment Form radio button. It changes the scene to the appointment form.
+     */
     public void toAppointmentForm() {
         try {
             Parent nextForm = FXMLLoader.load(Objects.requireNonNull(
@@ -307,6 +314,9 @@ public class CustomerFormController implements Initializable {
         }
     }
 
+    /**
+     * Event that fires whenever the user clicks the Report Form radio button. It changes the scene to the report form.
+     */
     public void toReportForm() {
         try {
             Parent nextForm = FXMLLoader.load(Objects.requireNonNull(
