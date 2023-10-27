@@ -319,9 +319,7 @@ public class AppointmentFormController implements Initializable {
         LocalDateTime systemEndTime = estEndTime.withZoneSameInstant(ZoneId.systemDefault()).toLocalDateTime();
 
         LocalTime openingTime = systemStartTime.toLocalTime();
-        System.out.println(openingTime);
         LocalTime closingTime = systemEndTime.toLocalTime();
-        System.out.println(closingTime);
 
         if(     (startTime.isAfter(closingTime)
                 || startTime.isBefore(openingTime)
@@ -396,6 +394,13 @@ public class AppointmentFormController implements Initializable {
                 || userIDField.getText().equals(""));
     }
 
+    private boolean isStartAfterEnd() {
+        LocalDateTime checkedAppointmentStart = LocalDateTime.of(startDatePicker.getValue(), startTimeBox.getValue());
+        LocalDateTime checkedAppointmentEnd = LocalDateTime.of(endDatePicker.getValue(), endTimeBox.getValue());
+
+        return checkedAppointmentStart.isAfter(checkedAppointmentEnd);
+    }
+
     /**
      * Attempts to add appointment into database and maintains form on success.
      * This allows for multiple appointments to be added in quick succession
@@ -418,6 +423,11 @@ public class AppointmentFormController implements Initializable {
         if(isAppointmentOverlapping()) {
             JOptionPane.showMessageDialog(null,
                     "Appointment time overlaps with another for this customer.");
+            return;
+        }
+        if(isStartAfterEnd()) {
+            JOptionPane.showMessageDialog(null,
+                    "Start time must be before end time");
             return;
         }
 
@@ -477,6 +487,11 @@ public class AppointmentFormController implements Initializable {
         if(isAppointmentOverlapping(Integer.parseInt(appointmentIDField.getText()))) {
             JOptionPane.showMessageDialog(null,
                     "Appointment time overlaps with another for this customer.");
+            return;
+        }
+        if(isStartAfterEnd()) {
+            JOptionPane.showMessageDialog(null,
+                    "Start time must be before end time");
             return;
         }
 
