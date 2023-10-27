@@ -149,4 +149,9 @@ public class Customer {
     public int getDivisionID() {
         return divisionID;
     }
+
+    @Override
+    public String toString() {
+        return customerName;
+    }
 }

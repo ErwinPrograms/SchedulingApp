@@ -280,6 +280,24 @@ public class DataHandlingFacade {
         return maxID;
     }
 
+    /**
+     * @param customerID    CustomerID to check for matches
+     * @return              A customer object with matching ID; null if no matches
+     */
+    public Customer customerByID(int customerID) {
+        for (Customer customer : customers) {
+            if (customer.getCustomerID() == customerID) {
+                return customer;
+            }
+        }
+        return null;
+    }
+
+    public User userByID(int userID) {
+        //TODO: rewrite this code with a User arraylist so database isn't called every time a userID is retrieved
+        return new UserDao().getByID(userID);
+    }
+
     //TODO: accept User/UserName as a parameter to be relayed to DAO
 
     /**

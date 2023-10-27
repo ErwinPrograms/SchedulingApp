@@ -55,9 +55,9 @@ public class AppointmentFormController implements Initializable {
     @FXML
     TableColumn<Appointment, LocalDateTime> endDateTimeColumn;
     @FXML
-    TableColumn<Appointment, Integer> customerIDColumn;
+    TableColumn<Appointment, String> customerIDColumn;
     @FXML
-    TableColumn<Appointment, Integer> userIDColumn;
+    TableColumn<Appointment, String> userIDColumn;
 
     @FXML
     TextField appointmentIDField;
@@ -136,8 +136,14 @@ public class AppointmentFormController implements Initializable {
         typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
         startDateTimeColumn.setCellValueFactory(new PropertyValueFactory<>("start"));
         endDateTimeColumn.setCellValueFactory(new PropertyValueFactory<>("end"));
-        customerIDColumn.setCellValueFactory(new PropertyValueFactory<>("customerID"));
-        userIDColumn.setCellValueFactory(new PropertyValueFactory<>("userID"));
+        customerIDColumn.setCellValueFactory(appointmentCustomerCellData -> {
+            Appointment appointment = appointmentCustomerCellData.getValue();
+            return new SimpleStringProperty(dataHandler.customerByID(appointment.getCustomerID()).toString());
+        });
+        userIDColumn.setCellValueFactory(appointmentUserCellData -> {
+            Appointment appointment = appointmentUserCellData.getValue();
+            return new SimpleStringProperty(dataHandler.userByID(appointment.getUserID()).toString());
+        });
 
         //Arbitrarily set the default display to be all appointments
         tableTimeRangeBox.setValue("All");
