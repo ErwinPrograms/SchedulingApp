@@ -13,9 +13,9 @@ This is a GUI-based Java desktop application made for scheduling across multiple
 
 ## Environment
 - IntelliJ IDEA 2022.2.2 (Community Edition)
-- OpenJDK 17.0.4
+- OpenJDK 11+
 - mysql-connector-java-8.0.30 (included in repository)
-- JavaFX-SDK-19
+- JavaFX-SDK-17
 
 ---
 
@@ -55,12 +55,17 @@ Document code with Javadoc comments and index.html file based on Oracle's guidel
 ---
 
 ## Features
-TODO (Add features as completed)
+Ability to create, read, update, and delete customers and appointments from a database using a graphical user interface.
+
+The ability to read three separate reports using aggregate data from different tables of the database:
+- Appointment counts sorted by type and date
+- The schedule of any contact's appointments
+- The count of appointments grouped by division
 
 ---
 
 ## Author
-Erwin, a plain old java developer.
+Erwin, a plain old Java developer.
 
 Github: https://github.com/ErwinPrograms
 
