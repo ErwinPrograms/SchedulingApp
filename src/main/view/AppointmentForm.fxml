@@ -51,10 +51,10 @@
             <Label layoutX="357.0" layoutY="433.0" text="End Date and Time:" />
             <DatePicker fx:id="endDatePicker" layoutX="488.0" layoutY="429.0" prefHeight="25.0" prefWidth="103.0" promptText="End Date" />
             <ComboBox fx:id="endTimeBox" layoutX="597.0" layoutY="429.0" prefHeight="25.0" prefWidth="103.0" promptText="End Time" />
-            <Label layoutX="357.0" layoutY="467.0" text="Customer ID:" />
-            <TextField fx:id="customerIDField" focusTraversable="false" layoutX="487.0" layoutY="463.0" prefHeight="25.0" prefWidth="213.0" promptText="Customer ID" />
-            <Label layoutX="357.0" layoutY="500.0" text="User ID:" />
-            <TextField fx:id="userIDField" focusTraversable="false" layoutX="488.0" layoutY="496.0" prefHeight="25.0" prefWidth="213.0" promptText="User ID" />
+            <Label layoutX="357.0" layoutY="467.0" text="Customer:" />
+         <ComboBox fx:id="customerBox" layoutX="487.0" layoutY="463.0" prefHeight="25.0" prefWidth="213.0" promptText="Customer" />
+            <Label layoutX="357.0" layoutY="500.0" text="User:" />
+         <ComboBox fx:id="userBox" layoutX="487.0" layoutY="496.0" prefHeight="25.0" prefWidth="213.0" promptText="User" />
         </Group>
        <Group fx:id="buttons">
          <Button fx:id="clearButton" layoutX="26.0" layoutY="555.0" mnemonicParsing="false" onAction="#clearForm" prefHeight="24.0" prefWidth="154.0" text="Clear Form" />

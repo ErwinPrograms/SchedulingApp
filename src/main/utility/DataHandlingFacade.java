@@ -22,6 +22,7 @@ public class DataHandlingFacade {
     private ArrayList<Contact> contacts = new ArrayList<>();
     private ArrayList<Customer> customers = new ArrayList<>();
     private ArrayList<Appointment> appointments = new ArrayList<>();
+    private ArrayList<User> users = new ArrayList<>();
 
     /**
      * Initializes DataHandlingFacade by fetching data from multiple tables in the database
@@ -47,6 +48,7 @@ public class DataHandlingFacade {
         contacts = new ContactDao().getAll();
         countries = new CountryDao().getAll();
         divisions = new FirstLevelDivisionDao().getAll();
+        users = new UserDao().getAll();
 
         //Lambda 1 - maps FirstLevelDivisions objects to Country objects
         divisions.forEach(division -> {
@@ -93,6 +95,14 @@ public class DataHandlingFacade {
      */
     public ObservableList<Customer> customersObservableList() {
         return FXCollections.observableList(customers);
+    }
+
+    /**
+     * Creates an ObservableList of all users in the database using users ArrayList that's already stored
+     * @return ObservableList containing all users from database
+     */
+    public ObservableList<User> usersObservableList() {
+        return FXCollections.observableList(users);
     }
 
     /**
@@ -293,9 +303,17 @@ public class DataHandlingFacade {
         return null;
     }
 
+    /**
+     * @param userID    UserID to check for matches
+     * @return          A user object with matching ID; null if no matches
+     */
     public User userByID(int userID) {
-        //TODO: rewrite this code with a User arraylist so database isn't called every time a userID is retrieved
-        return new UserDao().getByID(userID);
+        for (User user : users) {
+            if (user.getUserID() == userID) {
+                return user;
+            }
+        }
+        return null;
     }
 
     //TODO: accept User/UserName as a parameter to be relayed to DAO

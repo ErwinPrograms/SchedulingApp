@@ -14,6 +14,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import main.model.Appointment;
 import main.model.Contact;
+import main.model.Customer;
 import main.model.User;
 import main.utility.DataHandlingFacade;
 import main.utility.UniversalApplicationData;
@@ -90,10 +91,10 @@ public class AppointmentFormController implements Initializable {
     DatePicker endDatePicker;
 
     @FXML
-    TextField customerIDField;
+    ComboBox<Customer> customerBox;
 
     @FXML
-    TextField userIDField;
+    ComboBox<User> userBox;
 
     @FXML
     Button clearButton;
@@ -149,7 +150,7 @@ public class AppointmentFormController implements Initializable {
         tableTimeRangeBox.setValue("All");
         refreshAppointmentTable();
 
-        updateContactBox();
+        updateComboBoxes();
         updateTimeBoxes();
 
         activateInsertionButtons();
@@ -220,8 +221,10 @@ public class AppointmentFormController implements Initializable {
         deleteButton.setDisable(true);
     }
 
-    private void updateContactBox() {
+    private void updateComboBoxes() {
         contactBox.setItems(dataHandler.contactObservableList());
+        customerBox.setItems(dataHandler.customersObservableList());
+        userBox.setItems(dataHandler.usersObservableList());
     }
 
     private void updateTimeBoxes() {
@@ -265,8 +268,9 @@ public class AppointmentFormController implements Initializable {
             return;
         }
 
-        String contactName = dataHandler.contactByID(selectedAppointment.getContactID()).getContactName();
         Contact contact = dataHandler.contactByID(selectedAppointment.getContactID());
+        Customer customer = dataHandler.customerByID(selectedAppointment.getCustomerID());
+        User user = dataHandler.userByID(selectedAppointment.getUserID());
 
         appointmentIDField.setText(String.valueOf(selectedAppointment.getAppointmentID()));
         titleField.setText(selectedAppointment.getTitle());
@@ -278,8 +282,8 @@ public class AppointmentFormController implements Initializable {
         startTimeBox.setValue(selectedAppointment.getStart().toLocalTime());
         endDatePicker.setValue(selectedAppointment.getEnd().toLocalDate());
         endTimeBox.setValue(selectedAppointment.getEnd().toLocalTime());
-        customerIDField.setText(String.valueOf(selectedAppointment.getCustomerID()));
-        userIDField.setText(String.valueOf(selectedAppointment.getUserID()));
+        customerBox.setValue(customer);
+        userBox.setValue(user);
 
         activateSelectionButtons();
     }
@@ -300,8 +304,8 @@ public class AppointmentFormController implements Initializable {
         startTimeBox.setValue(null);
         endDatePicker.setValue(null);
         endTimeBox.setValue(null);
-        customerIDField.clear();
-        userIDField.clear();
+        customerBox.setValue(null);
+        userBox.setValue(null);
 
         activateInsertionButtons();
     }
@@ -368,8 +372,7 @@ public class AppointmentFormController implements Initializable {
      *          False if there is no overlap in hours
      */
     private boolean isAppointmentOverlapping(int excludedAppointmentID) {
-        //TODO: non-integer values inside customerIDField WILL cause errors
-        int customerID = Integer.parseInt(customerIDField.getText());
+        int customerID = customerBox.getValue().getCustomerID();
         ArrayList<Appointment> appointmentsToCheck = dataHandler.appointmentsByCustomerID(customerID);
 
         LocalDateTime checkedAppointmentStart = LocalDateTime.of(startDatePicker.getValue(), startTimeBox.getValue());
@@ -403,8 +406,8 @@ public class AppointmentFormController implements Initializable {
                 || startTimeBox.getValue() == null
                 || endDatePicker.getValue() == null
                 || endTimeBox.getValue() == null
-                || customerIDField.getText().equals("")
-                || userIDField.getText().equals(""));
+                || customerBox.getValue() == null
+                || userBox.getValue() == null);
     }
 
     private boolean isStartAfterEnd() {
@@ -453,7 +456,6 @@ public class AppointmentFormController implements Initializable {
                 endTimeBox.getValue()
         );
 
-        //TODO: non-integer values for customerID and userID WILL cause errors
         int status = dataHandler.insertAppointment(
                 titleField.getText(),
                 descriptionField.getText(),
@@ -461,8 +463,8 @@ public class AppointmentFormController implements Initializable {
                 typeField.getText(),
                 appointmentStart,
                 appointmentEnd,
-                Integer.parseInt(customerIDField.getText()),
-                Integer.parseInt(userIDField.getText()),
+                customerBox.getValue().getCustomerID(),
+                userBox.getValue().getUserID(),
                 contactBox.getValue().getContactID()
         );
 
@@ -525,8 +527,8 @@ public class AppointmentFormController implements Initializable {
                 typeField.getText(),
                 appointmentStart,
                 appointmentEnd,
-                Integer.parseInt(customerIDField.getText()),
-                Integer.parseInt(userIDField.getText()),
+                customerBox.getValue().getCustomerID(),
+                userBox.getValue().getUserID(),
                 contactBox.getValue().getContactID()
         );
 
