@@ -1,5 +1,6 @@
 package main.model;
 
+import main.utility.TimeUtility;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -36,8 +37,8 @@ public class Appointment {
             location = row.getString("Location");
             type = row.getString("Type");
             //TODO: change start and end to convert ResultSet
-            start = row.getTimestamp("Start").toLocalDateTime();
-            end = row.getTimestamp("End").toLocalDateTime();
+            start = new TimeUtility().getLocalDateTimeFromUTCTimestamp(row.getTimestamp("Start"));
+            end = new TimeUtility().getLocalDateTimeFromUTCTimestamp(row.getTimestamp("End"));
             customerID = row.getInt("Customer_ID");
             userID = row.getInt("User_ID");
             contactID = row.getInt("Contact_ID");

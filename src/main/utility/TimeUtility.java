@@ -3,6 +3,7 @@ package main.utility;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 //TODO: setup database to use UTC instead of local time
 //TODO: use MySQL Workbench to visualize and edit database easier (document in resource repo)
@@ -26,5 +27,22 @@ public class TimeUtility {
      */
     public Timestamp getUTCTime() {
         return Timestamp.valueOf(LocalDateTime.now(ZoneId.of("UTC")));
+    }
+
+    public LocalDateTime getLocalDateTimeFromUTCTimestamp(Timestamp utcTimestamp) {
+//        return ZonedDateTime.of(utcTimestamp.toLocalDateTime(), ZoneId.of("UTC"))
+//                .withZoneSameInstant(ZoneId.systemDefault())
+//                .toLocalDateTime();
+        return utcTimestamp.toLocalDateTime().atZone(ZoneId.of("UTC"))
+                .withZoneSameInstant(ZoneId.systemDefault())
+                .toLocalDateTime();
+    }
+
+    public Timestamp getUTCTimestampFromLocalDateTime(LocalDateTime localDateTime) {
+        return Timestamp.valueOf(
+                localDateTime.atZone(ZoneId.systemDefault())
+                .withZoneSameInstant(ZoneId.of("UTC"))
+                .toLocalDateTime()
+        );
     }
 }

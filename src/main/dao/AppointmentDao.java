@@ -1,6 +1,7 @@
 package main.dao;
 
 import main.model.Appointment;
+import main.utility.TimeUtility;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -78,8 +79,8 @@ public class AppointmentDao implements CrudDAO<Appointment> {
                 "'" + model.getDescription() + "', " +
                 "'" + model.getLocation() + "', " +
                 "'" + model.getType() + "', " +
-                "'" + Timestamp.valueOf(model.getStart()) + "', " +
-                "'" + Timestamp.valueOf(model.getEnd()) + "', " +
+                "'" + new TimeUtility().getUTCTimestampFromLocalDateTime(model.getStart()) + "', " +
+                "'" + new TimeUtility().getUTCTimestampFromLocalDateTime(model.getEnd()) + "', " +
                 model.getCustomerID() + ", " +
                 model.getUserID() + ", " +
                 model.getContactID() + " )");
@@ -111,8 +112,8 @@ public class AppointmentDao implements CrudDAO<Appointment> {
             update.setString(3, model.getDescription());
             update.setString(4, model.getLocation());
             update.setString(5, model.getType());
-            update.setTimestamp(6, Timestamp.valueOf(model.getStart()));
-            update.setTimestamp(7, Timestamp.valueOf(model.getEnd()));
+            update.setTimestamp(6, new TimeUtility().getUTCTimestampFromLocalDateTime(model.getStart()));
+            update.setTimestamp(7, new TimeUtility().getUTCTimestampFromLocalDateTime(model.getEnd()));
             update.setInt(8, model.getCustomerID());
             update.setInt(9, model.getUserID());
             update.setInt(10, model.getContactID());
