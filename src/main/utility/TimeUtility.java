@@ -29,6 +29,10 @@ public class TimeUtility {
         return Timestamp.valueOf(LocalDateTime.now(ZoneId.of("UTC")));
     }
 
+    /**
+     * @param utcTimestamp Timestamp which holds a time that represents UTC
+     * @return  A LocalDateTime which represents the input in the local time
+     */
     public LocalDateTime getLocalDateTimeFromUTCTimestamp(Timestamp utcTimestamp) {
 //        return ZonedDateTime.of(utcTimestamp.toLocalDateTime(), ZoneId.of("UTC"))
 //                .withZoneSameInstant(ZoneId.systemDefault())
@@ -38,6 +42,10 @@ public class TimeUtility {
                 .toLocalDateTime();
     }
 
+    /**
+     * @param localDateTime A LocalDateTime object which holds time in system's local time
+     * @return A timestamp object which represents the input as UTC
+     */
     public Timestamp getUTCTimestampFromLocalDateTime(LocalDateTime localDateTime) {
         return Timestamp.valueOf(
                 localDateTime.atZone(ZoneId.systemDefault())
