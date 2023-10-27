@@ -106,6 +106,7 @@ public class DataHandlingFacade {
     /**
      * Finds all appointments which are between the two LocalDateTimes. This includes appointments which are only partially
      * inside the time range
+     * There is a forEach lambda that adds elements to our result ArrayList if it passes a check of being between the time range.
      * @param startOfTimeRange  the starting time to check
      * @param endOfTimeRange    the ending time to check
      * @return ObservableList containing all appointments in database that are between the two time ranges. If there
@@ -136,7 +137,8 @@ public class DataHandlingFacade {
     }
 
     /**
-     * Creates and returns an ObservableList of all country names inside the database
+     * Creates and returns an ObservableList of all country names inside the database.
+     * A lambda is used to get the String country out of every country object
      * @return  ObservableList of country names
      */
     public ObservableList<String> countriesObservableList() {
@@ -157,6 +159,8 @@ public class DataHandlingFacade {
     /**
      * Searches for a division which matches the input ID, then returns the result. Looks through stored divisions
      * ArrayList instead of making a new database call.
+     * A lambda is used to search through an arraylist of division objects and add any matches to another arraylist.
+     * This second arraylist is checked at the end to make sure exactly one match was found.
      * @param divisionID    ID of division to search for
      * @return  null if there isn't exactly one unique match; if there is, then the FirstLevelDivision match
      */
@@ -176,6 +180,8 @@ public class DataHandlingFacade {
     }
 
     /**
+     * A lambda is used to search through an arraylist of division objects and add any matches to another arraylist.
+     * This second arraylist is checked at the end to make sure exactly one match was found.
      * @param divisionName  Required parameter. Finds a stored division with the same name.
      * @return  FirstLevelDivision that matches divisionName.
      */
@@ -198,6 +204,8 @@ public class DataHandlingFacade {
     /**
      * Finds a country based on an input countryID. Looks through stored countries ArrayList instead of making a new
      * database call.
+     * A lambda is used to search through an arraylist of country objects and add any matches to another arraylist.
+     * This second arraylist is checked at the end to make sure exactly one match was found.
      * @param countryID     countryID to search for
      * @return  Country object that matches countryID. Null if no matches are found
      */
@@ -219,6 +227,8 @@ public class DataHandlingFacade {
     /**
      * Finds a country based on an input countryName. Looks through stored countries ArrayList instead of making a new
      * database call.
+     * A lambda is used to search through an arraylist of country objects and add any matches to another arraylist.
+     * This second arraylist is checked at the end to make sure exactly one match was found.
      * @param countryName   name of country to look for
      * @return  Country object with matching name. Null if no matches are found.
      */

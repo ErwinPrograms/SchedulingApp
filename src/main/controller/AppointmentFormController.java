@@ -116,6 +116,13 @@ public class AppointmentFormController implements Initializable {
     // LocalTime already has a toString in 24h format
     //TODO: potentially replace radio with buttons
     //TODO: Time zones for project: UTC, EST, SystemDefault
+
+    /**
+     * A lambda is used inside setCellValueFactory() to retrieve Contact object from the contactID data in an Appointment
+     * object. It then gets the name of that contact and converts it into a String so that it can be displayed into the table.
+     * @param url               url
+     * @param resourceBundle    resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         idColumn.setCellValueFactory(new PropertyValueFactory<>("appointmentID"));
