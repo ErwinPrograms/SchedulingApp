@@ -1,5 +1,6 @@
 package main.controller;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -41,7 +42,7 @@ public class CustomerFormController implements Initializable {
     @FXML
     TableColumn<Customer, String> phoneColumn;
     @FXML
-    TableColumn<Customer, Integer> divisionColumn;
+    TableColumn<Customer, String> divisionColumn;
     @FXML
     TableColumn<Customer, String> addressColumn;
     @FXML
@@ -90,7 +91,12 @@ public class CustomerFormController implements Initializable {
         idColumn.setCellValueFactory(new PropertyValueFactory<>("customerID"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("customerName"));
         phoneColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
-        divisionColumn.setCellValueFactory(new PropertyValueFactory<>("divisionID"));
+        divisionColumn.setCellValueFactory(customerDivisionCellData -> {
+            Customer customer = customerDivisionCellData.getValue();
+            FirstLevelDivision customerDivision = dataHandler.divisionByID(customer.getDivisionID());
+            Country customerCountry = dataHandler.countryByDivision(customerDivision);
+            return new SimpleStringProperty(customerDivision.toString() + ", " + customerCountry.toString());
+        });
         addressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
         postalColumn.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
         refreshCustomerTable();

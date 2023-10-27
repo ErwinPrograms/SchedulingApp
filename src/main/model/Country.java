@@ -78,4 +78,8 @@ public class Country {
         return country;
     }
 
+    @Override
+    public String toString() {
+        return country;
+    }
 }

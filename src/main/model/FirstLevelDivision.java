@@ -90,4 +90,8 @@ public class FirstLevelDivision {
         return countryID;
     }
 
+    @Override
+    public String toString() {
+        return division;
+    }
 }
