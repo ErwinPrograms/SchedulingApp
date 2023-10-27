@@ -38,12 +38,12 @@ public class DataHandlingFacade {
      * Lambda 1 - mapping FirstLevelDivisions into Countries
      * This lambda easily finds the related Country using a helper method in the class, then
      * stores the connection in a HashMap object for quick retrieval later. <br>
-     * Lambda 2a, 2b - mapping Countries into ObservableList<String>s
+     * Lambda 2a, 2b - mapping Countries into ObservableLists
      * 2a first filters out non-relevant results through the removeIf() method inherited
-     * from the Collection<E> interface. 2b then takes the DivisionNames from each object
-     * in the ArrayList<FirstLevelDivision> and appends them into ObservableList<String>
+     * from the Collection interface. 2b then takes the DivisionNames from each object
+     * in the ArrayList and appends them into ObservableList
      */
-    private void fetchInitialData() {
+    public void fetchInitialData() {
         contacts = new ContactDao().getAll();
         countries = new CountryDao().getAll();
         divisions = new FirstLevelDivisionDao().getAll();
