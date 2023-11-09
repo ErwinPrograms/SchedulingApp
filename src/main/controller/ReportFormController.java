@@ -1,6 +1,8 @@
 package main.controller;
 
 import com.mysql.cj.xdevapi.Table;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -15,10 +17,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import main.dao.ReportDao;
-import main.model.Appointment;
-import main.model.Contact;
-import main.model.DivisionCount;
-import main.model.MonthTypeCount;
+import main.model.*;
 import main.utility.DataHandlingFacade;
 
 import java.io.IOException;
@@ -64,7 +63,13 @@ public class ReportFormController implements Initializable {
         contactAppointmentColumns.get(3).setCellValueFactory(new PropertyValueFactory<>("description"));
         contactAppointmentColumns.get(4).setCellValueFactory(new PropertyValueFactory<>("start"));
         contactAppointmentColumns.get(5).setCellValueFactory(new PropertyValueFactory<>("end"));
-        contactAppointmentColumns.get(6).setCellValueFactory(new PropertyValueFactory<>("customerID"));
+        TableColumn<Appointment, Customer> customerColumn =
+                (TableColumn<Appointment, Customer>) contactAppointmentColumns.get(6);
+        customerColumn.setCellValueFactory(customerCellData -> {
+            Appointment appointment = customerCellData.getValue();
+            Customer appointmentCustomer= dataHandler.customerByID(appointment.getCustomerID());
+            return new SimpleObjectProperty<>(appointmentCustomer);
+        });
 
         ObservableList<TableColumn<DivisionCount, ?>> divisionCountColumns = divisionCountTable.getColumns();
         divisionCountColumns.get(0).setCellValueFactory(new PropertyValueFactory<>("division"));
