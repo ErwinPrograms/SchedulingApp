@@ -35,9 +35,9 @@
                          <TableColumn prefWidth="75.0" text="Title" />
                            <TableColumn prefWidth="75.0" text="Type" />
                            <TableColumn prefWidth="104.0" text="Description" />
-                           <TableColumn prefWidth="104.0" text="Start" />
-                           <TableColumn prefWidth="104.0" text="End" />
-                           <TableColumn prefWidth="104.0" text="Customer ID" />
+                           <TableColumn prefWidth="99.0" text="Start" />
+                           <TableColumn prefWidth="122.0" text="End" />
+                           <TableColumn prefWidth="199.0" text="Customer ID" />
                        </columns>
                      </TableView>
                      <ComboBox fx:id="contactBox" layoutX="125.0" layoutY="14.0" onAction="#loadContactAppointments" prefHeight="24.0" prefWidth="369.0" />
@@ -51,8 +51,8 @@
                   <children>
                      <TableView fx:id="divisionCountTable" layoutX="13.0" layoutY="40.0" prefHeight="420.0" prefWidth="750.0">
                        <columns>
-                         <TableColumn prefWidth="533.0" text="Division Name" />
-                         <TableColumn prefWidth="166.0" text="Total Appointments" />
+                         <TableColumn prefWidth="486.0" text="Division Name" />
+                         <TableColumn prefWidth="213.0" text="Total Appointments" />
                        </columns>
                      </TableView>
                   </children></AnchorPane>
