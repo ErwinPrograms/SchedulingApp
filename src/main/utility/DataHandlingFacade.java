@@ -207,7 +207,6 @@ public class DataHandlingFacade {
             return matchedDivisions.get(0);
         }
 
-        //TODO: narrow down matchedDivisions by countryName as well before returning null
         return null;
     }
 
@@ -266,15 +265,12 @@ public class DataHandlingFacade {
         return divisionCountryMap.get(division);
     }
 
-    //TODO: lookup contact using private member variable contacts so less database calls are made
-
     /**
      * Gets the contact based on input contactID
      * @param contactID     id of the contact
      * @return  A contact object that matches the ID.
      */
     public Contact contactByID(int contactID) {
-        //TODO: get contact by searching through contacts ArrayList instead of calling database
         for (Contact contact: contacts) {
             if(contact.getContactID() == contactID) {
                 return contact;
@@ -402,7 +398,6 @@ public class DataHandlingFacade {
             appointmentDao.delete(appointment.getAppointmentID());
         }
 
-        //TODO: test to see if related appointments are deleted as well
         int status = new CustomerDao().delete(id);
 
         if(status == 0) {
@@ -429,7 +424,6 @@ public class DataHandlingFacade {
         return customerAppointments;
     }
 
-    //TODO: test to see if this works when time zone is affected
     /**
      * Finds any appointments that are occurring within the input amount of minutes
      * @param minutesUntilStart     The amount of minutes in the future to look for
