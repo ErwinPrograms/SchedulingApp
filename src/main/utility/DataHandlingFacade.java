@@ -275,7 +275,13 @@ public class DataHandlingFacade {
      */
     public Contact contactByID(int contactID) {
         //TODO: get contact by searching through contacts ArrayList instead of calling database
-        return new ContactDao().getByID(contactID);
+        for (Contact contact: contacts) {
+            if(contact.getContactID() == contactID) {
+                return contact;
+            }
+        }
+
+        return null;
     }
 
     private int customerMaxID() {
